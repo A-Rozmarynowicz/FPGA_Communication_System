@@ -1,5 +1,7 @@
 # compile vhdl design source files
 vhdl xil_defaultlib  \
+"../../../../FPGA_UART_Testbench.srcs/sources_1/new/UART_TX_Master.vhd" \
+"../../../../FPGA_UART_Testbench.srcs/sources_1/new/UART_RX_Master.vhd" \
 "../../../../FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd" \
 "../../../../FPGA_UART_Testbench.srcs/sim_1/new/Tester.vhd" \
 "../../../../FPGA_UART_Testbench.srcs/sim_1/new/UART_Slave_RAM.vhd" \

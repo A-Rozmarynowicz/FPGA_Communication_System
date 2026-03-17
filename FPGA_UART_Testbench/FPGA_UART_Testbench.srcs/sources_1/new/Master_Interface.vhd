@@ -44,21 +44,19 @@ entity Master_Interface is
         done  : out std_logic := '0';
 
         -- UART
-        tx : out std_logic := '0';
-        rx : in  std_logic
+        port_tx : out std_logic := '0';
+        port_rx : in  std_logic
     );
 end Master_Interface;
 
 architecture rtl of Master_Interface is
     -- Signals between internal logic and UART modules
-    signal tx_busy   : std_logic;
     signal rx_data   : std_logic_vector(7 downto 0);
-    signal rx_ready  : std_logic;
+    signal rx_receive_complete  : std_logic;
 
-    -- Optional: control signals for TX
-    signal tx_start  : std_logic;
     signal tx_data   : std_logic_vector(7 downto 0);
-
+    signal tx_transmit_complete : std_logic;
+    
 begin
 
     -- Instantiate UART Transmitter
@@ -66,11 +64,10 @@ begin
         port map (
             clk   => clk,
             rst   => rst,
-            
-            start => tx_start,
+
+            tx    => port_tx,
             data_to_send => tx_data,
-            tx    => tx,
-            busy  => tx_busy
+            transmit_complete => tx_transmit_complete
         );
 
     -- Instantiate UART Receiver
@@ -79,8 +76,8 @@ begin
             clk      => clk,
             rst      => rst,
             
-            rx       => rx,
+            rx       => port_rx,
             data_received => rx_data,
-            ready    => rx_ready
+            receive_complete => rx_receive_complete
         );
 end rtl;

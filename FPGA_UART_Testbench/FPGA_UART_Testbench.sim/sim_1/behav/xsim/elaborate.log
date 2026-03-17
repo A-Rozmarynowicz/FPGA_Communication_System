@@ -12,7 +12,9 @@ Compiling package std.standard
 Compiling package std.textio
 Compiling package ieee.std_logic_1164
 Compiling architecture behavioral of entity xil_defaultlib.Tester [tester_default]
-Compiling architecture behavioral of entity xil_defaultlib.Master_Interface [master_interface_default]
+Compiling architecture behavioral of entity xil_defaultlib.UART_TX_Master [uart_tx_master_default]
+Compiling architecture behavioral of entity xil_defaultlib.UART_RX_Master [uart_rx_master_default]
+Compiling architecture rtl of entity xil_defaultlib.Master_Interface [master_interface_default]
 Compiling architecture behavioral of entity xil_defaultlib.UART_Slave_RAM [uart_slave_ram_default]
 Compiling architecture behavioral of entity xil_defaultlib.testbench
 Built simulation snapshot testbench_behav

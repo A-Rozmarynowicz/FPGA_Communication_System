@@ -36,10 +36,9 @@ entity UART_TX_Master is
         clk   : in std_logic;
         rst   : in std_logic;
 
-        start : in std_logic;
         data_to_send : in std_logic_vector(7 downto 0);
         tx    : out std_logic;
-        busy  : out std_logic
+        transmit_complete : out std_logic
     );
 end UART_TX_Master;
 

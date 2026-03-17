@@ -101,8 +101,8 @@ begin
             data_in  => master_data_in,
             data_out => master_data_out,
             done     => done,
-            tx       => master_tx,
-            rx       => master_rx
+            port_tx       => master_tx,
+            port_rx       => master_rx
         );
 
     -- Instantiate Slave RAM (UART_Slave_RAM)

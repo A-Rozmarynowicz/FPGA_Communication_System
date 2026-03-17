@@ -36,10 +36,9 @@ entity UART_RX_Master is
         clk   : in std_logic;
         rst   : in std_logic;
 
-        start : in std_logic;
         data_received : out std_logic_vector(7 downto 0);
         rx    : in std_logic;
-        busy  : out std_logic
+        receive_complete : out std_logic
     );
 end UART_RX_Master;
 
