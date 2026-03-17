@@ -37,10 +37,10 @@ entity Tester is
         rst      : in  std_logic;
 
         -- Outputs to Master_Interface (inputs from Tester perspective)
-        start    : out std_logic;
-        rw       : out std_logic;
-        addr     : out std_logic_vector(7 downto 0);
-        data_in  : out std_logic_vector(7 downto 0);
+        start    : out std_logic := '0';
+        rw       : out std_logic := '0';
+        addr     : out std_logic_vector(7 downto 0):= (others => '0');
+        data_in  : out std_logic_vector(7 downto 0):= (others => '0');
 
         -- Inputs from Master_Interface (outputs from Tester perspective)
         data_out : in  std_logic_vector(7 downto 0);

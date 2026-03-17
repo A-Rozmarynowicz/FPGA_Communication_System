@@ -40,11 +40,11 @@ entity Master_Interface is
         rw   : in std_logic;
         addr  : in std_logic_vector(7 downto 0);
         data_in  : in std_logic_vector(7 downto 0);
-        data_out : out std_logic_vector(7 downto 0);
-        done  : out std_logic;
+        data_out : out std_logic_vector(7 downto 0) := (others => '0');
+        done  : out std_logic := '0';
 
         -- UART
-        tx : out std_logic;
+        tx : out std_logic := '0';
         rx : in  std_logic
     );
 end Master_Interface;
