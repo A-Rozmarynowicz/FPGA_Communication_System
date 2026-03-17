@@ -32,18 +32,21 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity Master_Interface is
-    Port ( clk : in STD_LOGIC;
-           reset : in STD_LOGIC;
-           addr : in STD_LOGIC_VECTOR (7 downto 0);
-           data_in : in STD_LOGIC_VECTOR (7 downto 0);
-           data_out : out STD_LOGIC_VECTOR (7 downto 0);
-           write_en : in STD_LOGIC;
-           read_en : in STD_LOGIC;
-           ready : out STD_LOGIC;
-           spi_miso : in STD_LOGIC;
-           spi_mosi : out STD_LOGIC;
-           spi_sclk : out STD_LOGIC;
-           spi_csn : out STD_LOGIC);
+    Port (
+        clk   : in std_logic;
+        rst   : in std_logic;
+
+        start : in std_logic;
+        dir   : in std_logic;
+        addr  : in std_logic_vector(7 downto 0);
+        data_in  : in std_logic_vector(7 downto 0);
+        data_out : out std_logic_vector(7 downto 0);
+        done  : out std_logic;
+
+        -- UART
+        tx : out std_logic;
+        rx : in  std_logic
+    );
 end Master_Interface;
 
 architecture Behavioral of Master_Interface is
