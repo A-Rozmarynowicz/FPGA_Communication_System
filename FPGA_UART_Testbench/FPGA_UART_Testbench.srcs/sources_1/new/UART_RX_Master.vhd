@@ -32,7 +32,15 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity UART_RX_Master is
---  Port ( );
+    Port (
+        clk   : in std_logic;
+        rst   : in std_logic;
+
+        start : in std_logic;
+        data_out : in std_logic_vector(7 downto 0);
+        rx    : out std_logic;
+        busy  : out std_logic
+    );
 end UART_RX_Master;
 
 architecture Behavioral of UART_RX_Master is

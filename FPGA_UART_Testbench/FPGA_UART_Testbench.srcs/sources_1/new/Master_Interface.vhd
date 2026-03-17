@@ -37,7 +37,7 @@ entity Master_Interface is
         rst   : in std_logic;
 
         start : in std_logic;
-        dir   : in std_logic;
+        rw   : in std_logic;
         addr  : in std_logic_vector(7 downto 0);
         data_in  : in std_logic_vector(7 downto 0);
         data_out : out std_logic_vector(7 downto 0);
