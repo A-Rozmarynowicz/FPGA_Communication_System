@@ -75,6 +75,7 @@ OPTRACE "Adding files" START { }
 read_vhdl -library xil_defaultlib {
   C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_TX_Master.vhd
   C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_RX_Master.vhd
+  C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd
   C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd
 }
 OPTRACE "Adding files" END { }

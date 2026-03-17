@@ -3,8 +3,8 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Tue Mar 17 14:42:27 2026
-# Process ID         : 28520
+# Start of session at: Tue Mar 17 15:02:20 2026
+# Process ID         : 1104
 # Current directory  : C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.runs/synth_1
 # Command line       : vivado.exe -log Master_Interface.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Master_Interface.tcl
 # Log file           : C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.runs/synth_1/Master_Interface.vds
@@ -19,10 +19,10 @@
 # Host memory        : 16890 MB
 # Swap memory        : 6174 MB
 # Total Virtual      : 23064 MB
-# Available Virtual  : 6701 MB
+# Available Virtual  : 6493 MB
 #-----------------------------------------------------------
 source Master_Interface.tcl -notrace
-create_project: Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 523.566 ; gain = 218.297
+create_project: Time (s): cpu = 00:00:08 ; elapsed = 00:00:06 . Memory (MB): peak = 523.840 ; gain = 218.766
 Command: read_checkpoint -auto_incremental -incremental C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/utils_1/imports/synth_1/Master_Interface.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/utils_1/imports/synth_1/Master_Interface.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
@@ -34,62 +34,35 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 20836
+INFO: [Synth 8-7075] Helper process launched with PID 16068
 ---------------------------------------------------------------------------------
-Starting Synthesize : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1069.121 ; gain = 532.770
+Starting Synthesize : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1068.570 ; gain = 530.672
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'Master_Interface' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:52]
+INFO: [Synth 8-638] synthesizing module 'Master_Interface' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:51]
 INFO: [Synth 8-638] synthesizing module 'UART_TX_Master' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_TX_Master.vhd:45]
 INFO: [Synth 8-256] done synthesizing module 'UART_TX_Master' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_TX_Master.vhd:45]
 INFO: [Synth 8-638] synthesizing module 'UART_RX_Master' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_RX_Master.vhd:45]
 INFO: [Synth 8-256] done synthesizing module 'UART_RX_Master' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_RX_Master.vhd:45]
-INFO: [Synth 8-256] done synthesizing module 'Master_Interface' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:52]
-WARNING: [Synth 8-3848] Net data_out in module/entity Master_Interface does not have driver. [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:43]
-WARNING: [Synth 8-3848] Net done in module/entity Master_Interface does not have driver. [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:44]
-WARNING: [Synth 8-3848] Net tx_data in module/entity Master_Interface does not have driver. [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:57]
-WARNING: [Synth 8-7129] Port data_out[7] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_out[6] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_out[5] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_out[4] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_out[3] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_out[2] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_out[1] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_out[0] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port done in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port start in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rw in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[7] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[6] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[5] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[4] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[3] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[2] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[1] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[0] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[7] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[6] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[5] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[4] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[3] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[2] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[1] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[0] in module Master_Interface is either unconnected or has no load
+INFO: [Synth 8-638] synthesizing module 'Parallel_Interface' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:47]
+INFO: [Synth 8-256] done synthesizing module 'Parallel_Interface' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:47]
+INFO: [Synth 8-256] done synthesizing module 'Master_Interface' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:51]
+WARNING: [Synth 8-3848] Net tx_data in module/entity Master_Interface does not have driver. [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:56]
 ---------------------------------------------------------------------------------
-Finished Synthesize : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1186.062 ; gain = 649.711
+Finished Synthesize : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1186.871 ; gain = 648.973
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1186.062 ; gain = 649.711
+Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1186.871 ; gain = 648.973
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s100fgga676-2
----------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7s100fgga676-2
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1186.062 ; gain = 649.711
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1186.871 ; gain = 648.973
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 1186.062 ; gain = 649.711
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1186.871 ; gain = 648.973
 ---------------------------------------------------------------------------------
 No constraint files found.
 ---------------------------------------------------------------------------------
@@ -112,48 +85,21 @@ No constraint files found.
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-3917] design Master_Interface has port data_out[7] driven by constant 0
-WARNING: [Synth 8-3917] design Master_Interface has port data_out[6] driven by constant 0
-WARNING: [Synth 8-3917] design Master_Interface has port data_out[5] driven by constant 0
-WARNING: [Synth 8-3917] design Master_Interface has port data_out[4] driven by constant 0
-WARNING: [Synth 8-3917] design Master_Interface has port data_out[3] driven by constant 0
-WARNING: [Synth 8-3917] design Master_Interface has port data_out[2] driven by constant 0
-WARNING: [Synth 8-3917] design Master_Interface has port data_out[1] driven by constant 0
-WARNING: [Synth 8-3917] design Master_Interface has port data_out[0] driven by constant 0
-WARNING: [Synth 8-3917] design Master_Interface has port done driven by constant 0
-WARNING: [Synth 8-7129] Port start in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port rw in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[7] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[6] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[5] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[4] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[3] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[2] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[1] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port addr[0] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[7] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[6] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[5] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[4] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[3] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[2] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[1] in module Master_Interface is either unconnected or has no load
-WARNING: [Synth 8-7129] Port data_in[0] in module Master_Interface is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1329.773 ; gain = 793.422
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:24 . Memory (MB): peak = 1330.852 ; gain = 792.953
 ---------------------------------------------------------------------------------
 No constraint files found.
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1354.773 ; gain = 818.422
+Finished Timing Optimization : Time (s): cpu = 00:00:20 ; elapsed = 00:00:24 . Memory (MB): peak = 1355.750 ; gain = 817.852
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:12 ; elapsed = 00:00:14 . Memory (MB): peak = 1354.773 ; gain = 818.422
+Finished Technology Mapping : Time (s): cpu = 00:00:20 ; elapsed = 00:00:24 . Memory (MB): peak = 1355.750 ; gain = 817.852
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -167,98 +113,88 @@ Finished Flattening Before IO Insertion
 ---------------------------------------------------------------------------------
 Start Final Netlist Cleanup
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-4649] Removing BlackBox instance uart_tx_inst of module UART_TX_Master having unconnected or no output ports
 INFO: [Synth 8-4649] Removing BlackBox instance uart_rx_inst of module UART_RX_Master having unconnected or no output ports
+INFO: [Synth 8-4649] Removing BlackBox instance parallel_interface_inst of module Parallel_Interface having unconnected or no output ports
 ---------------------------------------------------------------------------------
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
-CRITICAL WARNING: [Synth 8-4442] BlackBox module uart_tx_inst has unconnected pin data_to_send[7]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module uart_tx_inst has unconnected pin data_to_send[6]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module uart_tx_inst has unconnected pin data_to_send[5]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module uart_tx_inst has unconnected pin data_to_send[4]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module uart_tx_inst has unconnected pin data_to_send[3]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module uart_tx_inst has unconnected pin data_to_send[2]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module uart_tx_inst has unconnected pin data_to_send[1]
-CRITICAL WARNING: [Synth 8-4442] BlackBox module uart_tx_inst has unconnected pin data_to_send[0]
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
+Finished IO Insertion : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
 ---------------------------------------------------------------------------------
 
 Report BlackBoxes: 
-+------+---------------+----------+
-|      |BlackBox name  |Instances |
-+------+---------------+----------+
-|1     |UART_TX_Master |         1|
-+------+---------------+----------+
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
 
 Report Cell Usage: 
-+------+---------------+------+
-|      |Cell           |Count |
-+------+---------------+------+
-|1     |UART_TX_Master |     1|
-|2     |IBUF           |     2|
-|3     |OBUF           |    10|
-+------+---------------+------+
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |OBUF |    10|
++------+-----+------+
 
 Report Instance Areas: 
 +------+---------+-------+------+
 |      |Instance |Module |Cells |
 +------+---------+-------+------+
-|1     |top      |       |    14|
+|1     |top      |       |    10|
 +------+---------+-------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 8 critical warnings and 57 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
-Synthesis Optimization Complete : Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1589.902 ; gain = 1053.551
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
+Synthesis Optimization Complete : Time (s): cpu = 00:00:23 ; elapsed = 00:00:28 . Memory (MB): peak = 1590.789 ; gain = 1052.891
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1604.945 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1606.863 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1717.293 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1717.062 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: da88cb75
+Synth Design complete | Checksum: 299d2617
 INFO: [Common 17-83] Releasing license: Synthesis
-21 Infos, 57 Warnings, 8 Critical Warnings and 0 Errors encountered.
+25 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 1717.293 ; gain = 1189.730
-INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1717.293 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:25 ; elapsed = 00:00:31 . Memory (MB): peak = 1717.062 ; gain = 1187.996
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1717.062 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.runs/synth_1/Master_Interface.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file Master_Interface_utilization_synth.rpt -pb Master_Interface_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 14:42:58 2026...
+INFO: [Common 17-206] Exiting Vivado at Tue Mar 17 15:02:59 2026...

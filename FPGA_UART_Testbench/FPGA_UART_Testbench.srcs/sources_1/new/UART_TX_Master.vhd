@@ -37,8 +37,8 @@ entity UART_TX_Master is
         rst   : in std_logic;
 
         data_to_send : in std_logic_vector(7 downto 0);
-        tx    : out std_logic;
-        transmit_complete : out std_logic
+        tx    : out std_logic := '0';
+        transmit_complete : out std_logic := '0'
     );
 end UART_TX_Master;
 

@@ -42,12 +42,11 @@ architecture Behavioral of testbench is
     signal rst : std_logic := '1';
 
     -- Parallel interface signals between Tester and Master_Interface
-    signal start    : std_logic;
-    signal rw       : std_logic;
-    signal addr     : std_logic_vector(7 downto 0);
-    signal master_data_in  : std_logic_vector(7 downto 0);
-    signal master_data_out : std_logic_vector(7 downto 0);
-    signal done     : std_logic;
+    signal parallel_start    : std_logic;
+    signal parallel_rw       : std_logic;
+    signal parallel_master_data_in  : std_logic_vector(7 downto 0);
+    signal parallel_master_data_out : std_logic_vector(7 downto 0);
+    signal parallel_done     : std_logic;
 
     -- UART signals connecting Master and Slave RAM
     signal master_tx : std_logic;
@@ -82,12 +81,12 @@ begin
         port map (
             clk      => clk,
             rst      => rst,
-            start    => start,
-            rw       => rw,
-            addr     => addr,
-            data_to_send  => master_data_in,
-            data_received => master_data_out,
-            done     => done
+            
+            start    => parallel_start,
+            rw       => parallel_rw,
+            data_to_send  => parallel_master_data_in,
+            data_received => parallel_master_data_out,
+            done     => parallel_done
         );
 
     -- Instantiate Master_Interface (UART Master)
@@ -95,14 +94,15 @@ begin
         port map (
             clk      => clk,
             rst      => rst,
-            start    => start,
-            rw       => rw,
-            addr     => addr,
-            data_in  => master_data_in,
-            data_out => master_data_out,
-            done     => done,
-            port_tx       => master_tx,
-            port_rx       => master_rx
+            
+            parallel_start    => parallel_start,
+            parallel_rw       => parallel_rw,
+            parallel_data_in  => parallel_master_data_in,
+            parallel_data_out => parallel_master_data_out,
+            parallel_done     => parallel_done,
+            
+            uart_tx       => master_tx,
+            uart_rx       => master_rx
         );
 
     -- Instantiate Slave RAM (UART_Slave_RAM)

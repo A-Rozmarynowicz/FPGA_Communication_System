@@ -36,16 +36,15 @@ entity Master_Interface is
         clk   : in std_logic;
         rst   : in std_logic;
 
-        start : in std_logic;
-        rw   : in std_logic;
-        addr  : in std_logic_vector(7 downto 0);
-        data_in  : in std_logic_vector(7 downto 0);
-        data_out : out std_logic_vector(7 downto 0) := (others => '0');
-        done  : out std_logic := '0';
+        parallel_start : in std_logic;
+        parallel_rw   : in std_logic;
+        parallel_data_in  : in std_logic_vector(7 downto 0);
+        parallel_data_out : out std_logic_vector(7 downto 0) := (others => '0');
+        parallel_done  : out std_logic := '0';
 
         -- UART
-        port_tx : out std_logic := '0';
-        port_rx : in  std_logic
+        uart_tx : out std_logic;
+        uart_rx : in  std_logic
     );
 end Master_Interface;
 
@@ -65,7 +64,7 @@ begin
             clk   => clk,
             rst   => rst,
 
-            tx    => port_tx,
+            tx    => uart_tx,
             data_to_send => tx_data,
             transmit_complete => tx_transmit_complete
         );
@@ -76,8 +75,22 @@ begin
             clk      => clk,
             rst      => rst,
             
-            rx       => port_rx,
+            rx       => uart_rx,
             data_received => rx_data,
             receive_complete => rx_receive_complete
         );
+    
+    -- Instantiate Parallel Interface
+    parallel_interface_inst : entity work.Parallel_Interface
+        port map (
+            clk      => clk,
+            rst      => rst,
+            
+            start   => parallel_start,
+            rw      => parallel_rw,
+            data_in  => parallel_data_in,
+            data_out => parallel_data_out,
+            done    => parallel_done
+        );
+     
 end rtl;

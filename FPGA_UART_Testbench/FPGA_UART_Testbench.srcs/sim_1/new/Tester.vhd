@@ -39,7 +39,6 @@ entity Tester is
         -- Outputs to Master_Interface (inputs from Tester perspective)
         start    : out std_logic := '0';
         rw       : out std_logic := '0';
-        addr     : out std_logic_vector(7 downto 0):= (others => '0');
         data_to_send  : out std_logic_vector(7 downto 0):= (others => '0');
 
         -- Inputs from Master_Interface (outputs from Tester perspective)
@@ -62,14 +61,12 @@ begin
         if rst = '1' then
             start    <= '0';
             rw       <= '0';
-            addr     <= (others => '0');
             data_to_send  <= (others => '0');
             state    <= IDLE_TYPE;
             expected_data <= (others => '0');
         elsif rising_edge(clk) then
             case state is
                 when IDLE_TYPE =>
-                    addr <= x"10";
                     data_to_send <= x"AA";
                     rw <= '0';  -- write
                     start <= '1';
