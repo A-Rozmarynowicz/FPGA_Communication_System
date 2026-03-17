@@ -45,8 +45,8 @@ architecture Behavioral of testbench is
     signal start    : std_logic;
     signal rw       : std_logic;
     signal addr     : std_logic_vector(7 downto 0);
-    signal data_in  : std_logic_vector(7 downto 0);
-    signal data_out : std_logic_vector(7 downto 0);
+    signal master_data_in  : std_logic_vector(7 downto 0);
+    signal master_data_out : std_logic_vector(7 downto 0);
     signal done     : std_logic;
 
     -- UART signals connecting Master and Slave RAM
@@ -85,8 +85,8 @@ begin
             start    => start,
             rw       => rw,
             addr     => addr,
-            data_in  => data_in,
-            data_out => data_out,
+            data_to_send  => master_data_in,
+            data_received => master_data_out,
             done     => done
         );
 
@@ -98,8 +98,8 @@ begin
             start    => start,
             rw       => rw,
             addr     => addr,
-            data_in  => data_in,
-            data_out => data_out,
+            data_in  => master_data_in,
+            data_out => master_data_out,
             done     => done,
             tx       => master_tx,
             rx       => master_rx

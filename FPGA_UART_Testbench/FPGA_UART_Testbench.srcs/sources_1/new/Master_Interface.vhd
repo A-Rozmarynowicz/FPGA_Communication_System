@@ -49,9 +49,38 @@ entity Master_Interface is
     );
 end Master_Interface;
 
-architecture Behavioral of Master_Interface is
+architecture rtl of Master_Interface is
+    -- Signals between internal logic and UART modules
+    signal tx_busy   : std_logic;
+    signal rx_data   : std_logic_vector(7 downto 0);
+    signal rx_ready  : std_logic;
+
+    -- Optional: control signals for TX
+    signal tx_start  : std_logic;
+    signal tx_data   : std_logic_vector(7 downto 0);
 
 begin
 
+    -- Instantiate UART Transmitter
+    uart_tx_inst : entity work.UART_TX_Master
+        port map (
+            clk   => clk,
+            rst   => rst,
+            
+            start => tx_start,
+            data_to_send => tx_data,
+            tx    => tx,
+            busy  => tx_busy
+        );
 
-end Behavioral;
+    -- Instantiate UART Receiver
+    uart_rx_inst : entity work.UART_RX_Master
+        port map (
+            clk      => clk,
+            rst      => rst,
+            
+            rx       => rx,
+            data_received => rx_data,
+            ready    => rx_ready
+        );
+end rtl;

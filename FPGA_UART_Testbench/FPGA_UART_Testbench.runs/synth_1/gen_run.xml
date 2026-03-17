@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7s100fgga676-2" LaunchTime="1773750124" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/Master_Interface.dcp">
+<GenRun Id="synth_1" LaunchPart="xc7s100fgga676-2" LaunchTime="1773754443" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/Master_Interface.dcp">
   <File Type="PA-TCL" Name="Master_Interface.tcl"/>
   <File Type="REPORTS-TCL" Name="Master_Interface_reports.tcl"/>
   <File Type="RDS-RDS" Name="Master_Interface.vds"/>
@@ -13,14 +13,12 @@
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/new/UART_TX_Master.vhd">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
     <File Path="$PSRCDIR/sources_1/new/UART_RX_Master.vhd">
       <FileInfo>
-        <Attr Name="AutoDisabled" Val="1"/>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>

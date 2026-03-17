@@ -37,8 +37,8 @@ entity UART_RX_Master is
         rst   : in std_logic;
 
         start : in std_logic;
-        data_out : in std_logic_vector(7 downto 0);
-        rx    : out std_logic;
+        data_received : out std_logic_vector(7 downto 0);
+        rx    : in std_logic;
         busy  : out std_logic
     );
 end UART_RX_Master;

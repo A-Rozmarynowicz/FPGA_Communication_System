@@ -37,7 +37,7 @@ entity UART_TX_Master is
         rst   : in std_logic;
 
         start : in std_logic;
-        data_in : in std_logic_vector(7 downto 0);
+        data_to_send : in std_logic_vector(7 downto 0);
         tx    : out std_logic;
         busy  : out std_logic
     );

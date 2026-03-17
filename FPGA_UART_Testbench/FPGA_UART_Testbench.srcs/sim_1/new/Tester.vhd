@@ -40,10 +40,10 @@ entity Tester is
         start    : out std_logic := '0';
         rw       : out std_logic := '0';
         addr     : out std_logic_vector(7 downto 0):= (others => '0');
-        data_in  : out std_logic_vector(7 downto 0):= (others => '0');
+        data_to_send  : out std_logic_vector(7 downto 0):= (others => '0');
 
         -- Inputs from Master_Interface (outputs from Tester perspective)
-        data_out : in  std_logic_vector(7 downto 0);
+        data_received : in  std_logic_vector(7 downto 0);
         done     : in  std_logic
     );
 end Tester;
@@ -63,14 +63,14 @@ begin
             start    <= '0';
             rw       <= '0';
             addr     <= (others => '0');
-            data_in  <= (others => '0');
+            data_to_send  <= (others => '0');
             state    <= IDLE_TYPE;
             expected_data <= (others => '0');
         elsif rising_edge(clk) then
             case state is
                 when IDLE_TYPE =>
                     addr <= x"10";
-                    data_in <= x"AA";
+                    data_to_send <= x"AA";
                     rw <= '0';  -- write
                     start <= '1';
                     expected_data <= x"AA";
@@ -93,7 +93,7 @@ begin
 
                 when WAIT_READ_TYPE =>
                     if done = '1' then
-                        if data_out = expected_data then
+                        if data_received = expected_data then
                             report "Test passed: Read data matches written data" severity note;
                         else
                             report "Test failed: Read data mismatch" severity error;
