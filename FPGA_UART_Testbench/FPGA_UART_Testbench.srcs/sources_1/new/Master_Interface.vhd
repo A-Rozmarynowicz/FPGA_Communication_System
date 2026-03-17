@@ -56,6 +56,8 @@ architecture rtl of Master_Interface is
     signal tx_data   : std_logic_vector(7 downto 0);
     signal tx_transmit_complete : std_logic;
     
+    signal parallel_reading_complete : std_logic;
+    
 begin
 
     -- Instantiate UART Transmitter
@@ -65,7 +67,7 @@ begin
             rst   => rst,
 
             tx    => uart_tx,
-            data_to_send => tx_data,
+            data_to_send => tx_data, -- Tutaj może w drugą strone strzałka
             transmit_complete => tx_transmit_complete
         );
 
@@ -89,8 +91,11 @@ begin
             start   => parallel_start,
             rw      => parallel_rw,
             data_in  => parallel_data_in,
+            
             data_out => parallel_data_out,
-            done    => parallel_done
+            done    => parallel_done,
+            
+            reading_complete => parallel_reading_complete
         );
      
 end rtl;

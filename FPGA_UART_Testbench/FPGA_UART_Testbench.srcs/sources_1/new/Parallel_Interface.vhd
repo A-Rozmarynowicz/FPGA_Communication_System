@@ -40,13 +40,36 @@ entity Parallel_Interface is
         rw   : in std_logic;
         data_in  : in std_logic_vector(7 downto 0);
         data_out : out std_logic_vector(7 downto 0) := (others => '0');
-        done  : out std_logic := '0'
+        done  : out std_logic := '0';
+        
+        reading_complete : out std_logic := '0'
     );
 end Parallel_Interface;
 
-architecture Behavioral of Parallel_Interface is
-
+architecture rt1 of Parallel_Interface is
+    type state_type is (IDLE_STATE, WRITE_STATE);
+    signal state : state_type := IDLE_STATE;
+    
+    signal last_registered_start : std_logic := '0';
 begin
-
-
-end Behavioral;
+    process(clk, rst)
+    begin
+        if rst = '1' then
+            data_out <= (others => '0');
+            state    <= IDLE_STATE;
+            done <= '0';
+        elsif rising_edge(clk) then
+            case state is
+                when IDLE_STATE =>
+                    if (start = '0') and (last_registered_start = '1')
+                                                    and (rw = '0') then -- reading
+                       reading_complete <= '1';
+                    end if;        
+                when WRITE_STATE =>
+                    null;
+            end case;
+        end if;
+        
+        last_registered_start <= start;
+     end process;
+end rt1;

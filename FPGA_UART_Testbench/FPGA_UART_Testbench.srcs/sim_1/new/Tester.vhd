@@ -48,9 +48,9 @@ entity Tester is
 end Tester;
 
 architecture Behavioral of Tester is
-    type state_type is (IDLE_TYPE, WRITE_TYPE, WAIT_WRITE_TYPE,
-                            READ_TYPE, WAIT_READ_TYPE, DONE_TYPE);
-    signal state : state_type := IDLE_TYPE;
+    type state_type is (IDLE_STATE, WRITE_STATE, WAIT_FOR_READ_STATE,
+                            READ_STATE, INIT_READ_STATE, DONE_STATE);
+    signal state : state_type := IDLE_STATE;
 
     -- For storing expected data
     signal expected_data : std_logic_vector(7 downto 0) := (others => '0');
@@ -62,43 +62,43 @@ begin
             start    <= '0';
             rw       <= '0';
             data_to_send  <= (others => '0');
-            state    <= IDLE_TYPE;
+            state    <= IDLE_STATE;
             expected_data <= (others => '0');
         elsif rising_edge(clk) then
             case state is
-                when IDLE_TYPE =>
+                when IDLE_STATE =>
                     data_to_send <= x"AA";
                     rw <= '0';  -- write
                     start <= '1';
                     expected_data <= x"AA";
-                    state <= WRITE_TYPE;
+                    state <= WRITE_STATE;
 
-                when WRITE_TYPE =>
+                when WRITE_STATE =>
                     start <= '0'; -- pulse off
-                    state <= WAIT_WRITE_TYPE;
+                    state <= WAIT_FOR_READ_STATE;
 
-                when WAIT_WRITE_TYPE =>
+                when WAIT_FOR_READ_STATE =>
                     if done = '1' then
                         rw <= '1'; -- read
                         start <= '1';
-                        state <= READ_TYPE;
+                        state <= INIT_READ_STATE;
                     end if;
 
-                when READ_TYPE =>
+                when INIT_READ_STATE =>
                     start <= '0';
-                    state <= WAIT_READ_TYPE;
+                    state <= READ_STATE;
 
-                when WAIT_READ_TYPE =>
+                when READ_STATE =>
                     if done = '1' then
                         if data_received = expected_data then
                             report "Test passed: Read data matches written data" severity note;
                         else
                             report "Test failed: Read data mismatch" severity error;
                         end if;
-                        state <= DONE_TYPE;
+                        state <= DONE_STATE;
                     end if;
 
-                when DONE_TYPE =>
+                when DONE_STATE =>
                     -- Test complete, do nothing or loop
                     null;
             end case;
