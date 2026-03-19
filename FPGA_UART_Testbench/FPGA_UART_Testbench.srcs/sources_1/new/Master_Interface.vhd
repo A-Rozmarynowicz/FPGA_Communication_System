@@ -76,7 +76,7 @@ begin
             rst   => RST,
 
             tx    => UART_TX,
-            data_to_send => tx_data, -- Tutaj może w drugą strone strzałka
+            data_to_send => tx_data,
             transmit_complete => tx_transmit_complete
         );
 
