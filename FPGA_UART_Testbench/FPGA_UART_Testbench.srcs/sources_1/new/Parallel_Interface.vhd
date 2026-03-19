@@ -37,7 +37,6 @@ entity Parallel_Interface is
         rst   : in std_logic;
 
         start : in std_logic;
-        rw   : in std_logic;
         data_in  : in std_logic_vector(7 downto 0);
         data_out : out std_logic_vector(7 downto 0) := (others => '0');
         done  : out std_logic := '0';
@@ -61,8 +60,8 @@ begin
         elsif rising_edge(clk) then
             case state is
                 when IDLE_STATE =>
-                    if (start = '0') and (last_registered_start = '1')
-                                                    and (rw = '0') then -- reading
+                    if (start = '0') and (last_registered_start = '1') then
+--                                                    and (rw = '0') then -- reading
                        reading_complete <= '1';
                     end if;        
                 when WRITE_STATE =>

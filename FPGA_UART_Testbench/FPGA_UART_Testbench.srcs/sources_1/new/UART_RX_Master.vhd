@@ -9,16 +9,17 @@ entity UART_RX_Master is
     MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
     NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 8;			-- liczba bitow slowa danych (5-8)
     NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
-    NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
+    NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2                     -- liczba bitow stopu (1-2)
   );
+  
   port (
-    C		        :in  std_logic;					-- zegar taktujacy
-    R		        :in  std_logic;					-- sygnal resetowania
+    CLK	        :in  std_logic;					-- zegar taktujacy
+    RST		        :in  std_logic;					-- sygnal resetowania
     CYCLES_PER_BIT	:in  natural range 0 to CLOCK_FREQ/MIN_BAUD_RATE;	-- liczba taktow zegara dla jednego bodu
     RX		        :in  std_logic;					-- odebrany sygnal szeregowy
     WORD	        :out std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);	-- odebrane slowo danych
     READY	        :out std_logic;					-- flaga potwierdzenia odbioru
-    RX_ERROR	        :out std_logic					-- flaga wykrycia bledu w odbiorze
+    RX_ERROR	    :out std_logic					-- flaga wykrycia bledu w odbiorze
   );
 end UART_RX_Master;
 
@@ -42,10 +43,10 @@ begin
     report "SERIAL_RX: nieprawidlowa wartosc parametru CLOCK_FREQ"
     severity error;
 
-   process (R, C) is							-- proces odbiornika
+   process (RST, CLK) is							-- proces odbiornika
    begin								-- cialo procesu odbiornika
 
-     if (R='1') then							-- asynchroniczna inicjalizacja rejestrow
+     if (RST='1') then							-- asynchroniczna inicjalizacja rejestrow
        input_rx_buffer	<= (others => '0');					-- wyzerowanie rejestru sygnalu RX
        state	<= IDLE_WAIT;						-- poczatkowy stan pracy odbiornika
        cycles_in_current_bit  <= 0;							-- wyzerowanie licznika czasu bodu
@@ -56,7 +57,7 @@ begin
        READY	<= '0';							-- wyzerowanie flagi potwierdzenia odbioru
        RX_ERROR	<= '0';							-- wyzerowanie flagi wykrycia bledu w odbiorze
 
-     elsif (rising_edge(C)) then					-- synchroniczna praca odbiornika
+     elsif (rising_edge(CLK)) then					-- synchroniczna praca odbiornika
 
        READY     <= '0';						-- defaultowe skasowanie flagi potwierdzenia odbioru
        RX_ERROR       <= '0';						-- defaultowe skasowanie flagi wykrycia bledu w odbiorze
