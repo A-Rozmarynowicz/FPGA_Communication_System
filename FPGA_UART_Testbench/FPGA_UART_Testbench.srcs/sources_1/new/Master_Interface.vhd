@@ -33,8 +33,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity Master_Interface is
     generic (
-        CLOCK_FREQ		: positive := 20_000_000;			-- czestotliwosc zegata w [Hz]
-        BAUD_RATE       : positive := 9600;
+        CLOCK_FREQ		: positive := 100_000_000;			-- czestotliwosc zegata w [Hz]
+        BAUD_RATE       : positive := 1_000_000;
         MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
         NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 8;			-- liczba bitow slowa danych (5-8)
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
@@ -137,4 +137,5 @@ begin
     end process;
     
     tx_word_ready <=  parallel_reading_complete;
+    tx_data <= PARALLEL_DATA_IN;
 end rtl;

@@ -37,6 +37,13 @@ end testbench;
 
 architecture Behavioral of testbench is
 
+    constant CLOCK_FREQ :positive := 100_000_000;
+    constant BAUD_RATE :positive := 20_000_000;
+    constant MIN_BAUD_RATE :positive := 110;				-- minimalna predkosc nadawania w [bodach]
+    constant NUMBER_OF_WORD_BITS :positive := 8;			-- liczba bitow slowa danych (5-8)
+    constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)
+    constant NUMBER_OF_STOP_BITS    :positive := 2; 
+    
     -- Clock and reset
     signal clk : std_logic := '0';
     signal rst : std_logic := '1';
@@ -89,6 +96,14 @@ begin
 
     -- Instantiate Master_Interface (UART Master)
     uut_master : entity work.Master_Interface
+        generic map(
+            CLOCK_FREQ	=> CLOCK_FREQ,
+            BAUD_RATE   => BAUD_RATE,
+            MIN_BAUD_RATE => MIN_BAUD_RATE,				-- minimalna predkosc nadawania w [bodach]
+            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,			-- liczba bitow slowa danych (5-8)
+            NUMBER_OF_PARITY_BITS   => NUMBER_OF_PARITY_BITS,                     -- liczba bitow parzystosci (0-1)
+            NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS                     -- liczba bitow stopu (1-2)
+          )
         port map (
             CLK      => clk,
             RST      => rst,
