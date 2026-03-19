@@ -68,13 +68,14 @@ begin
                     if (start = '0') and (last_registered_start = '1') then
                         DATA_RECEIVED <= DATA_IN;
                         READING_COMPLETE <= '1';
+                        state <= READ_STATE;
                     end if;
                     
                 when WRITE_STATE =>
                     null;
                     
                 when READ_STATE =>
-                    null; 
+                    READING_COMPLETE <= '0'; 
             end case;
         end if;
      end process;

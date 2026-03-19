@@ -38,7 +38,7 @@ end testbench;
 architecture Behavioral of testbench is
 
     constant CLOCK_FREQ :positive := 100_000_000;
-    constant BAUD_RATE :positive := 20_000_000;
+    constant BAUD_RATE :positive := 50_000_000;
     constant MIN_BAUD_RATE :positive := 110;				-- minimalna predkosc nadawania w [bodach]
     constant NUMBER_OF_WORD_BITS :positive := 8;			-- liczba bitow slowa danych (5-8)
     constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)

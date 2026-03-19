@@ -68,6 +68,7 @@ begin
        case state is							-- badanie aktualnego stanu maszyny stanow
 
          when IDLE_WAIT =>						-- obsluga stanu IDLE_WAIT
+            BUSY <= '0';
             if (WORD_READY = '1') then
                 output_word_buffer <= WORD;
                 BUSY <= '1';
@@ -101,14 +102,50 @@ begin
                     number_of_bits_transmitted <= number_of_bits_transmitted + 1;
                 else
                     number_of_bits_transmitted <= 0;
+                    if (NUMBER_OF_PARITY_BITS = 1) then
+                        state <= TRANSMITTING_PARITY;
+                    else
+                        state <= TRANSMITTING_STOP;
+                    end if;
                 end if;
+                
             end if;
 
          when TRANSMITTING_PARITY =>						-- obsluga stanu PARZYSTOSC
-            null;
+            if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
+                cycles_in_current_bit <= cycles_in_current_bit + 1;
+        
+            else
+                cycles_in_current_bit <= 0;
+        
+                -- transmit parity bit (even parity example)
+                -- even parity = XOR of all bits in word
+                TX <= XOR_REDUCE(output_word_buffer);
+        
+                -- after parity bit -> go to STOP state
+                state <= TRANSMITTING_STOP;
+            end if;
 
          when TRANSMITTING_STOP =>							-- obsluga stanu STOP
-           null;
+            if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
+                cycles_in_current_bit <= cycles_in_current_bit + 1;
+        
+            else
+                cycles_in_current_bit <= 0;
+        
+                -- transmit STOP bit = logic '1' (UART idle level)
+                TX <= '1';
+        
+                -- handle multiple stop bits
+                if (number_of_bits_transmitted /= NUMBER_OF_STOP_BITS-1) then
+                    number_of_bits_transmitted <= number_of_bits_transmitted + 1;
+                else
+                    -- finished frame
+                    number_of_bits_transmitted <= 0;
+                    -- go back to IDLE or ready state
+                    state <= IDLE_WAIT;
+                end if;
+            end if;
 
        end case;							-- zakonczenie instukcji warunkowego wyboru
 

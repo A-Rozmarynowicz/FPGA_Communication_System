@@ -81,8 +81,8 @@ begin
                     state <= AWAITING_MASTER;
             
                 when AWAITING_MASTER =>
-                    state <= IDLE_STATE;
-            
+--                    state <= IDLE_STATE;
+                    null;            
                 when READ_RAM_STATE_SENDING =>
                     null;
             
