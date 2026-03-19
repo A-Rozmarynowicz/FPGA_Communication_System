@@ -52,7 +52,6 @@ architecture Behavioral of Tester is
                             READ_STATE, INIT_READ_STATE, DONE_STATE);
     signal state : state_type := IDLE_STATE;
 
-    -- For storing expected data
     signal expected_data : std_logic_vector(7 downto 0) := (others => '0');
 
 begin
