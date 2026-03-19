@@ -33,73 +33,71 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity Tester is
  port (
-        clk      : in  std_logic;
-        rst      : in  std_logic;
+        CLK      : in  std_logic;
+        RST      : in  std_logic;
 
         -- Outputs to Master_Interface (inputs from Tester perspective)
-        start    : out std_logic := '0';
-        rw       : out std_logic := '0';
-        data_to_send  : out std_logic_vector(7 downto 0):= (others => '0');
+        START    : out std_logic := '0';
+        DATA_TO_SEND  : out std_logic_vector(7 downto 0):= (others => '0');
 
         -- Inputs from Master_Interface (outputs from Tester perspective)
-        data_received : in  std_logic_vector(7 downto 0);
-        done     : in  std_logic
+        DATA_RECEIVED : in  std_logic_vector(7 downto 0);
+        DONE         : in  std_logic
     );
 end Tester;
 
 architecture Behavioral of Tester is
-    type state_type is (IDLE_STATE, WRITE_STATE, WAIT_FOR_READ_STATE,
-                            READ_STATE, INIT_READ_STATE, DONE_STATE);
+    type state_type is (    IDLE_STATE,
+                            WRITE_RAM_STATE_SENDING, WRITE_RAM_STATE_CONFIRMING, AWAITING_MASTER,
+                            READ_RAM_STATE_SENDING, READ_RAM_STATE_CONFIRMING,
+                            WAIT_FOR_MASTER_RAM_READY, READ_RAM_STATE_READING,
+                            DONE_STATE
+                        );
     signal state : state_type := IDLE_STATE;
 
     signal expected_data : std_logic_vector(7 downto 0) := (others => '0');
 
 begin
-    process(clk, rst)
+    process(CLK, RST)
     begin
-        if rst = '1' then
-            start    <= '0';
-            rw       <= '0';
-            data_to_send  <= (others => '0');
+        if RST = '1' then
+            START    <= '0';
+            DATA_TO_SEND  <= (others => '0');
             state    <= IDLE_STATE;
             expected_data <= (others => '0');
-        elsif rising_edge(clk) then
+        elsif rising_edge(CLK) then
             case state is
                 when IDLE_STATE =>
-                    data_to_send <= x"AA";
-                    rw <= '0';  -- write
-                    start <= '1';
+                    state <= WRITE_RAM_STATE_SENDING;
+            
+                when WRITE_RAM_STATE_SENDING =>
+                    DATA_TO_SEND <= x"AA";
+                    START <= '1';
                     expected_data <= x"AA";
-                    state <= WRITE_STATE;
-
-                when WRITE_STATE =>
-                    start <= '0'; -- pulse off
-                    state <= WAIT_FOR_READ_STATE;
-
-                when WAIT_FOR_READ_STATE =>
-                    if done = '1' then
-                        rw <= '1'; -- read
-                        start <= '1';
-                        state <= INIT_READ_STATE;
-                    end if;
-
-                when INIT_READ_STATE =>
-                    start <= '0';
-                    state <= READ_STATE;
-
-                when READ_STATE =>
-                    if done = '1' then
-                        if data_received = expected_data then
-                            report "Test passed: Read data matches written data" severity note;
-                        else
-                            report "Test failed: Read data mismatch" severity error;
-                        end if;
-                        state <= DONE_STATE;
-                    end if;
-
-                when DONE_STATE =>
-                    -- Test complete, do nothing or loop
+                    state <= WRITE_RAM_STATE_CONFIRMING;
+            
+                when WRITE_RAM_STATE_CONFIRMING =>
+                    START <= '0';
+                    state <= AWAITING_MASTER;
+            
+                when AWAITING_MASTER =>
+                    state <= IDLE_STATE;
+            
+                when READ_RAM_STATE_SENDING =>
                     null;
+            
+                when READ_RAM_STATE_CONFIRMING =>
+                    null;
+            
+                when WAIT_FOR_MASTER_RAM_READY =>
+                    null;
+            
+                when READ_RAM_STATE_READING =>
+                    null;
+            
+                when DONE_STATE =>
+                    null;
+            
             end case;
         end if;
     end process;

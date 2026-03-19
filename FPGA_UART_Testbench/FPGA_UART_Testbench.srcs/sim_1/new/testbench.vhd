@@ -43,7 +43,6 @@ architecture Behavioral of testbench is
 
     -- Parallel interface signals between Tester and Master_Interface
     signal parallel_start    : std_logic;
-    signal parallel_rw       : std_logic;
     signal parallel_master_data_in  : std_logic_vector(7 downto 0);
     signal parallel_master_data_out : std_logic_vector(7 downto 0);
     signal parallel_done     : std_logic;
@@ -79,37 +78,35 @@ begin
     -- Instantiate Tester (generates commands on parallel interface)
     uut_tester : entity work.Tester -- uut means Unit Under Test
         port map (
-            clk      => clk,
-            rst      => rst,
+            CLK      => clk,
+            RST      => rst,
             
-            start    => parallel_start,
-            rw       => parallel_rw,
-            data_to_send  => parallel_master_data_in,
-            data_received => parallel_master_data_out,
-            done     => parallel_done
+            START    => parallel_start,
+            DATA_TO_SEND => parallel_master_data_in,
+            DATA_RECEIVED => parallel_master_data_out,
+            DONE        => parallel_done
         );
 
     -- Instantiate Master_Interface (UART Master)
     uut_master : entity work.Master_Interface
         port map (
-            clk      => clk,
-            rst      => rst,
+            CLK      => clk,
+            RST      => rst,
             
-            parallel_start    => parallel_start,
-            parallel_rw       => parallel_rw,
-            parallel_data_in  => parallel_master_data_in,
-            parallel_data_out => parallel_master_data_out,
-            parallel_done     => parallel_done,
+            PARALLEL_START => parallel_start,
+            PARALLEL_DATA_IN  => parallel_master_data_in,
+            PARALLEL_DATA_OUT => parallel_master_data_out,
+            PARALLEL_DONE   => parallel_done,
             
-            uart_tx       => master_tx,
-            uart_rx       => master_rx
+            UART_TX       => master_tx,
+            UART_RX       => master_rx
         );
 
     -- Instantiate Slave RAM (UART_Slave_RAM)
     uut_slave : entity work.UART_Slave_RAM
         port map (
-            rx => slave_rx,
-            tx => slave_tx
+            RX => slave_rx,
+            TX => slave_tx
         );
 
     -- Cross UART signals between Master and Slave

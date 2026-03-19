@@ -33,8 +33,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity UART_Slave_RAM is
 Port (
-        rx : in std_logic;
-        tx : out std_logic := '0'
+        RX : in std_logic;
+        TX : out std_logic := '0'
     );
 end UART_Slave_RAM;
 

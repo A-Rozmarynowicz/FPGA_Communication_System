@@ -33,42 +33,50 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity Parallel_Interface is
     Port (
-        clk   : in std_logic;
-        rst   : in std_logic;
+        CLK   : in std_logic;
+        RST   : in std_logic;
 
-        start : in std_logic;
-        data_in  : in std_logic_vector(7 downto 0);
-        data_out : out std_logic_vector(7 downto 0) := (others => '0');
-        done  : out std_logic := '0';
+        START : in std_logic;
+        DATA_IN  : in std_logic_vector(7 downto 0);
+        DATA_OUT : out std_logic_vector(7 downto 0) := (others => '0');
+        DONE  : out std_logic := '0';
         
-        reading_complete : out std_logic := '0'
+        READING_COMPLETE : out std_logic := '0';
+        DATA_RECEIVED : out std_logic_vector(7 downto 0)
     );
 end Parallel_Interface;
 
 architecture rt1 of Parallel_Interface is
-    type state_type is (IDLE_STATE, WRITE_STATE);
+    type state_type is (IDLE_STATE, WRITE_STATE, READ_STATE);
     signal state : state_type := IDLE_STATE;
     
     signal last_registered_start : std_logic := '0';
+    
 begin
     process(clk, rst)
     begin
-        if rst = '1' then
-            data_out <= (others => '0');
+        if RST = '1' then
+            DATA_OUT <= (others => '0');
             state    <= IDLE_STATE;
-            done <= '0';
-        elsif rising_edge(clk) then
+            DONE <= '0';
+            last_registered_start <= '0';
+            
+        elsif rising_edge(CLK) then
             case state is
                 when IDLE_STATE =>
                     if (start = '0') and (last_registered_start = '1') then
---                                                    and (rw = '0') then -- reading
-                       reading_complete <= '1';
-                    end if;        
+                        DATA_RECEIVED <= DATA_IN;
+                        READING_COMPLETE <= '1';
+                    end if;
+                    
                 when WRITE_STATE =>
                     null;
+                    
+                when READ_STATE =>
+                    null; 
             end case;
         end if;
         
-        last_registered_start <= start;
+        last_registered_start <= START;
      end process;
 end rt1;

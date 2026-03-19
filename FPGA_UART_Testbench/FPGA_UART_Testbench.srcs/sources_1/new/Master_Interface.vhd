@@ -62,23 +62,34 @@ architecture rtl of Master_Interface is
     signal rx_error : std_logic;
 
     signal tx_data   : std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);
-    signal tx_transmit_complete : std_logic;
+    signal tx_word_ready : std_logic;
+    signal tx_busy : std_logic;
     signal tx_error : std_logic;
     
     signal parallel_reading_complete : std_logic;
+    signal parallel_received_data : std_logic_vector (7 downto 0);
     
 begin
 
-    -- Instantiate UART Transmitter
-    uart_tx_inst : entity work.UART_TX_Master
+    uart_rt_inst: entity work.UART_TX_Master
+        generic map (
+          CLOCK_FREQ      => CLOCK_FREQ,
+          MIN_BAUD_RATE   => MIN_BAUD_RATE,
+          NUMBER_OF_WORD_BITS       => NUMBER_OF_WORD_BITS,
+          NUMBER_OF_PARITY_BITS     => NUMBER_OF_PARITY_BITS,
+          NUMBER_OF_STOP_BITS      => NUMBER_OF_STOP_BITS
+        )
+        
         port map (
-            clk   => CLK,
-            rst   => RST,
-
-            tx    => UART_TX,
-            data_to_send => tx_data,
-            transmit_complete => tx_transmit_complete
-        );
+          CLK             => CLK,
+          RST            => RST,
+          CYCLES_PER_BIT  => CLOCK_FREQ/BAUD_RATE,
+          WORD         => tx_data,
+          WORD_READY    => tx_word_ready,
+          TX            => UART_TX,
+          BUSY          => tx_busy,
+          TX_ERROR          => tx_error
+       );
 
     uart_rx_inst: entity work.UART_RX_Master
         generic map (
@@ -107,12 +118,15 @@ begin
             rst      => RST,
             
             start   => PARALLEL_START,
-            data_in  => parallel_data_in,
+            data_in  => PARALLEL_DATA_IN,
             
-            data_out => parallel_data_out,
-            done    => parallel_done,
+            data_out => PARALLEL_DATA_OUT,
+            done    => PARALLEL_DONE,
             
-            reading_complete => parallel_reading_complete
+            reading_complete => parallel_reading_complete,
+            data_received => parallel_received_data
         );
+        
+    tx_word_ready <=  parallel_reading_complete;
      
 end rtl;

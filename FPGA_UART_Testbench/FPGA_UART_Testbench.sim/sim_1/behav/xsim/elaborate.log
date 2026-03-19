@@ -11,9 +11,13 @@ Time Resolution for simulation is 1ps
 Compiling package std.standard
 Compiling package std.textio
 Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package synopsys.attributes
+Compiling package ieee.std_logic_misc
 Compiling architecture behavioral of entity xil_defaultlib.Tester [tester_default]
-Compiling architecture behavioral of entity xil_defaultlib.UART_TX_Master [uart_tx_master_default]
-Compiling architecture behavioral of entity xil_defaultlib.UART_RX_Master [uart_rx_master_default]
+Compiling architecture rtl of entity xil_defaultlib.UART_TX_Master [uart_tx_master_default]
+Compiling architecture rtl of entity xil_defaultlib.UART_RX_Master [uart_rx_master_default]
 Compiling architecture rt1 of entity xil_defaultlib.Parallel_Interface [parallel_interface_default]
 Compiling architecture rtl of entity xil_defaultlib.Master_Interface [master_interface_default]
 Compiling architecture behavioral of entity xil_defaultlib.UART_Slave_RAM [uart_slave_ram_default]
