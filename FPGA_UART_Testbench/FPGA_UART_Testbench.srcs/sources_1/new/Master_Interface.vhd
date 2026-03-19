@@ -127,6 +127,14 @@ begin
             data_received => parallel_received_data
         );
         
+    process(clk, rst)
+    begin
+        if RST = '1' then
+            null;
+        elsif rising_edge(CLK) then
+            null;
+        end if;
+    end process;
+    
     tx_word_ready <=  parallel_reading_complete;
-     
 end rtl;

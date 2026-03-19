@@ -2,3 +2,283 @@
 *** Running vivado
     with args -log Master_Interface.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Master_Interface.tcl
 
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Mar 19 18:00:26 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source Master_Interface.tcl -notrace
+create_project: Time (s): cpu = 00:00:08 ; elapsed = 00:00:05 . Memory (MB): peak = 522.074 ; gain = 219.227
+Command: read_checkpoint -auto_incremental -incremental C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/utils_1/imports/synth_1/Master_Interface.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/utils_1/imports/synth_1/Master_Interface.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top Master_Interface -part xc7s100fgga676-2
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7s100'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7s100'
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 17900
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1068.508 ; gain = 534.391
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'Master_Interface' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:58]
+INFO: [Synth 8-638] synthesizing module 'UART_TX_Master' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_TX_Master.vhd:28]
+	Parameter CLOCK_FREQ bound to: 20000000 - type: integer 
+	Parameter MIN_BAUD_RATE bound to: 110 - type: integer 
+	Parameter NUMBER_OF_WORD_BITS bound to: 8 - type: integer 
+	Parameter NUMBER_OF_PARITY_BITS bound to: 1 - type: integer 
+	Parameter NUMBER_OF_STOP_BITS bound to: 2 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'UART_TX_Master' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_TX_Master.vhd:28]
+INFO: [Synth 8-638] synthesizing module 'UART_RX_Master' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_RX_Master.vhd:26]
+	Parameter CLOCK_FREQ bound to: 20000000 - type: integer 
+	Parameter MIN_BAUD_RATE bound to: 110 - type: integer 
+	Parameter NUMBER_OF_WORD_BITS bound to: 8 - type: integer 
+	Parameter NUMBER_OF_PARITY_BITS bound to: 1 - type: integer 
+	Parameter NUMBER_OF_STOP_BITS bound to: 2 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'UART_RX_Master' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_RX_Master.vhd:26]
+INFO: [Synth 8-638] synthesizing module 'Parallel_Interface' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:49]
+INFO: [Synth 8-256] done synthesizing module 'Parallel_Interface' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:49]
+INFO: [Synth 8-256] done synthesizing module 'Master_Interface' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:58]
+WARNING: [Synth 8-3848] Net tx_data in module/entity Master_Interface does not have driver. [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:64]
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[17] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[16] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[15] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[14] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[13] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[12] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[11] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[10] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[9] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[8] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[7] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[6] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[5] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[4] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[3] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[2] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[1] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port CYCLES_PER_BIT[0] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port WORD[7] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port WORD[6] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port WORD[5] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port WORD[4] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port WORD[3] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port WORD[2] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port WORD[1] in module UART_TX_Master is either unconnected or has no load
+WARNING: [Synth 8-7129] Port WORD[0] in module UART_TX_Master is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1187.703 ; gain = 653.586
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1187.703 ; gain = 653.586
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7s100fgga676-2
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1187.703 ; gain = 653.586
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7s100fgga676-2
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'UART_RX_Master'
+WARNING: [Synth 8-327] inferring latch for variable 'state_reg' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_TX_Master.vhd:52]
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+               idle_wait |                            00001 |                              000
+         receiving_start |                            00010 |                              001
+          receiving_word |                            00100 |                              010
+        receiving_parity |                            01000 |                              011
+          receiving_stop |                            10000 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'UART_RX_Master'
+WARNING: [Synth 8-327] inferring latch for variable 'DATA_OUT_reg' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:59]
+WARNING: [Synth 8-327] inferring latch for variable 'DONE_reg' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:61]
+WARNING: [Synth 8-327] inferring latch for variable 'state_reg' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:60]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1187.703 ; gain = 653.586
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   19 Bit       Adders := 1     
+	   2 Input   18 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 1     
++---XORs : 
+	   2 Input      1 Bit         XORs := 1     
++---XORs : 
+	                8 Bit    Wide XORs := 1     
++---Registers : 
+	               18 Bit    Registers := 1     
+	                8 Bit    Registers := 3     
+	                3 Bit    Registers := 1     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 7     
++---Muxes : 
+	   2 Input   18 Bit        Muxes := 1     
+	   5 Input   18 Bit        Muxes := 1     
+	   5 Input    8 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 1     
+	   5 Input    3 Bit        Muxes := 1     
+	   6 Input    1 Bit        Muxes := 1     
+	   5 Input    1 Bit        Muxes := 8     
+	   4 Input    1 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 160 (col length:80)
+BRAMs: 240 (col length: RAMB18 80 RAMB36 40)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7129] Port PARALLEL_DATA_IN[7] in module Master_Interface is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PARALLEL_DATA_IN[6] in module Master_Interface is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PARALLEL_DATA_IN[5] in module Master_Interface is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PARALLEL_DATA_IN[4] in module Master_Interface is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PARALLEL_DATA_IN[3] in module Master_Interface is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PARALLEL_DATA_IN[2] in module Master_Interface is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PARALLEL_DATA_IN[1] in module Master_Interface is either unconnected or has no load
+WARNING: [Synth 8-7129] Port PARALLEL_DATA_IN[0] in module Master_Interface is either unconnected or has no load
+WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[4]) is unused and will be removed from module Master_Interface.
+WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[3]) is unused and will be removed from module Master_Interface.
+WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[2]) is unused and will be removed from module Master_Interface.
+WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[1]) is unused and will be removed from module Master_Interface.
+WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[0]) is unused and will be removed from module Master_Interface.
+WARNING: [Synth 8-3332] Sequential element (parallel_interface_inst/DATA_OUT_reg[7]) is unused and will be removed from module Master_Interface.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1358.961 ; gain = 824.844
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 1374.785 ; gain = 840.668
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:08 ; elapsed = 00:00:10 . Memory (MB): peak = 1374.785 ; gain = 840.668
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |BUFG |     1|
+|2     |LUT4 |     1|
+|3     |FDCE |     2|
+|4     |FDRE |     1|
+|5     |IBUF |     3|
+|6     |OBUF |    10|
++------+-----+------+
+
+Report Instance Areas: 
++------+--------------------------+-------------------+------+
+|      |Instance                  |Module             |Cells |
++------+--------------------------+-------------------+------+
+|1     |top                       |                   |    18|
+|2     |  parallel_interface_inst |Parallel_Interface |     3|
+|3     |  uart_rt_inst            |UART_TX_Master     |     1|
++------+--------------------------+-------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 45 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+Synthesis Optimization Complete : Time (s): cpu = 00:00:11 ; elapsed = 00:00:13 . Memory (MB): peak = 1609.195 ; gain = 1075.078
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1623.293 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1735.109 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 52d101cb
+INFO: [Common 17-83] Releasing license: Synthesis
+24 Infos, 45 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:13 ; elapsed = 00:00:16 . Memory (MB): peak = 1735.109 ; gain = 1205.855
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1735.109 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.runs/synth_1/Master_Interface.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file Master_Interface_utilization_synth.rpt -pb Master_Interface_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 19 18:00:49 2026...

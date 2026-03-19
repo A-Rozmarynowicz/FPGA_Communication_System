@@ -62,6 +62,7 @@ begin
             last_registered_start <= '0';
             
         elsif rising_edge(CLK) then
+            last_registered_start <= START;
             case state is
                 when IDLE_STATE =>
                     if (start = '0') and (last_registered_start = '1') then
@@ -76,7 +77,5 @@ begin
                     null; 
             end case;
         end if;
-        
-        last_registered_start <= START;
      end process;
 end rt1;
