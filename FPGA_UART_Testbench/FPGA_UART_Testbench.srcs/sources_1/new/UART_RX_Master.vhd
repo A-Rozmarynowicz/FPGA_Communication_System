@@ -28,15 +28,15 @@ architecture RTL of UART_RX_Master is
 
   signal   input_rx_buffer	:std_logic_vector(0 to 1);			-- podwojny rejestr sygnalu RX
 
-  type     STATES_TYPE		is (CZEKANIE, START, DANA, PARZYSTOSC, STOP);	-- lista etapow pracy odbiornika
+  type     STATES_TYPE		is (IDLE_WAIT, RECEIVING_START, RECEIVING_WORD, RECEIVING_PARITY, RECEIVING_STOP);	-- lista etapow pracy odbiornika
   signal   state		:STATES_TYPE;						-- rejestr maszyny stanow odbiornika
 
   constant MAX_CYCLES_FOR_BIT	:positive := CLOCK_FREQ/MIN_BAUD_RATE;		-- czas jednego bodu - liczba taktow zegara
   signal   cycles_in_current_bit  	:natural range 0 to MAX_CYCLES_FOR_BIT-1;		-- licznik czasu jednego bodu
   signal   number_of_bits_received  	:natural range 0 to NUMBER_OF_WORD_BITS-1;			-- licznik odebranych bitow danych lub stopu
 
-  signal   bufor	:std_logic_vector(WORD'range);			-- rejestr kolejno odebranych bitow danych
-  signal   problem	:std_logic;					-- rejestr (flaga) wykrytego bledu odbioru
+  signal   final_word_buffer	:std_logic_vector(WORD'range);			-- rejestr kolejno odebranych bitow danych
+  signal   internal_error	:std_logic;					-- rejestr (flaga) wykrytego bledu odbioru
 
 begin
 
@@ -50,11 +50,11 @@ begin
 
      if (R='1') then							-- asynchroniczna inicjalizacja rejestrow
        input_rx_buffer	<= (others => '0');					-- wyzerowanie rejestru sygnalu RX
-       state	<= CZEKANIE;						-- poczatkowy stan pracy odbiornika
+       state	<= IDLE_WAIT;						-- poczatkowy stan pracy odbiornika
        cycles_in_current_bit  <= 0;							-- wyzerowanie licznika czasu bodu
        number_of_bits_received  <= 0;							-- wyzerowanie licznika odebranych bitow
-       bufor	<= (others => '0');					-- wyzerowanie bufora bitow danych
-       problem 	<= '0';							-- wyzerowanie rejestru bledu odbioru
+       final_word_buffer	<= (others => '0');					-- wyzerowanie bufora bitow danych
+       internal_error 	<= '0';							-- wyzerowanie rejestru bledu odbioru
        WORD	<= (others => '0');					-- wyzerowanie wyjsciowego slowa danych
        READY	<= '0';							-- wyzerowanie flagi potwierdzenia odbioru
        ERROR	<= '0';							-- wyzerowanie flagi wykrycia bledu w odbiorze
@@ -71,34 +71,34 @@ begin
 
        case state is							-- badanie aktualnego stanu maszyny stanow
 
-         when CZEKANIE =>						-- obsluga stanu CZEKANIE
+         when IDLE_WAIT =>						-- obsluga stanu IDLE_WAIT
            cycles_in_current_bit <= 0;						-- wyzerowanie licznika czasu bodu
            number_of_bits_received <= 0;						-- wyzerowanie licznika odebranych bitow
-           bufor   <= (others => '0');					-- wyzerowanie bufora bitow danych
-           problem <= '0';						-- wyzerowanie rejestru bledu odbioru
+           final_word_buffer   <= (others => '0');					-- wyzerowanie bufora bitow danych
+           internal_error <= '0';						-- wyzerowanie rejestru bledu odbioru
            if (input_rx_buffer(1)='0' and input_rx_buffer(0)='1' and CYCLES_PER_BIT/=0) then	-- wykrycie poczatku bitu START
-             state   <= START;						-- przejscie do stanu START
+             state   <= RECEIVING_START;						-- przejscie do stanu START
            end if;							-- zakonczenie instukcji warunkowej
 
-         when START =>							-- obsluga stanu START
+         when RECEIVING_START =>							-- obsluga stanu RECEIVING_START
            if (cycles_in_current_bit /= CYCLES_PER_BIT/2) then				-- badanie odliczania pol okresu bodu
              cycles_in_current_bit <= cycles_in_current_bit + 1;					-- zwiekszenie o 1 stanu licznika czasu
            else								-- zakonczenie odliczania polowy okresu bodu
              cycles_in_current_bit <= 0;						-- wyzerowanie licznika czasu bodu
-             state    <= DANA;						-- przejscie do stanu DANA
+             state    <= RECEIVING_WORD;						-- przejscie do stanu DANA
              if (input_rx_buffer(1) = '0') then					-- badanie nieprawidlowego stanu bitu START
 	       report "SERIAL_RX: nieprawidlowa wartosc bitu startu"	-- informacja o bledzie odbioru
 	         severity warning;
-               problem <= '1';						-- ustawienie rejestru bledu odbioru
+               internal_error <= '1';						-- ustawienie rejestru bledu odbioru
              end if;							-- zakonczenie instukcji warunkowej
            end if;							-- zakonczenie instukcji warunkowej
 
-         when DANA =>							-- obsluga stanu DANA
+         when RECEIVING_WORD =>							-- obsluga stanu DANA
            if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then				-- badanie odliczania okresu bodu
              cycles_in_current_bit <= cycles_in_current_bit + 1;					-- zwiekszenie o 1 stanu licznika czasu
            else								-- zakonczenie odliczania okresu bodu
-             bufor(bufor'left) <= input_rx_buffer(1);				-- zapamietanie stanu bitu danych
-             bufor(bufor'left-1 downto 0) <= bufor(bufor'left downto 1);-- przesuniecie bitow w buforze
+             final_word_buffer(final_word_buffer'left) <= input_rx_buffer(1);				-- zapamietanie stanu bitu danych
+             final_word_buffer(final_word_buffer'left-1 downto 0) <= final_word_buffer(final_word_buffer'left downto 1);-- przesuniecie bitow w buforze
              cycles_in_current_bit <= 0;						-- wyzerowanie licznika czasu bodu
 
              if (number_of_bits_received /= NUMBER_OF_WORD_BITS-1) then				-- badanie odliczania bitow danych
@@ -106,28 +106,28 @@ begin
              else							-- zakonczenie odliczania bitow danych
                number_of_bits_received <= 0;						-- wyzerowanie licznika odebranych bitow
                if (NUMBER_OF_PARITY_BITS = 1) then				-- badanie odbioru bitu parzystosci
-                 state <= PARZYSTOSC;					-- przejscie do stanu PARZYSTOSC
+                 state <= RECEIVING_PARITY;					-- przejscie do stanu PARZYSTOSC
                else							-- brak odbioru bitu parzystosci
-                 state <= STOP;						-- przejscie do stanu STOP
+                 state <= RECEIVING_STOP;						-- przejscie do stanu STOP
                end if;							-- zakonczenie instukcji warunkowej
              end if; 							-- zakonczenie instukcji warunkowej
 
            end if;							-- zakonczenie instukcji warunkowej
 
-         when PARZYSTOSC =>						-- obsluga stanu PARZYSTOSC
+         when RECEIVING_PARITY =>						-- obsluga stanu PARZYSTOSC
            if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then					-- badanie odliczania okresu bodu
              cycles_in_current_bit <= cycles_in_current_bit + 1;					-- zwiekszenie o 1 stanu licznika czasu
            else								-- zakonczenie odliczania okresu bodu
              cycles_in_current_bit <= 0;						-- wyzerowanie licznika czasu bodu
-             state    <= STOP;						-- przejscie do stanu STOP
-             if ((input_rx_buffer(1) xor XOR_REDUCE(bufor)) = '1') then 	-- badanie nieprawidlowej parzystosci bitow
-               problem <= '1';						-- ustawienie rejestru bledu odbioru
+             state    <= RECEIVING_STOP;						-- przejscie do stanu STOP
+             if ((input_rx_buffer(1) xor XOR_REDUCE(final_word_buffer)) = '1') then 	-- badanie nieprawidlowej parzystosci bitow
+               internal_error <= '1';						-- ustawienie rejestru bledu odbioru
 	       report "SERIAL_RX: nieprawidlowa wartosc bitu parzystosci" -- informacja o bledzie odbioru
 	         severity warning;
              end if; 							-- zakonczenie instukcji warunkowej
            end if;							-- zakonczenie instukcji warunkowej
 
-         when STOP =>							-- obsluga stanu STOP
+         when RECEIVING_STOP =>							-- obsluga stanu STOP
            if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then					-- badanie odliczania okresu bodu
              cycles_in_current_bit <= cycles_in_current_bit + 1;					-- zwiekszenie o 1 stanu licznika czasu
            else								-- zakonczenie odliczania okresu bodu
@@ -136,22 +136,22 @@ begin
              if (number_of_bits_received /= NUMBER_OF_STOP_BITS-1) then				-- badanie odliczania bitow stopu
                number_of_bits_received <= number_of_bits_received + 1;					-- zwiekszenie o 1 liczby bitow stopu
                if (input_rx_buffer(1) = '1') then				-- badanie nieprawidlowego stanu bitu STOP
-                 problem <= '1';					-- ustawienie rejestru bledu odbioru
+                 internal_error <= '1';					-- ustawienie rejestru bledu odbioru
 	       report "SERIAL_RX: nieprawidlowa wartosc bitu stopu"	-- informacja o bledzie odbioru
 	         severity warning;
                end if; 							-- zakonczenie instukcji warunkowej
              else							-- zakonczenie odliczania bitow stopu
-               if (problem = '0' and input_rx_buffer(1) = '0') then		-- badanie prawidlowego odbioru szeregowego
-                 WORD <= bufor;					-- ustawienie na wyjsciu WORD odebranego slowa
+               if (internal_error = '0' and input_rx_buffer(1) = '0') then		-- badanie prawidlowego odbioru szeregowego
+                 WORD <= final_word_buffer;					-- ustawienie na wyjsciu WORD odebranego slowa
                  if (NOT_WORD = TRUE) then				-- badanie warunku zanegowania odebranego slowa
-                   WORD <= not(bufor);					-- ustawienie na wyjsciu WORD odebranego slowa
+                   WORD <= not(final_word_buffer);					-- ustawienie na wyjsciu WORD odebranego slowa
                  end if;						-- zakonczenie instukcji warunkowej
                  READY <= '1';						-- ustawienie na wyjsciu flagi potwierdzenia
                else							-- wykryto nieprawidlowy odbioru szeregowy
                  WORD <= (others => '0');				-- wyzerowanie wyjscia danych
                  ERROR <= '1';						-- ustawienie na wyjsciu flagi bledu odbioru
                end if;							-- zakonczenie instukcji warunkowej
-               state <= CZEKANIE;					-- przejscie do stanu CZEKANIE
+               state <= IDLE_WAIT;					-- przejscie do stanu IDLE_WAIT
              end if;							-- zakonczenie instukcji warunkowej
 
            end if;							-- zakonczenie instukcji warunkowej
