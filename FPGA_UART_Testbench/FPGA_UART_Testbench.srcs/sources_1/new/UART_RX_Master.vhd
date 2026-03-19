@@ -10,8 +10,6 @@ entity UART_RX_Master is
     NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 8;			-- liczba bitow slowa danych (5-8)
     NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
     NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
-    NOT_RX		:boolean := FALSE;				-- negacja logiczna sygnalu szeregowego
-    NOT_WORD		:boolean := FALSE				-- negacja logiczna slowa danych
   );
   port (
     C		        :in  std_logic;					-- zegar taktujacy
@@ -20,7 +18,7 @@ entity UART_RX_Master is
     RX		        :in  std_logic;					-- odebrany sygnal szeregowy
     WORD	        :out std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);	-- odebrane slowo danych
     READY	        :out std_logic;					-- flaga potwierdzenia odbioru
-    ERROR	        :out std_logic					-- flaga wykrycia bledu w odbiorze
+    RX_ERROR	        :out std_logic					-- flaga wykrycia bledu w odbiorze
   );
 end UART_RX_Master;
 
@@ -39,11 +37,10 @@ architecture RTL of UART_RX_Master is
   signal   internal_error	:std_logic;					-- rejestr (flaga) wykrytego bledu odbioru
 
 begin
-
-   assert (CLOCK_FREQ>=2*MIN_BAUD_RATE)					-- badanie poprawnosci ustawien zegarow
-     report   "SERIAL_RX: nieprawidlowa wartosc parametru CLOCK_FREQ = " & integer'image(CLOCK_FREQ)
-              & "i/lub parametru MIN_NUMBER_MIN_BAUD_RATEOF_BAUDS = "&integer'image(MIN_BAUD_RATE)
-     severity error;
+    -- badanie poprawnosci ustawien zegarow
+    assert (CLOCK_FREQ >= 2 * MIN_BAUD_RATE)
+    report "SERIAL_RX: nieprawidlowa wartosc parametru CLOCK_FREQ"
+    severity error;
 
    process (R, C) is							-- proces odbiornika
    begin								-- cialo procesu odbiornika
@@ -57,16 +54,13 @@ begin
        internal_error 	<= '0';							-- wyzerowanie rejestru bledu odbioru
        WORD	<= (others => '0');					-- wyzerowanie wyjsciowego slowa danych
        READY	<= '0';							-- wyzerowanie flagi potwierdzenia odbioru
-       ERROR	<= '0';							-- wyzerowanie flagi wykrycia bledu w odbiorze
+       RX_ERROR	<= '0';							-- wyzerowanie flagi wykrycia bledu w odbiorze
 
      elsif (rising_edge(C)) then					-- synchroniczna praca odbiornika
 
        READY     <= '0';						-- defaultowe skasowanie flagi potwierdzenia odbioru
-       ERROR       <= '0';						-- defaultowe skasowanie flagi wykrycia bledu w odbiorze
+       RX_ERROR       <= '0';						-- defaultowe skasowanie flagi wykrycia bledu w odbiorze
        input_rx_buffer(0) <= RX;						-- zarejestrowanie synchroniczne stanu sygnalu RX
-       if (NOT_RX = TRUE) then						-- badanie warunku zanegowania sygnalu szeregowego
-         input_rx_buffer(0) <= not(RX);						-- zarejestrowanie synchroniczne zanegowanego sygnalu RX
-       end if;								-- zakonczenie instukcji warunkowej
        input_rx_buffer(1) <= input_rx_buffer(0);					-- zarejestrowanie dwoch kolejnych stanow sygnalu RX
 
        case state is							-- badanie aktualnego stanu maszyny stanow
@@ -143,13 +137,10 @@ begin
              else							-- zakonczenie odliczania bitow stopu
                if (internal_error = '0' and input_rx_buffer(1) = '0') then		-- badanie prawidlowego odbioru szeregowego
                  WORD <= final_word_buffer;					-- ustawienie na wyjsciu WORD odebranego slowa
-                 if (NOT_WORD = TRUE) then				-- badanie warunku zanegowania odebranego slowa
-                   WORD <= not(final_word_buffer);					-- ustawienie na wyjsciu WORD odebranego slowa
-                 end if;						-- zakonczenie instukcji warunkowej
                  READY <= '1';						-- ustawienie na wyjsciu flagi potwierdzenia
                else							-- wykryto nieprawidlowy odbioru szeregowy
                  WORD <= (others => '0');				-- wyzerowanie wyjscia danych
-                 ERROR <= '1';						-- ustawienie na wyjsciu flagi bledu odbioru
+                 RX_ERROR <= '1';						-- ustawienie na wyjsciu flagi bledu odbioru
                end if;							-- zakonczenie instukcji warunkowej
                state <= IDLE_WAIT;					-- przejscie do stanu IDLE_WAIT
              end if;							-- zakonczenie instukcji warunkowej

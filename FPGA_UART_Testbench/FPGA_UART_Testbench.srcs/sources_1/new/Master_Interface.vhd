@@ -72,15 +72,15 @@ begin
         );
 
     -- Instantiate UART Receiver
-    uart_rx_inst : entity work.UART_RX_Master
-        port map (
-            clk      => clk,
-            rst      => rst,
+--    uart_rx_inst : entity work.UART_RX_Master
+--        port map (
+--            clk      => clk,
+--            rst      => rst,
             
-            rx       => uart_rx,
-            data_received => rx_data,
-            receive_complete => rx_receive_complete
-        );
+--            rx       => uart_rx,
+--            data_received => rx_data,
+--            receive_complete => rx_receive_complete
+--        );
     
     -- Instantiate Parallel Interface
     parallel_interface_inst : entity work.Parallel_Interface
