@@ -38,7 +38,8 @@ entity Master_Interface is
         MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
         NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 8;			-- liczba bitow slowa danych (5-8)
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
-        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2                     -- liczba bitow stopu (1-2)
+        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
+        PARITY_TYPE         :std_logic := '0' -- 0 to even, 1 to odd
       );
     Port (
         CLK   : in std_logic;
@@ -77,7 +78,8 @@ begin
           MIN_BAUD_RATE   => MIN_BAUD_RATE,
           NUMBER_OF_WORD_BITS       => NUMBER_OF_WORD_BITS,
           NUMBER_OF_PARITY_BITS     => NUMBER_OF_PARITY_BITS,
-          NUMBER_OF_STOP_BITS      => NUMBER_OF_STOP_BITS
+          NUMBER_OF_STOP_BITS      => NUMBER_OF_STOP_BITS,
+          PARITY_TYPE => PARITY_TYPE
         )
         
         port map (
@@ -97,7 +99,8 @@ begin
           MIN_BAUD_RATE   => MIN_BAUD_RATE,
           NUMBER_OF_WORD_BITS       => NUMBER_OF_WORD_BITS,
           NUMBER_OF_PARITY_BITS     => NUMBER_OF_PARITY_BITS,
-          NUMBER_OF_STOP_BITS      => NUMBER_OF_STOP_BITS
+          NUMBER_OF_STOP_BITS      => NUMBER_OF_STOP_BITS,
+          PARITY_TYPE => PARITY_TYPE
         )
         
         port map (

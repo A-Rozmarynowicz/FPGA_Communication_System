@@ -4,22 +4,5 @@ Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 Running: C:/AMDDesignTools/2025.2/Vivado/bin/unwrapped/win64.o/xelab.exe --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip --snapshot testbench_behav xil_defaultlib.testbench -log elaborate.log 
 Using 2 slave threads.
 Starting static elaboration
-Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling package std.standard
-Compiling package std.textio
-Compiling package ieee.std_logic_1164
-Compiling package ieee.std_logic_arith
-Compiling package ieee.std_logic_unsigned
-Compiling package synopsys.attributes
-Compiling package ieee.std_logic_misc
-Compiling architecture behavioral of entity xil_defaultlib.Tester [tester_default]
-Compiling architecture rtl of entity xil_defaultlib.UART_TX_Master [\UART_TX_Master(clock_freq=10000...]
-Compiling architecture rtl of entity xil_defaultlib.UART_RX_Master [\UART_RX_Master(clock_freq=10000...]
-Compiling architecture rt1 of entity xil_defaultlib.Parallel_Interface [parallel_interface_default]
-Compiling architecture rtl of entity xil_defaultlib.Master_Interface [\Master_Interface(baud_rate=2000...]
-Compiling architecture behavioral of entity xil_defaultlib.UART_Slave_RAM [uart_slave_ram_default]
-Compiling architecture behavioral of entity xil_defaultlib.testbench
-Built simulation snapshot testbench_behav
+ERROR: [VRFC 10-666] expression has 8 elements; expected 6 [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:143]
+ERROR: [XSIM 43-3321] Static elaboration of top level VHDL design unit testbench in library work failed.
