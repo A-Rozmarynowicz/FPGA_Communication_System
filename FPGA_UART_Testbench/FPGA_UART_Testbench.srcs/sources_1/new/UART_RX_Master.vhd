@@ -118,7 +118,7 @@ begin
              state    <= RECEIVING_STOP;						-- przejscie do stanu STOP
              if (PARITY_TYPE = '0') and ((input_rx_buffer(1) xor XOR_REDUCE(final_word_buffer)) = '0') then 	-- badanie nieprawidlowej parzystosci bitow
                null;
-             else if (PARITY_TYPE = '1') and ((input_rx_buffer(1) xor not XOR_REDUCE(final_word_buffer)) = '0') then
+             elsif (PARITY_TYPE = '1') and ((input_rx_buffer(1) xor not XOR_REDUCE(final_word_buffer)) = '0') then
                 null;
              else
                 internal_error <= '1';						-- ustawienie rejestru bledu odbioru

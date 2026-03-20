@@ -40,10 +40,12 @@ architecture Behavioral of testbench is
     constant CLOCK_FREQ :positive := 100_000_000;
     constant BAUD_RATE :positive := 20_000_000;
     constant MIN_BAUD_RATE :positive := 110;				-- minimalna predkosc nadawania w [bodach]
-    constant NUMBER_OF_WORD_BITS :positive := 6;			-- liczba bitow slowa danych (5-8)
+    constant NUMBER_OF_WORD_BITS :positive := 5;			-- liczba bitow slowa danych (5-8)
     constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)
     constant NUMBER_OF_STOP_BITS    :positive := 2; 
     constant PARITY_TYPE    :std_logic := '1'; -- 1 is odd 0 is even
+    
+    constant PARALLEL_BUS_WIDTH     :positive := 5;
     
     -- Clock and reset
     signal clk : std_logic := '0';
@@ -51,8 +53,8 @@ architecture Behavioral of testbench is
 
     -- Parallel interface signals between Tester and Master_Interface
     signal parallel_start    : std_logic;
-    signal parallel_master_data_in  : std_logic_vector(7 downto 0);
-    signal parallel_master_data_out : std_logic_vector(7 downto 0);
+    signal parallel_master_data_in  : std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
+    signal parallel_master_data_out : std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
     signal parallel_done     : std_logic;
 
     -- UART signals connecting Master and Slave RAM
@@ -85,6 +87,9 @@ begin
 
     -- Instantiate Tester (generates commands on parallel interface)
     uut_tester : entity work.Tester -- uut means Unit Under Test
+        generic map (
+            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH
+        )
         port map (
             CLK      => clk,
             RST      => rst,
@@ -104,7 +109,9 @@ begin
             NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,			-- liczba bitow slowa danych (5-8)
             NUMBER_OF_PARITY_BITS   => NUMBER_OF_PARITY_BITS,                     -- liczba bitow parzystosci (0-1)
             NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
-            PARITY_TYPE     => PARITY_TYPE
+            PARITY_TYPE     => PARITY_TYPE,
+          
+            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH
           )
         port map (
             CLK      => clk,

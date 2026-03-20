@@ -32,17 +32,21 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity Parallel_Interface is
+    generic (
+        PARALLEL_BUS_WIDTH  :positive := 8
+    );
+    
     Port (
         CLK   : in std_logic;
         RST   : in std_logic;
 
         START : in std_logic;
-        DATA_IN  : in std_logic_vector(7 downto 0);
-        DATA_OUT : out std_logic_vector(7 downto 0) := (others => '0');
+        DATA_IN  : in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
+        DATA_OUT : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0) := (others => '0');
         DONE  : out std_logic := '0';
         
         READING_COMPLETE : out std_logic := '0';
-        DATA_RECEIVED : out std_logic_vector(7 downto 0)
+        DATA_RECEIVED : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0)
     );
 end Parallel_Interface;
 

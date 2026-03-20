@@ -39,15 +39,17 @@ entity Master_Interface is
         NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 8;			-- liczba bitow slowa danych (5-8)
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
-        PARITY_TYPE         :std_logic := '0' -- 0 to even, 1 to odd
+        PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
+        
+        PARALLEL_BUS_WIDTH :positive := 8
       );
     Port (
         CLK   : in std_logic;
         RST   : in std_logic;
 
         PARALLEL_START : in std_logic;
-        PARALLEL_DATA_IN  : in std_logic_vector(7 downto 0);
-        PARALLEL_DATA_OUT : out std_logic_vector(7 downto 0) := (others => '0');
+        PARALLEL_DATA_IN  : in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
+        PARALLEL_DATA_OUT : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0) := (others => '0');
         PARALLEL_DONE  : out std_logic := '0';
 
         -- UART
@@ -68,7 +70,7 @@ architecture rtl of Master_Interface is
     signal tx_error : std_logic;
     
     signal parallel_reading_complete : std_logic;
-    signal parallel_received_data : std_logic_vector (7 downto 0);
+    signal parallel_received_data : std_logic_vector (PARALLEL_BUS_WIDTH-1 downto 0);
     
 begin
 
@@ -116,6 +118,10 @@ begin
        
     -- Instantiate Parallel Interface
     parallel_interface_inst : entity work.Parallel_Interface
+        generic map (
+            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH
+        )
+        
         port map (
             clk      => CLK,
             rst      => RST,

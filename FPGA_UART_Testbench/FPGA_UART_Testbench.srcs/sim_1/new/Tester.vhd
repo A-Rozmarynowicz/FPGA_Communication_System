@@ -32,16 +32,19 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity Tester is
- port (
+    generic (
+        PARALLEL_BUS_WIDTH :positive := 8
+    );
+    port (
         CLK      : in  std_logic;
         RST      : in  std_logic;
 
         -- Outputs to Master_Interface (inputs from Tester perspective)
         START    : out std_logic := '0';
-        DATA_TO_SEND  : out std_logic_vector(7 downto 0):= (others => '0');
+        DATA_TO_SEND  : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0):= (others => '0');
 
         -- Inputs from Master_Interface (outputs from Tester perspective)
-        DATA_RECEIVED : in  std_logic_vector(7 downto 0);
+        DATA_RECEIVED : in  std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
         DONE         : in  std_logic
     );
 end Tester;
@@ -55,7 +58,7 @@ architecture Behavioral of Tester is
                         );
     signal state : state_type := IDLE_STATE;
 
-    signal expected_data : std_logic_vector(7 downto 0) := (others => '0');
+    signal expected_data : std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0) := (others => '0');
 
 begin
     process(CLK, RST)
@@ -71,9 +74,9 @@ begin
                     state <= WRITE_RAM_STATE_SENDING;
             
                 when WRITE_RAM_STATE_SENDING =>
-                    DATA_TO_SEND <= x"8F";
+                    DATA_TO_SEND <= b"01011";
                     START <= '1';
-                    expected_data <= x"8F";
+                    expected_data <= b"01011";
                     state <= WRITE_RAM_STATE_CONFIRMING;
             
                 when WRITE_RAM_STATE_CONFIRMING =>
