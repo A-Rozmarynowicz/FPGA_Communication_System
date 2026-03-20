@@ -74,9 +74,9 @@ begin
                     state <= WRITE_RAM_STATE_SENDING;
             
                 when WRITE_RAM_STATE_SENDING =>
-                    DATA_TO_SEND <= b"01011";
+                    DATA_TO_SEND <= b"01011011";
                     START <= '1';
-                    expected_data <= b"01011";
+                    expected_data <= b"01011011";
                     state <= WRITE_RAM_STATE_CONFIRMING;
             
                 when WRITE_RAM_STATE_CONFIRMING =>

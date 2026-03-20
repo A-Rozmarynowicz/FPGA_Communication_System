@@ -36,16 +36,16 @@ entity Master_Interface is
         CLOCK_FREQ		: positive := 100_000_000;			-- czestotliwosc zegata w [Hz]
         BAUD_RATE       : positive := 20_000_000;
         MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
-        NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 5;			-- liczba bitow slowa danych (5-8)
+        NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 6;			-- liczba bitow slowa danych (5-8)
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
         PARITY_TYPE         :std_logic := '1'; -- 0 to even, 1 to odd
         
-        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 5;
+        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 8;
         
-        FIFO_BUFFER_SIZE :positive := 5;
-        FIFO_SINGLE_FRAME_SIZE :positive := 5;
-        UART_FRAMES_PER_SINGLE_FRAME :positive := 1
+        FIFO_BUFFER_SIZE :positive := 12;
+        FIFO_SINGLE_FRAME_SIZE :positive := 12;
+        UART_FRAMES_PER_SINGLE_FRAME :positive := 2
       );
     Port (
         CLK   : in std_logic;
@@ -161,6 +161,7 @@ begin
                         downto (buffer_pointer - 1+1)*FIFO_SINGLE_FRAME_SIZE) <= (others => '0');
                     fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH + buffer_zero_padding_size - 1 
                         downto (buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size) <= parallel_received_data;
+                    null;
                 end if;
             end if;
             
@@ -173,6 +174,7 @@ begin
                             & (FIFO_SINGLE_FRAME_SIZE - 1 downto 0 => '0');
                         buffer_pointer <= buffer_pointer - 1;
                         current_uart_frame_pointer <= UART_FRAMES_PER_SINGLE_FRAME;
+                        tx_word_ready <= '1';
                     else
                         tx_data <= fifo_buffer((current_uart_frame_pointer)*NUMBER_OF_WORD_BITS - 1
                             downto (current_uart_frame_pointer-1)*NUMBER_OF_WORD_BITS);

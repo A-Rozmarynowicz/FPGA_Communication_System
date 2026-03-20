@@ -40,12 +40,12 @@ architecture Behavioral of testbench is
     constant CLOCK_FREQ :positive := 100_000_000;
     constant BAUD_RATE :positive := 20_000_000;
     constant MIN_BAUD_RATE :positive := 110;				-- minimalna predkosc nadawania w [bodach]
-    constant NUMBER_OF_WORD_BITS :positive := 5;			-- liczba bitow slowa danych (5-8)
+    constant NUMBER_OF_WORD_BITS :positive := 6;			-- liczba bitow slowa danych (5-8)
     constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)
     constant NUMBER_OF_STOP_BITS    :positive := 2; 
     constant PARITY_TYPE    :std_logic := '1'; -- 1 is odd 0 is even
     
-    constant PARALLEL_BUS_WIDTH     :positive := 5;
+    constant PARALLEL_BUS_WIDTH     :positive := 8;
     
     -- Clock and reset
     signal clk : std_logic := '0';
@@ -111,11 +111,11 @@ begin
             NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
             PARITY_TYPE     => PARITY_TYPE,
           
-            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
+            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH
             
-            FIFO_BUFFER_SIZE => 5,
-            FIFO_SINGLE_FRAME_SIZE => 5,
-            UART_FRAMES_PER_SINGLE_FRAME => 1
+--            FIFO_BUFFER_SIZE => 5,
+--            FIFO_SINGLE_FRAME_SIZE => 5,
+--            UART_FRAMES_PER_SINGLE_FRAME => 1
           )
         port map (
             CLK      => clk,
