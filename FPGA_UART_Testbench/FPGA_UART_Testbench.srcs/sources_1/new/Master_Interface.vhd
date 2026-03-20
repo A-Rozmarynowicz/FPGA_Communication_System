@@ -41,10 +41,11 @@ entity Master_Interface is
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
         PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
         
-        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 8;
+        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 5;
         
-        FIFO_BUFFER_SIZE :positive;
-        FIFO_SINGLE_FRAME_SIZE :positive
+        FIFO_BUFFER_SIZE :positive := 5;
+        FIFO_SINGLE_FRAME_SIZE :positive := 5;
+        UART_FRAMES_PER_SINGLE_FRAME :positive := 5
       );
     Port (
         CLK   : in std_logic;
@@ -75,10 +76,12 @@ architecture rtl of Master_Interface is
     signal parallel_reading_complete : std_logic;
     signal parallel_received_data : std_logic_vector (PARALLEL_BUS_WIDTH-1 downto 0);
     
-    signal fifo_buffer : std_logic_vector (FIFO_BUFFER_SIZE downto 0);
+    signal fifo_buffer : std_logic_vector (FIFO_BUFFER_SIZE-1 downto 0);
     signal buffer_pointer :natural range 0 to (FIFO_BUFFER_SIZE/FIFO_SINGLE_FRAME_SIZE) := 0;
     
     signal buffer_zero_padding_size :natural := FIFO_SINGLE_FRAME_SIZE - PARALLEL_BUS_WIDTH;
+    
+    signal current_uart_frame_pointer :natural := UART_FRAMES_PER_SINGLE_FRAME;
 begin
 
     uart_rt_inst: entity work.UART_TX_Master
@@ -143,7 +146,7 @@ begin
             data_received => parallel_received_data
         );
         
-    process(clk, rst)
+    process(CLK, RST)
     begin
         if RST = '1' then
             fifo_buffer <= (others => '0');
@@ -154,10 +157,10 @@ begin
                     null;
                 else
                     buffer_pointer <= buffer_pointer + 1;
-                    fifo_buffer((buffer_pointer-1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size - 1 
-                        downto (buffer_pointer - 1)*FIFO_SINGLE_FRAME_SIZE) <= (others => '0');
-                    fifo_buffer((buffer_pointer-1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH + buffer_zero_padding_size - 1 
-                        downto (buffer_pointer-1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size) <= parallel_received_data;
+                    fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size - 1 
+                        downto (buffer_pointer - 1+1)*FIFO_SINGLE_FRAME_SIZE) <= (others => '0');
+                    fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH + buffer_zero_padding_size - 1 
+                        downto (buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size) <= parallel_received_data;
                 end if;
             end if;
             
@@ -165,10 +168,22 @@ begin
                 if buffer_pointer = 0 then
                     null;
                 else
-                    tx_data <= fifo_buffer((buffer_pointer-1)*FIFO_SINGLE_FRAME_SIZE to buffer_pointer - 1)
+                    if current_uart_frame_pointer = 0 then
+                        fifo_buffer <= fifo_buffer(FIFO_BUFFER_SIZE - FIFO_SINGLE_FRAME_SIZE - 1 downto 0)
+                            & (FIFO_SINGLE_FRAME_SIZE - 1 downto 0 => '0');
+                        buffer_pointer <= buffer_pointer - 1;
+                        current_uart_frame_pointer <= UART_FRAMES_PER_SINGLE_FRAME;
+                    else
+                        tx_data <= fifo_buffer((current_uart_frame_pointer)*NUMBER_OF_WORD_BITS - 1
+                            downto (current_uart_frame_pointer-1)*NUMBER_OF_WORD_BITS);
+                        current_uart_frame_pointer <= current_uart_frame_pointer - 1;
+                        tx_word_ready <= '1';
+                    end if;
+                end if;
+            else
+                tx_word_ready <= '0';
+            end if;
         end if;
     end process;
     
-    tx_word_ready <=  parallel_reading_complete;
-    tx_data <= PARALLEL_DATA_IN;
 end rtl;

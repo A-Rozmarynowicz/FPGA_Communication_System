@@ -111,7 +111,11 @@ begin
             NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
             PARITY_TYPE     => PARITY_TYPE,
           
-            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH
+            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
+            
+            FIFO_BUFFER_SIZE => 5,
+            FIFO_SINGLE_FRAME_SIZE => 5,
+            UART_FRAMES_PER_SINGLE_FRAME => 5
           )
         port map (
             CLK      => clk,
