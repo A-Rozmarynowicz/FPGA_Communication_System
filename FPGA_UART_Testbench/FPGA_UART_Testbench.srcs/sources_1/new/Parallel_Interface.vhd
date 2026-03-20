@@ -33,7 +33,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity Parallel_Interface is
     generic (
-        PARALLEL_BUS_WIDTH  :positive := 8
+        PARALLEL_BUS_WIDTH  :positive range 4 to 10 := 8
     );
     
     Port (

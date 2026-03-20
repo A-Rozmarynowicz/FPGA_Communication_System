@@ -41,7 +41,10 @@ entity Master_Interface is
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
         PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
         
-        PARALLEL_BUS_WIDTH :positive := 8
+        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 8;
+        
+        FIFO_BUFFER_SIZE :positive;
+        FIFO_SINGLE_FRAME_SIZE :positive
       );
     Port (
         CLK   : in std_logic;
@@ -72,6 +75,10 @@ architecture rtl of Master_Interface is
     signal parallel_reading_complete : std_logic;
     signal parallel_received_data : std_logic_vector (PARALLEL_BUS_WIDTH-1 downto 0);
     
+    signal fifo_buffer : std_logic_vector (FIFO_BUFFER_SIZE downto 0);
+    signal buffer_pointer :natural range 0 to (FIFO_BUFFER_SIZE/FIFO_SINGLE_FRAME_SIZE) := 0;
+    
+    signal buffer_zero_padding_size :natural := FIFO_SINGLE_FRAME_SIZE - PARALLEL_BUS_WIDTH;
 begin
 
     uart_rt_inst: entity work.UART_TX_Master
@@ -139,9 +146,26 @@ begin
     process(clk, rst)
     begin
         if RST = '1' then
-            null;
+            fifo_buffer <= (others => '0');
+            buffer_pointer <= 0;
         elsif rising_edge(CLK) then
-            null;
+            if parallel_reading_complete = '1' then
+                if buffer_pointer = FIFO_SINGLE_FRAME_SIZE then
+                    null;
+                else
+                    buffer_pointer <= buffer_pointer + 1;
+                    fifo_buffer((buffer_pointer-1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size - 1 
+                        downto (buffer_pointer - 1)*FIFO_SINGLE_FRAME_SIZE) <= (others => '0');
+                    fifo_buffer((buffer_pointer-1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH + buffer_zero_padding_size - 1 
+                        downto (buffer_pointer-1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size) <= parallel_received_data;
+                end if;
+            end if;
+            
+            if tx_busy = '0' then 
+                if buffer_pointer = 0 then
+                    null;
+                else
+                    tx_data <= fifo_buffer((buffer_pointer-1)*FIFO_SINGLE_FRAME_SIZE to buffer_pointer - 1)
         end if;
     end process;
     
