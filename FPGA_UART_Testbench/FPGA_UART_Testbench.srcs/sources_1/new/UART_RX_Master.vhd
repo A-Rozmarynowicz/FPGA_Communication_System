@@ -116,10 +116,14 @@ begin
            else								-- zakonczenie odliczania okresu bodu
              cycles_in_current_bit <= 0;						-- wyzerowanie licznika czasu bodu
              state    <= RECEIVING_STOP;						-- przejscie do stanu STOP
-             if ((input_rx_buffer(1) xor XOR_REDUCE(final_word_buffer)) = '1') then 	-- badanie nieprawidlowej parzystosci bitow
-               internal_error <= '1';						-- ustawienie rejestru bledu odbioru
-	       report "SERIAL_RX: nieprawidlowa wartosc bitu parzystosci" -- informacja o bledzie odbioru
-	         severity warning;
+             if (PARITY_TYPE = '0') and ((input_rx_buffer(1) xor XOR_REDUCE(final_word_buffer)) = '0') then 	-- badanie nieprawidlowej parzystosci bitow
+               null;
+             else if (PARITY_TYPE = '1') and ((input_rx_buffer(1) xor not XOR_REDUCE(final_word_buffer)) = '0') then
+                null;
+             else
+                internal_error <= '1';						-- ustawienie rejestru bledu odbioru
+                report "SERIAL_RX: nieprawidlowa wartosc bitu parzystosci" -- informacja o bledzie odbioru
+                severity warning;
              end if; 							-- zakonczenie instukcji warunkowej
            end if;							-- zakonczenie instukcji warunkowej
 
