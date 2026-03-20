@@ -77,6 +77,7 @@ begin
             end if;
             
          when TRANSMITTING_START =>							-- obsluga stanu RECEIVING_START
+            BUSY <= '1';
             if (cycles_in_current_bit /= CYCLES_PER_BIT/2) then				-- badanie odliczania pol okresu bodu
                 cycles_in_current_bit <= cycles_in_current_bit + 1;
                 TX <= '1';					-- zwiekszenie o 1 stanu licznika czasu
@@ -87,6 +88,7 @@ begin
            end if;							-- zakonczenie instukcji warunkowej
 
          when TRANSMITTING_WORD =>							-- obsluga stanu DANA
+            BUSY <= '1';
             if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
                 cycles_in_current_bit <= cycles_in_current_bit + 1;
         
@@ -113,6 +115,7 @@ begin
             end if;
 
          when TRANSMITTING_PARITY =>						-- obsluga stanu PARZYSTOSC
+            BUSY <= '1';
             if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
                 cycles_in_current_bit <= cycles_in_current_bit + 1;
         
@@ -132,6 +135,7 @@ begin
             end if;
 
          when TRANSMITTING_STOP =>							-- obsluga stanu STOP
+            BUSY <= '1';
             if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
                 cycles_in_current_bit <= cycles_in_current_bit + 1;
         
