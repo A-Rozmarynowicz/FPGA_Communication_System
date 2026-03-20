@@ -36,7 +36,7 @@ entity Master_Interface is
         CLOCK_FREQ		: positive := 100_000_000;			-- czestotliwosc zegata w [Hz]
         BAUD_RATE       : positive := 1_000_000;
         MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
-        NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 8;			-- liczba bitow slowa danych (5-8)
+        NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 5;			-- liczba bitow slowa danych (5-8)
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
         PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
@@ -45,7 +45,7 @@ entity Master_Interface is
         
         FIFO_BUFFER_SIZE :positive := 5;
         FIFO_SINGLE_FRAME_SIZE :positive := 5;
-        UART_FRAMES_PER_SINGLE_FRAME :positive := 5
+        UART_FRAMES_PER_SINGLE_FRAME :positive := 1
       );
     Port (
         CLK   : in std_logic;

@@ -115,7 +115,7 @@ begin
             
             FIFO_BUFFER_SIZE => 5,
             FIFO_SINGLE_FRAME_SIZE => 5,
-            UART_FRAMES_PER_SINGLE_FRAME => 5
+            UART_FRAMES_PER_SINGLE_FRAME => 1
           )
         port map (
             CLK      => clk,

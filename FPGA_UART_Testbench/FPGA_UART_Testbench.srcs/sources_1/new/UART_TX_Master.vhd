@@ -5,12 +5,12 @@ use     ieee.std_logic_misc.all;
 
 entity UART_TX_Master is
   generic (
-    CLOCK_FREQ		:positive := 10_000_000;			-- czestotliwosc zegata w [Hz]
-    MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
-    NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 8;			-- liczba bitow slowa danych (5-8)
-    NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
-    NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
-    PARITY_TYPE         :std_logic := '0' -- 0 to even, 1 to odd
+    CLOCK_FREQ		:positive;			-- czestotliwosc zegata w [Hz]
+    MIN_BAUD_RATE		:positive;				-- minimalna predkosc nadawania w [bodach]
+    NUMBER_OF_WORD_BITS		:natural range 5 to 8;			-- liczba bitow slowa danych (5-8)
+    NUMBER_OF_PARITY_BITS       :natural range 0 to 1;                     -- liczba bitow parzystosci (0-1)
+    NUMBER_OF_STOP_BITS            :natural range 0 to 2;                     -- liczba bitow stopu (1-2)
+    PARITY_TYPE         :std_logic -- 0 to even, 1 to odd
   );
   
   port (
