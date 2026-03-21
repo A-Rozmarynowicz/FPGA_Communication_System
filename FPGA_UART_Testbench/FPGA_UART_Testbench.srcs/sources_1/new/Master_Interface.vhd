@@ -41,11 +41,11 @@ entity Master_Interface is
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
         PARITY_TYPE         :std_logic := '1'; -- 0 to even, 1 to odd
         
-        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 8;
+        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 6;
         
-        FIFO_BUFFER_SIZE :positive := 12;
-        FIFO_SINGLE_FRAME_SIZE :positive := 12;
-        UART_FRAMES_PER_SINGLE_FRAME :positive := 2
+        FIFO_BUFFER_SIZE :positive := 6;
+        FIFO_SINGLE_FRAME_SIZE :positive := 6;
+        UART_FRAMES_PER_SINGLE_FRAME :positive := 1
       );
     Port (
         CLK   : in std_logic;
@@ -157,10 +157,11 @@ begin
                     null;
                 else
                     buffer_pointer <= buffer_pointer + 1;
-                    fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size - 1 
-                        downto (buffer_pointer - 1+1)*FIFO_SINGLE_FRAME_SIZE) <= (others => '0');
+                    
                     fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH + buffer_zero_padding_size - 1 
-                        downto (buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + buffer_zero_padding_size) <= parallel_received_data;
+                        downto (buffer_pointer - 1+1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH) <= (others => '0');
+                    fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH - 1 
+                        downto (buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE ) <= parallel_received_data;
                     null;
                 end if;
             end if;
