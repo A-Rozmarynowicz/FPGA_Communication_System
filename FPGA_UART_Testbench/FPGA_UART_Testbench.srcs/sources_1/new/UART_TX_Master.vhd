@@ -96,9 +96,9 @@ begin
                 cycles_in_current_bit <= 0;
         
                 -- SHIFT OUT CURRENT BIT (LSB first or MSB first depending on design)
-                TX <= output_word_buffer(0);  -- example: LSB first
+                TX <= output_word_buffer(output_word_buffer'left);  -- example: LSB first
         
-                output_word_buffer <= '0' & output_word_buffer(output_word_buffer'left downto 1);
+                output_word_buffer <= output_word_buffer(output_word_buffer'left-1 downto 0) & '0';
         
                 -- bit counter
                 if (number_of_bits_transmitted /= NUMBER_OF_WORD_BITS-1) then
