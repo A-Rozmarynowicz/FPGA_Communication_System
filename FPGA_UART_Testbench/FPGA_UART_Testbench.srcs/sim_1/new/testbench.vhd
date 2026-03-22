@@ -135,13 +135,15 @@ begin
     -- Instantiate Slave RAM (UART_Slave_RAM)
     uut_slave : entity work.UART_Slave_RAM
         port map (
-            RX => slave_rx,
-            TX => slave_tx
+            CLK      => clk,
+            RST      => rst,
+            UART_RX => slave_rx,
+            UART_TX => slave_tx
         );
 
     -- Cross UART signals between Master and Slave
---    master_rx <= slave_tx;
---    slave_rx  <= master_tx;
-      master_rx <= master_tx;
+    master_rx <= slave_tx;
+    slave_rx  <= master_tx;
+--      master_rx <= master_tx;
 
 end Behavioral;
