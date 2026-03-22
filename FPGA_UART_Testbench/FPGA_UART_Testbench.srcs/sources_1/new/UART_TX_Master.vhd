@@ -76,9 +76,9 @@ begin
                 BUSY <= '1';
                 state <= TRANSMITTING_START;
                 if (PARITY_TYPE = '0') then
-                    parity_bit <= XOR_REDUCE(output_word_buffer);
+                    parity_bit <= XOR_REDUCE(WORD);
                 else
-                    parity_bit <= not XOR_REDUCE(output_word_buffer);
+                    parity_bit <= not XOR_REDUCE(WORD);
                 end if;
             end if;
             

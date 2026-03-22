@@ -83,6 +83,7 @@ architecture rtl of Master_Interface is
     
     signal parallel_output_data : std_logic_vector (PARALLEL_BUS_WIDTH-1 downto 0);
     signal parallel_output_ready : std_logic;
+    signal parallel_busy :std_logic;
 
 begin
 
@@ -145,7 +146,8 @@ begin
             DATA_RECEIVED => parallel_received_data,
             
             INPUT_DATA_WORD => parallel_output_data,
-            INPUT_DATA_READY => parallel_output_ready
+            INPUT_DATA_READY => parallel_output_ready,
+            BUSY => parallel_busy
         );
     
     buffer_size_parallel_to_uart_converter : entity work.Buffer_Size_Universal_Converter
@@ -168,7 +170,7 @@ begin
         buffer_size_uart_to_parallel_converter : entity work.Buffer_Size_Universal_Converter
         generic map (
             OUTPUT_WORD_SIZE => PARALLEL_BUS_WIDTH,
-            INPUT_WORD_SIZE => NUMBER_OF_WORD_BITS * ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS),
+            INPUT_WORD_SIZE => NUMBER_OF_WORD_BITS,
             FIFO_NUMBER_OF_WORDS => FIFO_NUMBER_OF_WORDS
         )
         port map (
@@ -179,7 +181,7 @@ begin
             INPUT_READY => rx_receive_complete,
             OUTPUT_DATA => parallel_output_data,
             OUTPUT_READY => parallel_output_ready,
-            OUTPUT_BUSY => '0'
+            OUTPUT_BUSY => parallel_busy
         );
     
 end rtl;

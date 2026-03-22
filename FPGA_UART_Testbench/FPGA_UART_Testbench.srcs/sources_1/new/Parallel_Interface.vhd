@@ -50,7 +50,7 @@ entity Parallel_Interface is
         
         INPUT_DATA_WORD :in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
         INPUT_DATA_READY :in std_logic;
-        BUSY :std_logic
+        BUSY :out std_logic
     );
 end Parallel_Interface;
 
