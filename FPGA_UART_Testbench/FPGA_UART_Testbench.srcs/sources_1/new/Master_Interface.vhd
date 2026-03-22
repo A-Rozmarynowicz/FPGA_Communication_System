@@ -153,7 +153,25 @@ begin
             reading_complete => parallel_reading_complete,
             data_received => parallel_received_data
         );
+    
+    parallel_to_uart_fifo_converter : entity work.Parallel_To_UART_FIFO_Converter
+        generic map (
+            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,
+            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
+            FIFO_NUMBER_OF_WORDS => FIFO_NUMBER_OF_WORDS
+        )
         
+        port map (
+            CLK      => CLK,
+            RST      => RST,
+            
+            PARALLEL_DATA => parallel_received_data,
+            PARALLEL_READY => parallel_reading_complete,
+            UART_FRAME => tx_data,
+            UART_READY => tx_data_ready,
+            UART_BUSY => tx_busy
+        );
+    
     process(CLK, RST)
     begin
         if RST = '1' then
