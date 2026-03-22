@@ -21,6 +21,8 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -74,9 +76,9 @@ begin
                     state <= WRITE_RAM_STATE_SENDING;
             
                 when WRITE_RAM_STATE_SENDING =>
-                    DATA_TO_SEND <= b"11010111";
+                    DATA_TO_SEND <= std_logic_vector(to_unsigned(215, DATA_TO_SEND'length));
                     START <= '1';
-                    expected_data <= b"11010111";
+                    expected_data <= std_logic_vector(to_unsigned(215, DATA_TO_SEND'length));
                     state <= WRITE_RAM_STATE_CONFIRMING;
             
                 when WRITE_RAM_STATE_CONFIRMING =>

@@ -21,6 +21,10 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use     ieee.std_logic_1164.all;
+use     ieee.std_logic_unsigned.all;
+use     ieee.std_logic_misc.all;
+use     ieee.numeric_std.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -39,7 +43,8 @@ Generic (
         NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 6;			-- liczba bitow slowa danych (5-8)
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
-        PARITY_TYPE         :std_logic := '0' -- 0 to even, 1 to odd
+        PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
+        UART_FRAMES_PER_MESSAGE :positive
 );
 Port (
         CLK   : in std_logic;
@@ -60,6 +65,9 @@ architecture Behavioral of UART_Slave_RAM is
     signal tx_word_ready : std_logic;
     signal tx_busy : std_logic;
     signal tx_error : std_logic;
+    
+    signal final_received_data :std_logic_vector((NUMBER_OF_WORD_BITS*UART_FRAMES_PER_MESSAGE)-1 downto 0);
+    signal number_of_received_uart_frames :natural range 0 to UART_FRAMES_PER_MESSAGE := 0;
 begin
     uart_rt_inst: entity work.UART_TX_Master
         generic map (
@@ -101,6 +109,24 @@ begin
           READY        => rx_receive_complete,
           RX_ERROR          => rx_error
        );
-
-
+    
+    process(CLK, RST)
+    begin
+        if RST = '1' then
+            null;
+        elsif rising_edge(CLK) then
+            if rx_receive_complete = '1' then
+                final_received_data(((number_of_received_uart_frames+1)*NUMBER_OF_WORD_BITS-1) 
+                    downto ((number_of_received_uart_frames)*NUMBER_OF_WORD_BITS)) <= rx_data;
+                number_of_received_uart_frames <= number_of_received_uart_frames + 1;
+            else
+                null;
+            end if;
+            if number_of_received_uart_frames = UART_FRAMES_PER_MESSAGE then
+                report "DUPA = " & integer'image(to_integer(unsigned(final_received_data)));
+--                    final_received_data <= (others => '0');
+--                    number_of_received_uart_frames = 0;
+            end if;
+        end if;
+    end process;
 end Behavioral;

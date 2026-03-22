@@ -134,6 +134,9 @@ begin
 
     -- Instantiate Slave RAM (UART_Slave_RAM)
     uut_slave : entity work.UART_Slave_RAM
+        generic map (
+            UART_FRAMES_PER_MESSAGE => ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS)
+        )
         port map (
             CLK      => clk,
             RST      => rst,
