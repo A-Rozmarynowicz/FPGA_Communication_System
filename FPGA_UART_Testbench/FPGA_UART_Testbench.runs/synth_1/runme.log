@@ -8,12 +8,12 @@
   **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
   **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
   **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-  **** Start of session at: Sun Mar 22 21:05:56 2026
+  **** Start of session at: Sun Mar 22 21:26:07 2026
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source Master_Interface.tcl -notrace
-create_project: Time (s): cpu = 00:00:22 ; elapsed = 00:00:17 . Memory (MB): peak = 522.828 ; gain = 220.336
+create_project: Time (s): cpu = 00:00:12 ; elapsed = 00:00:08 . Memory (MB): peak = 522.902 ; gain = 219.531
 Command: read_checkpoint -auto_incremental -incremental C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/utils_1/imports/synth_1/Master_Interface.dcp
 INFO: [Vivado 12-5825] Read reference checkpoint from C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/utils_1/imports/synth_1/Master_Interface.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
@@ -25,11 +25,11 @@ INFO: [Designutils 20-5440] No compile time benefit to using incremental synthes
 INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 17480
+INFO: [Synth 8-7075] Helper process launched with PID 12124
 ---------------------------------------------------------------------------------
-Starting Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 1070.523 ; gain = 534.621
+Starting Synthesize : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1068.141 ; gain = 531.781
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'Master_Interface' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:65]
+INFO: [Synth 8-638] synthesizing module 'Master_Interface' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:67]
 INFO: [Synth 8-638] synthesizing module 'UART_TX_Master' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_TX_Master.vhd:29]
 	Parameter CLOCK_FREQ bound to: 100000000 - type: integer 
 	Parameter MIN_BAUD_RATE bound to: 110 - type: integer 
@@ -47,24 +47,23 @@ INFO: [Synth 8-638] synthesizing module 'UART_RX_Master' [C:/Users/arekr/OneDriv
 	Parameter PARITY_TYPE bound to: 1'b0 
 INFO: [Synth 8-256] done synthesizing module 'UART_RX_Master' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/UART_RX_Master.vhd:28]
 INFO: [Synth 8-638] synthesizing module 'Parallel_Interface' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:53]
-	Parameter PARALLEL_BUS_WIDTH bound to: 6 - type: integer 
+	Parameter PARALLEL_BUS_WIDTH bound to: 10 - type: integer 
 INFO: [Synth 8-256] done synthesizing module 'Parallel_Interface' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:53]
-INFO: [Synth 8-6054] Found Dynamic range expression with variable size [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:161]
-WARNING: [Synth 8-11358] null range expression ignored [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:174]
-INFO: [Synth 8-256] done synthesizing module 'Master_Interface' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:65]
+INFO: [Synth 8-6054] Found Dynamic range expression with variable size [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:169]
+INFO: [Synth 8-256] done synthesizing module 'Master_Interface' (0#1) [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd:67]
 ---------------------------------------------------------------------------------
-Finished Synthesize : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1192.773 ; gain = 656.871
+Finished Synthesize : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 1190.285 ; gain = 653.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1192.773 ; gain = 656.871
+Finished Constraint Validation : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1190.285 ; gain = 653.926
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7s100fgga676-2
----------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7s100fgga676-2
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1192.773 ; gain = 656.871
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1190.285 ; gain = 653.926
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'UART_TX_Master'
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'UART_RX_Master'
@@ -91,7 +90,7 @@ INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 
 WARNING: [Synth 8-327] inferring latch for variable 'DATA_OUT_reg' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:63]
 WARNING: [Synth 8-327] inferring latch for variable 'DONE_reg' [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd:65]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1192.773 ; gain = 656.871
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 1190.285 ; gain = 653.926
 ---------------------------------------------------------------------------------
 No constraint files found.
 ---------------------------------------------------------------------------------
@@ -104,31 +103,35 @@ Detailed RTL Component Info :
 	   2 Input   31 Bit       Adders := 1     
 	   2 Input   21 Bit       Adders := 2     
 	   2 Input   20 Bit       Adders := 1     
-	   2 Input    3 Bit       Adders := 2     
-	   2 Input    1 Bit       Adders := 2     
+	   2 Input    3 Bit       Adders := 4     
 +---XORs : 
 	   2 Input      1 Bit         XORs := 1     
 +---XORs : 
 	                6 Bit    Wide XORs := 2     
 +---Registers : 
+	               60 Bit    Registers := 1     
 	               31 Bit    Registers := 1     
 	               20 Bit    Registers := 1     
-	                6 Bit    Registers := 6     
-	                3 Bit    Registers := 2     
+	               10 Bit    Registers := 1     
+	                6 Bit    Registers := 4     
+	                3 Bit    Registers := 3     
 	                2 Bit    Registers := 2     
-	                1 Bit    Registers := 11    
+	                1 Bit    Registers := 10    
 +---Multipliers : 
 	               4x32  Multipliers := 1     
 +---Muxes : 
+	   2 Input   60 Bit        Muxes := 6     
+	   2 Input   31 Bit        Muxes := 1     
 	   2 Input   20 Bit        Muxes := 1     
 	   5 Input   20 Bit        Muxes := 1     
 	   5 Input    6 Bit        Muxes := 2     
-	   2 Input    6 Bit        Muxes := 5     
-	   2 Input    3 Bit        Muxes := 3     
+	   2 Input    6 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 6     
 	   5 Input    3 Bit        Muxes := 2     
 	   5 Input    1 Bit        Muxes := 15    
 	   4 Input    1 Bit        Muxes := 3     
 	   2 Input    1 Bit        Muxes := 4     
+	   3 Input    1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -150,22 +153,22 @@ WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[3]
 WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[2]) is unused and will be removed from module Master_Interface.
 WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[1]) is unused and will be removed from module Master_Interface.
 WARNING: [Synth 8-3332] Sequential element (uart_rx_inst/FSM_onehot_state_reg[0]) is unused and will be removed from module Master_Interface.
-WARNING: [Synth 8-3332] Sequential element (parallel_interface_inst/DATA_OUT_reg[5]) is unused and will be removed from module Master_Interface.
+WARNING: [Synth 8-3332] Sequential element (parallel_interface_inst/DATA_OUT_reg[9]) is unused and will be removed from module Master_Interface.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1385.574 ; gain = 849.672
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1417.926 ; gain = 881.566
 ---------------------------------------------------------------------------------
 No constraint files found.
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1385.574 ; gain = 849.672
+Finished Timing Optimization : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 1424.363 ; gain = 888.004
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1393.113 ; gain = 857.211
+Finished Technology Mapping : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 1424.531 ; gain = 888.172
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -183,37 +186,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
+Finished IO Insertion : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -230,50 +233,51 @@ Report Cell Usage:
 |      |Cell   |Count |
 +------+-------+------+
 |1     |BUFG   |     1|
-|2     |CARRY4 |    16|
-|3     |LUT1   |     1|
-|4     |LUT2   |    25|
-|5     |LUT3   |    12|
-|6     |LUT4   |    13|
-|7     |LUT5   |    12|
-|8     |LUT6   |    19|
-|9     |FDCE   |    43|
-|10    |FDPE   |     2|
-|11    |FDRE   |    46|
-|12    |IBUF   |     9|
-|13    |OBUF   |     8|
+|2     |CARRY4 |    17|
+|3     |LUT1   |     2|
+|4     |LUT2   |    28|
+|5     |LUT3   |    17|
+|6     |LUT4   |    11|
+|7     |LUT5   |   116|
+|8     |LUT6   |    31|
+|9     |MUXF7  |     2|
+|10    |FDCE   |    89|
+|11    |FDPE   |     2|
+|12    |FDRE   |    50|
+|13    |IBUF   |    13|
+|14    |OBUF   |    12|
 +------+-------+------+
 
 Report Instance Areas: 
 +------+--------------------------+-------------------+------+
 |      |Instance                  |Module             |Cells |
 +------+--------------------------+-------------------+------+
-|1     |top                       |                   |   207|
-|2     |  parallel_interface_inst |Parallel_Interface |    26|
-|3     |  uart_rt_inst            |UART_TX_Master     |   104|
+|1     |top                       |                   |   391|
+|2     |  parallel_interface_inst |Parallel_Interface |    68|
+|3     |  uart_rt_inst            |UART_TX_Master     |   153|
 +------+--------------------------+-------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 9 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
-Synthesis Optimization Complete : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 1615.863 ; gain = 1079.961
+Synthesis finished with 0 errors, 0 critical warnings and 8 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
+Synthesis Optimization Complete : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1614.770 ; gain = 1078.410
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1628.984 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 16 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1629.844 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 19 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1741.789 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1741.004 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: e84f96c9
+Synth Design complete | Checksum: 980a994a
 INFO: [Common 17-83] Releasing license: Synthesis
-29 Infos, 9 Warnings, 0 Critical Warnings and 0 Errors encountered.
+29 Infos, 8 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1741.789 ; gain = 1213.016
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1741.789 ; gain = 0.000
+synth_design: Time (s): cpu = 00:00:15 ; elapsed = 00:00:17 . Memory (MB): peak = 1741.004 ; gain = 1211.484
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1741.004 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.runs/synth_1/Master_Interface.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file Master_Interface_utilization_synth.rpt -pb Master_Interface_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun Mar 22 21:06:34 2026...
+INFO: [Common 17-206] Exiting Vivado at Sun Mar 22 21:26:35 2026...

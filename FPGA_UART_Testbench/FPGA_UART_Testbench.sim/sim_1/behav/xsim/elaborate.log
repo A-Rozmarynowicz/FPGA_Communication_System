@@ -16,11 +16,11 @@ Compiling package ieee.std_logic_unsigned
 Compiling package synopsys.attributes
 Compiling package ieee.std_logic_misc
 Compiling package ieee.numeric_std
-Compiling architecture behavioral of entity xil_defaultlib.Tester [\Tester(parallel_bus_width=6)\]
+Compiling architecture behavioral of entity xil_defaultlib.Tester [\Tester(parallel_bus_width=8)\]
 Compiling architecture rtl of entity xil_defaultlib.UART_TX_Master [\UART_TX_Master(clock_freq=10000...]
 Compiling architecture rtl of entity xil_defaultlib.UART_RX_Master [\UART_RX_Master(clock_freq=10000...]
-Compiling architecture rt1 of entity xil_defaultlib.Parallel_Interface [\Parallel_Interface(parallel_bus...]
-Compiling architecture rtl of entity xil_defaultlib.Master_Interface [master_interface_default]
+Compiling architecture rt1 of entity xil_defaultlib.Parallel_Interface [parallel_interface_default]
+Compiling architecture rtl of entity xil_defaultlib.Master_Interface [\Master_Interface(parallel_bus_w...]
 Compiling architecture behavioral of entity xil_defaultlib.UART_Slave_RAM [uart_slave_ram_default]
 Compiling architecture behavioral of entity xil_defaultlib.testbench
 Built simulation snapshot testbench_behav

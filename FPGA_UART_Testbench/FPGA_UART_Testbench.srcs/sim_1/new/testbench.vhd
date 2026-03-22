@@ -45,7 +45,7 @@ architecture Behavioral of testbench is
     constant NUMBER_OF_STOP_BITS    :positive := 2; 
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
-    constant PARALLEL_BUS_WIDTH     :positive := 6;
+    constant PARALLEL_BUS_WIDTH     :positive := 8;
     
     -- Clock and reset
     signal clk : std_logic := '0';
@@ -111,7 +111,9 @@ begin
             NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
             PARITY_TYPE     => PARITY_TYPE,
           
-            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH
+            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
+            
+            FIFO_NUMBER_OF_WORDS => 5
             
 --            FIFO_BUFFER_SIZE => 5,
 --            FIFO_SINGLE_FRAME_SIZE => 5,

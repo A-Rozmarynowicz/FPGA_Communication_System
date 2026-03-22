@@ -41,11 +41,13 @@ entity Master_Interface is
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
         PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
         
-        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 6;
+        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 10;
         
-        FIFO_BUFFER_SIZE :positive := 6;
-        FIFO_SINGLE_FRAME_SIZE :positive := 6;
-        UART_FRAMES_PER_SINGLE_FRAME :positive := 1
+        FIFO_NUMBER_OF_WORDS :positive range 1 to 10 := 5
+        
+--        FIFO_BUFFER_SIZE :positive := 12;
+--        FIFO_SINGLE_FRAME_SIZE :positive := 12;
+--        UART_FRAMES_PER_SINGLE_FRAME :positive := 2
       );
     Port (
         CLK   : in std_logic;
@@ -76,6 +78,10 @@ architecture rtl of Master_Interface is
     signal parallel_reading_complete : std_logic;
     signal parallel_received_data : std_logic_vector (PARALLEL_BUS_WIDTH-1 downto 0);
     
+    constant FIFO_SINGLE_FRAME_SIZE :positive  := ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS) * NUMBER_OF_WORD_BITS;
+    constant FIFO_BUFFER_SIZE :positive := FIFO_SINGLE_FRAME_SIZE * FIFO_NUMBER_OF_WORDS;
+    constant UART_FRAMES_PER_SINGLE_FRAME :positive := FIFO_SINGLE_FRAME_SIZE/NUMBER_OF_WORD_BITS;
+    
     signal fifo_buffer : std_logic_vector (FIFO_BUFFER_SIZE-1 downto 0);
     signal buffer_pointer :natural range 0 to (FIFO_BUFFER_SIZE/FIFO_SINGLE_FRAME_SIZE) := 0;
     
@@ -83,6 +89,8 @@ architecture rtl of Master_Interface is
     
     signal current_uart_frame_pointer :natural := 0;
 begin
+    
+        
 
     uart_rt_inst: entity work.UART_TX_Master
         generic map (
