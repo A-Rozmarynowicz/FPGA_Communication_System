@@ -48,8 +48,9 @@ entity Parallel_Interface is
         READING_COMPLETE : out std_logic := '0';
         DATA_RECEIVED : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
         
-        INPUT_DATA_FRAME :in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
-        INPUT_DATA_READY :in std_logic
+        INPUT_DATA_WORD :in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
+        INPUT_DATA_READY :in std_logic;
+        BUSY :std_logic
     );
 end Parallel_Interface;
 
@@ -64,6 +65,7 @@ begin
     begin
         if RST = '1' then
             DATA_OUT <= (others => '0');
+            BUSY <= '0';
             read_state    <= IDLE_READ_STATE;
             write_state <= IDLE_WRITE_STATE;
             DONE <= '0';
@@ -81,9 +83,15 @@ begin
         
             case write_state is
                 when IDLE_WRITE_STATE =>
-                    null;
+                    if INPUT_DATA_READY = '1' then
+                        DATA_OUT <= INPUT_DATA_WORD;
+                        DONE <= '1';
+                        BUSY <= '1';
+                        write_state <= WRITE_PARALLEL_STATE;
+                    end if;
                 when WRITE_PARALLEL_STATE =>
-                    null; 
+                    DONE <= '0';
+                    write_state <= IDLE_WRITE_STATE;
             end case;
         end if;
      end process;

@@ -36,7 +36,7 @@ entity Master_Interface is
         CLOCK_FREQ		: positive := 100_000_000;			-- czestotliwosc zegata w [Hz]
         BAUD_RATE       : positive := 20_000_000;
         MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
-        NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 6;			-- liczba bitow slowa danych (5-8)
+        NUMBER_OF_WORD_BITS		:positive range 5 to 8 := 6;			-- liczba bitow slowa danych (5-8)
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
         PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
@@ -144,11 +144,11 @@ begin
             READING_COMPLETE => parallel_reading_complete,
             DATA_RECEIVED => parallel_received_data,
             
-            INPUT_DATA_FRAME => parallel_output_data,
+            INPUT_DATA_WORD => parallel_output_data,
             INPUT_DATA_READY => parallel_output_ready
         );
     
-    buffer_size_universal_converter : entity work.Buffer_Size_Universal_Converter
+    buffer_size_parallel_to_uart_converter : entity work.Buffer_Size_Universal_Converter
         generic map (
             OUTPUT_WORD_SIZE => NUMBER_OF_WORD_BITS,
             INPUT_WORD_SIZE => PARALLEL_BUS_WIDTH,
@@ -163,6 +163,23 @@ begin
             OUTPUT_DATA => tx_data,
             OUTPUT_READY => tx_word_ready,
             OUTPUT_BUSY => tx_busy
+        );
+        
+        buffer_size_uart_to_parallel_converter : entity work.Buffer_Size_Universal_Converter
+        generic map (
+            OUTPUT_WORD_SIZE => PARALLEL_BUS_WIDTH,
+            INPUT_WORD_SIZE => NUMBER_OF_WORD_BITS * ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS),
+            FIFO_NUMBER_OF_WORDS => FIFO_NUMBER_OF_WORDS
+        )
+        port map (
+            CLK      => CLK,
+            RST      => RST,
+            
+            INPUT_DATA => rx_data,
+            INPUT_READY => rx_receive_complete,
+            OUTPUT_DATA => parallel_output_data,
+            OUTPUT_READY => parallel_output_ready,
+            OUTPUT_BUSY => '0'
         );
     
 end rtl;

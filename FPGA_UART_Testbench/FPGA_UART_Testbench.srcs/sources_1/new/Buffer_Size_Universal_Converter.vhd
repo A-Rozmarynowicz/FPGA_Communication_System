@@ -33,9 +33,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity Buffer_Size_Universal_Converter is
     Generic (
-        OUTPUT_WORD_SIZE		:natural range 5 to 8;
-        INPUT_WORD_SIZE :positive range 4 to 10;
-        FIFO_NUMBER_OF_WORDS :positive range 1 to 10
+        OUTPUT_WORD_SIZE		:positive;
+        INPUT_WORD_SIZE         :positive;
+        FIFO_NUMBER_OF_WORDS :positive range 1 to 128
     );
     Port (
         CLK :in std_logic;
