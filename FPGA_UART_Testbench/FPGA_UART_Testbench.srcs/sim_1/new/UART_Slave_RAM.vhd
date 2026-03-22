@@ -68,6 +68,7 @@ architecture Behavioral of UART_Slave_RAM is
     
     signal final_received_data :std_logic_vector((NUMBER_OF_WORD_BITS*UART_FRAMES_PER_MESSAGE)-1 downto 0);
     signal number_of_received_uart_frames :natural range 0 to UART_FRAMES_PER_MESSAGE := 0;
+    signal reset_received_data :std_logic := '0';
 begin
     uart_rt_inst: entity work.UART_TX_Master
         generic map (
@@ -120,12 +121,15 @@ begin
                     downto ((number_of_received_uart_frames)*NUMBER_OF_WORD_BITS)) <= rx_data;
                 number_of_received_uart_frames <= number_of_received_uart_frames + 1;
             else
-                null;
+                if number_of_received_uart_frames = UART_FRAMES_PER_MESSAGE then
+                    report "DUPA = " & integer'image(to_integer(unsigned(final_received_data)));
+                    number_of_received_uart_frames <= 0;
+                    -- INTERPRETATION
+                end if;
             end if;
-            if number_of_received_uart_frames = UART_FRAMES_PER_MESSAGE then
-                report "DUPA = " & integer'image(to_integer(unsigned(final_received_data)));
---                    final_received_data <= (others => '0');
---                    number_of_received_uart_frames = 0;
+            if reset_received_data = '1' then
+                final_received_data <= (others => '0');
+                reset_received_data <= '0';
             end if;
         end if;
     end process;
