@@ -65,7 +65,10 @@ entity Master_Interface is
 end Master_Interface;
 
 architecture rtl of Master_Interface is
-    -- Signals between internal logic and UART modules
+    constant FIFO_SINGLE_FRAME_SIZE :positive  := ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS) * NUMBER_OF_WORD_BITS;
+    constant FIFO_BUFFER_SIZE :positive := FIFO_SINGLE_FRAME_SIZE * FIFO_NUMBER_OF_WORDS;
+    constant UART_FRAMES_PER_SINGLE_FRAME :positive := FIFO_SINGLE_FRAME_SIZE/NUMBER_OF_WORD_BITS;
+    
     signal rx_data   : std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);
     signal rx_receive_complete  : std_logic;
     signal rx_error : std_logic;
@@ -78,16 +81,9 @@ architecture rtl of Master_Interface is
     signal parallel_reading_complete : std_logic;
     signal parallel_received_data : std_logic_vector (PARALLEL_BUS_WIDTH-1 downto 0);
     
-    constant FIFO_SINGLE_FRAME_SIZE :positive  := ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS) * NUMBER_OF_WORD_BITS;
-    constant FIFO_BUFFER_SIZE :positive := FIFO_SINGLE_FRAME_SIZE * FIFO_NUMBER_OF_WORDS;
-    constant UART_FRAMES_PER_SINGLE_FRAME :positive := FIFO_SINGLE_FRAME_SIZE/NUMBER_OF_WORD_BITS;
-    
-    signal fifo_buffer : std_logic_vector (FIFO_BUFFER_SIZE-1 downto 0);
-    signal buffer_pointer :natural range 0 to (FIFO_BUFFER_SIZE/FIFO_SINGLE_FRAME_SIZE) := 0;
-    
-    signal buffer_zero_padding_size :natural := FIFO_SINGLE_FRAME_SIZE - PARALLEL_BUS_WIDTH;
-    
-    signal current_uart_frame_pointer :natural := 0;
+    signal parallel_output_data : std_logic_vector (PARALLEL_BUS_WIDTH-1 downto 0);
+    signal parallel_output_ready : std_logic;
+
 begin
     
         
@@ -141,17 +137,20 @@ begin
         )
         
         port map (
-            clk      => CLK,
-            rst      => RST,
+            CLK      => CLK,
+            RST      => RST,
             
-            start   => PARALLEL_START,
-            data_in  => PARALLEL_DATA_IN,
+            START   => PARALLEL_START,
+            DATA_IN => PARALLEL_DATA_IN,
             
-            data_out => PARALLEL_DATA_OUT,
-            done    => PARALLEL_DONE,
+            DATA_OUT => PARALLEL_DATA_OUT,
+            DONE    => PARALLEL_DONE,
             
-            reading_complete => parallel_reading_complete,
-            data_received => parallel_received_data
+            READING_COMPLETE => parallel_reading_complete,
+            DATA_RECEIVED => parallel_received_data,
+            
+            INPUT_DATA_FRAME => parallel_output_data,
+            INPUT_DATA_READY => parallel_output_ready
         );
     
     parallel_to_uart_fifo_converter : entity work.Parallel_To_UART_FIFO_Converter

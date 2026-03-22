@@ -33,7 +33,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity Parallel_Interface is
     generic (
-        PARALLEL_BUS_WIDTH  :positive range 4 to 10 := 8
+        PARALLEL_BUS_WIDTH  :positive range 4 to 10
     );
     
     Port (
@@ -46,40 +46,44 @@ entity Parallel_Interface is
         DONE  : out std_logic := '0';
         
         READING_COMPLETE : out std_logic := '0';
-        DATA_RECEIVED : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0)
+        DATA_RECEIVED : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
+        
+        INPUT_DATA_FRAME :in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
+        INPUT_DATA_READY :in std_logic
     );
 end Parallel_Interface;
 
 architecture rt1 of Parallel_Interface is
-    type state_type is (IDLE_STATE, WRITE_STATE, READ_STATE);
-    signal state : state_type := IDLE_STATE;
-    
-    signal last_registered_start : std_logic := '0';
-    
+    type READ_STATE_TYPE is (IDLE_READ_STATE, READ_PARALLEL_STATE);
+    signal read_state : READ_STATE_TYPE := IDLE_READ_STATE;
+
+    type WRITE_STATE_TYPE is (IDLE_WRITE_STATE, WRITE_PARALLEL_STATE);
+    signal write_state : WRITE_STATE_TYPE := IDLE_WRITE_STATE;
 begin
     process(clk, rst)
     begin
         if RST = '1' then
             DATA_OUT <= (others => '0');
-            state    <= IDLE_STATE;
+            read_state    <= IDLE_READ_STATE;
+            write_state <= IDLE_WRITE_STATE;
             DONE <= '0';
-            last_registered_start <= '0';
-            
         elsif rising_edge(CLK) then
-            last_registered_start <= START;
-            case state is
-                when IDLE_STATE =>
-                    if (start = '0') and (last_registered_start = '1') then
+            case read_state is
+                when IDLE_READ_STATE =>
+                    if (start = '1') then
                         DATA_RECEIVED <= DATA_IN;
                         READING_COMPLETE <= '1';
-                        state <= READ_STATE;
+                        read_state <= READ_PARALLEL_STATE;
                     end if;
-                    
-                when WRITE_STATE =>
-                    null;
-                    
-                when READ_STATE =>
+                when READ_PARALLEL_STATE =>
                     READING_COMPLETE <= '0'; 
+            end case;
+        
+            case write_state is
+                when IDLE_WRITE_STATE =>
+                    null;
+                when WRITE_PARALLEL_STATE =>
+                    null; 
             end case;
         end if;
      end process;

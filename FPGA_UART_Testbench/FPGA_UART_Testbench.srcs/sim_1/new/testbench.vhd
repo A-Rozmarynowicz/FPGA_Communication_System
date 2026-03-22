@@ -135,6 +135,13 @@ begin
     -- Instantiate Slave RAM (UART_Slave_RAM)
     uut_slave : entity work.UART_Slave_RAM
         generic map (
+            CLOCK_FREQ	=> CLOCK_FREQ,
+            BAUD_RATE   => BAUD_RATE,
+            MIN_BAUD_RATE => MIN_BAUD_RATE,				-- minimalna predkosc nadawania w [bodach]
+            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,			-- liczba bitow slowa danych (5-8)
+            NUMBER_OF_PARITY_BITS   => NUMBER_OF_PARITY_BITS,                     -- liczba bitow parzystosci (0-1)
+            NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
+            PARITY_TYPE     => PARITY_TYPE,
             UART_FRAMES_PER_MESSAGE => ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS)
         )
         port map (

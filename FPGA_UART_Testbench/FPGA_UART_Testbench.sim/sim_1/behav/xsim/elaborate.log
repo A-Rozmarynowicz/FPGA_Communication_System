@@ -19,9 +19,10 @@ Compiling package ieee.std_logic_misc
 Compiling architecture behavioral of entity xil_defaultlib.Tester [\Tester(parallel_bus_width=8)\]
 Compiling architecture rtl of entity xil_defaultlib.UART_TX_Master [\UART_TX_Master(clock_freq=10000...]
 Compiling architecture rtl of entity xil_defaultlib.UART_RX_Master [\UART_RX_Master(clock_freq=10000...]
-Compiling architecture rt1 of entity xil_defaultlib.Parallel_Interface [parallel_interface_default]
+Compiling architecture rt1 of entity xil_defaultlib.Parallel_Interface [\Parallel_Interface(parallel_bus...]
 Compiling architecture rtl of entity xil_defaultlib.Parallel_To_UART_FIFO_Converter [\Parallel_To_UART_FIFO_Converter...]
 Compiling architecture rtl of entity xil_defaultlib.Master_Interface [\Master_Interface(parallel_bus_w...]
-Compiling architecture behavioral of entity xil_defaultlib.UART_Slave_RAM [\UART_Slave_RAM(uart_frames_per_...]
+Compiling architecture rtl of entity xil_defaultlib.Parallel_To_UART_FIFO_Converter [\Parallel_To_UART_FIFO_Converter...]
+Compiling architecture behavioral of entity xil_defaultlib.UART_Slave_RAM [\UART_Slave_RAM(clock_freq=10000...]
 Compiling architecture behavioral of entity xil_defaultlib.testbench
 Built simulation snapshot testbench_behav

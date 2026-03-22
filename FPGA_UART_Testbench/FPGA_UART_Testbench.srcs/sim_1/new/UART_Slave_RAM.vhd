@@ -37,13 +37,13 @@ use     ieee.numeric_std.all;
 
 entity UART_Slave_RAM is
 Generic (
-        CLOCK_FREQ		: positive := 100_000_000;			-- czestotliwosc zegata w [Hz]
-        BAUD_RATE       : positive := 20_000_000;
-        MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
-        NUMBER_OF_WORD_BITS		:natural range 5 to 8 := 6;			-- liczba bitow slowa danych (5-8)
-        NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
-        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
-        PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
+        CLOCK_FREQ		: positive;			-- czestotliwosc zegata w [Hz]
+        BAUD_RATE       : positive;
+        MIN_BAUD_RATE		:positive;				-- minimalna predkosc nadawania w [bodach]
+        NUMBER_OF_WORD_BITS		:natural range 5 to 8;			-- liczba bitow slowa danych (5-8)
+        NUMBER_OF_PARITY_BITS       :natural range 0 to 1;                     -- liczba bitow parzystosci (0-1)
+        NUMBER_OF_STOP_BITS            :natural range 0 to 2;                     -- liczba bitow stopu (1-2)
+        PARITY_TYPE         :std_logic; -- 0 to even, 1 to odd
         UART_FRAMES_PER_MESSAGE :positive
 );
 Port (
@@ -56,6 +56,8 @@ Port (
 end UART_Slave_RAM;
 
 architecture Behavioral of UART_Slave_RAM is
+    constant RESPONSE_MESSAGE_WIDTH :positive := 8;
+    constant FIFO_NUMBER_OF_WORDS :positive := 1;
 
     signal rx_data   : std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);
     signal rx_receive_complete  : std_logic;
@@ -68,7 +70,10 @@ architecture Behavioral of UART_Slave_RAM is
     
     signal final_received_data :std_logic_vector((NUMBER_OF_WORD_BITS*UART_FRAMES_PER_MESSAGE)-1 downto 0);
     signal number_of_received_uart_frames :natural range 0 to UART_FRAMES_PER_MESSAGE := 0;
-    signal reset_received_data :std_logic := '0';
+    signal interpret_received_data :std_logic := '0';
+    
+    signal response_message :std_logic_vector(RESPONSE_MESSAGE_WIDTH-1 downto 0);
+    signal response_ready :std_logic := '0';
 begin
     uart_rt_inst: entity work.UART_TX_Master
         generic map (
@@ -88,7 +93,7 @@ begin
           WORD_READY    => tx_word_ready,
           TX            => UART_TX,
           BUSY          => tx_busy,
-          TX_ERROR          => tx_error
+          TX_ERROR      => tx_error
        );
 
     uart_rx_inst: entity work.UART_RX_Master
@@ -110,11 +115,30 @@ begin
           READY        => rx_receive_complete,
           RX_ERROR          => rx_error
        );
+       
+       parallel_to_uart_fifo_converter : entity work.Parallel_To_UART_FIFO_Converter
+        generic map (
+            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,
+            PARALLEL_BUS_WIDTH => RESPONSE_MESSAGE_WIDTH,
+            FIFO_NUMBER_OF_WORDS => FIFO_NUMBER_OF_WORDS
+        )
+        
+        port map (
+            CLK      => CLK,
+            RST      => RST,
+            
+            PARALLEL_DATA => response_message,
+            PARALLEL_READY => response_ready,
+            UART_FRAME => tx_data,
+            UART_READY => tx_word_ready,
+            UART_BUSY => tx_busy
+        );
     
     process(CLK, RST)
     begin
         if RST = '1' then
-            null;
+            interpret_received_data <= '0';
+            -- TODO
         elsif rising_edge(CLK) then
             if rx_receive_complete = '1' then
                 final_received_data(((number_of_received_uart_frames+1)*NUMBER_OF_WORD_BITS-1) 
@@ -124,13 +148,20 @@ begin
                 if number_of_received_uart_frames = UART_FRAMES_PER_MESSAGE then
                     report "DUPA = " & integer'image(to_integer(unsigned(final_received_data)));
                     number_of_received_uart_frames <= 0;
-                    -- INTERPRETATION
+                    interpret_received_data <= '1';
                 end if;
             end if;
-            if reset_received_data = '1' then
+            
+            if interpret_received_data = '1' then
+                response_message <= std_logic_vector(to_unsigned(69, response_message'length));
+                response_ready <= '1';
+                interpret_received_data <= '0';
                 final_received_data <= (others => '0');
-                reset_received_data <= '0';
+            else
+                response_ready <= '0';
             end if;
+            
+           
         end if;
     end process;
 end Behavioral;
