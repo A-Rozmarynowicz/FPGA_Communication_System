@@ -70,6 +70,7 @@ begin
             write_state <= IDLE_WRITE_STATE;
             DONE <= '0';
         elsif rising_edge(CLK) then
+            BUSY <= '0';
             case read_state is
                 when IDLE_READ_STATE =>
                     if (start = '1') then

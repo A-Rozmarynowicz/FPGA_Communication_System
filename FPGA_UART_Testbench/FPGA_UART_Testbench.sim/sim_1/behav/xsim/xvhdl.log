@@ -1,0 +1,6 @@
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Parallel_Interface.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'Parallel_Interface'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sources_1/new/Master_Interface.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'Master_Interface'
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sim_1/new/testbench.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'testbench'
