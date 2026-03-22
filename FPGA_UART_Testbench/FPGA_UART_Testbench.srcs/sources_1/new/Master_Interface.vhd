@@ -85,8 +85,6 @@ architecture rtl of Master_Interface is
     signal parallel_output_ready : std_logic;
 
 begin
-    
-        
 
     uart_rt_inst: entity work.UART_TX_Master
         generic map (
@@ -97,7 +95,6 @@ begin
           NUMBER_OF_STOP_BITS      => NUMBER_OF_STOP_BITS,
           PARITY_TYPE => PARITY_TYPE
         )
-        
         port map (
           CLK             => CLK,
           RST            => RST,
@@ -118,7 +115,6 @@ begin
           NUMBER_OF_STOP_BITS      => NUMBER_OF_STOP_BITS,
           PARITY_TYPE => PARITY_TYPE
         )
-        
         port map (
           CLK             => CLK,
           RST            => RST,
@@ -135,7 +131,6 @@ begin
         generic map (
             PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH
         )
-        
         port map (
             CLK      => CLK,
             RST      => RST,
@@ -153,22 +148,21 @@ begin
             INPUT_DATA_READY => parallel_output_ready
         );
     
-    parallel_to_uart_fifo_converter : entity work.Parallel_To_UART_FIFO_Converter
+    buffer_size_universal_converter : entity work.Buffer_Size_Universal_Converter
         generic map (
-            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,
-            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
+            OUTPUT_WORD_SIZE => NUMBER_OF_WORD_BITS,
+            INPUT_WORD_SIZE => PARALLEL_BUS_WIDTH,
             FIFO_NUMBER_OF_WORDS => FIFO_NUMBER_OF_WORDS
         )
-        
         port map (
             CLK      => CLK,
             RST      => RST,
             
-            PARALLEL_DATA => parallel_received_data,
-            PARALLEL_READY => parallel_reading_complete,
-            UART_FRAME => tx_data,
-            UART_READY => tx_word_ready,
-            UART_BUSY => tx_busy
+            INPUT_DATA => parallel_received_data,
+            INPUT_READY => parallel_reading_complete,
+            OUTPUT_DATA => tx_data,
+            OUTPUT_READY => tx_word_ready,
+            OUTPUT_BUSY => tx_busy
         );
     
 end rtl;

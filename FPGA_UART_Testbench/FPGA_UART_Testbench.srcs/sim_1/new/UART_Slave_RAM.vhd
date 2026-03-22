@@ -116,22 +116,21 @@ begin
           RX_ERROR          => rx_error
        );
        
-       parallel_to_uart_fifo_converter : entity work.Parallel_To_UART_FIFO_Converter
+       buffer_size_universal_converter : entity work.Buffer_Size_Universal_Converter
         generic map (
-            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,
-            PARALLEL_BUS_WIDTH => RESPONSE_MESSAGE_WIDTH,
+            OUTPUT_WORD_SIZE => NUMBER_OF_WORD_BITS,
+            INPUT_WORD_SIZE => RESPONSE_MESSAGE_WIDTH,
             FIFO_NUMBER_OF_WORDS => FIFO_NUMBER_OF_WORDS
         )
-        
         port map (
             CLK      => CLK,
             RST      => RST,
             
-            PARALLEL_DATA => response_message,
-            PARALLEL_READY => response_ready,
-            UART_FRAME => tx_data,
-            UART_READY => tx_word_ready,
-            UART_BUSY => tx_busy
+            INPUT_DATA => response_message,
+            INPUT_READY => response_ready,
+            OUTPUT_DATA => tx_data,
+            OUTPUT_READY => tx_word_ready,
+            OUTPUT_BUSY => tx_busy
         );
     
     process(CLK, RST)
