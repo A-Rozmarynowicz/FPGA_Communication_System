@@ -35,74 +35,64 @@ use ieee.numeric_std.all;
 
 entity Tester is
     generic (
-        PARALLEL_BUS_WIDTH :positive range 4 to 10
+        PARALLEL_BUS_WIDTH :positive range 4 to 10;
+        PARALLEL_FRAMES_PER_MESSAGE :positive
     );
     port (
         CLK      : in  std_logic;
         RST      : in  std_logic;
 
-        -- Outputs to Master_Interface (inputs from Tester perspective)
         START    : out std_logic := '0';
-        DATA_TO_SEND  : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0):= (others => '0');
+        DATA_OUT  : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0):= (others => '0');
 
-        -- Inputs from Master_Interface (outputs from Tester perspective)
-        DATA_RECEIVED : in  std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
+        DATA_IN : in  std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
         DONE         : in  std_logic
     );
 end Tester;
 
 architecture Behavioral of Tester is
-    type state_type is (    IDLE_STATE,
-                            WRITE_RAM_STATE_SENDING, WRITE_RAM_STATE_CONFIRMING, AWAITING_MASTER,
-                            READ_RAM_STATE_SENDING, READ_RAM_STATE_CONFIRMING,
-                            WAIT_FOR_MASTER_RAM_READY, READ_RAM_STATE_READING,
-                            DONE_STATE
-                        );
-    signal state : state_type := IDLE_STATE;
-
-    signal expected_data : std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0) := (others => '0');
-
+    type WRITE_STATE_TYPE is (WRITE_IDLE_STATE, WRITE_RAM_STATE_SENDING);
+    signal write_state : WRITE_STATE_TYPE := WRITE_IDLE_STATE;
+    
+    type READ_STATE_TYPE is (READ_IDLE_STATE, READ_RAM_STATE_RECEIVING);
+    signal read_state : READ_STATE_TYPE := READ_IDLE_STATE;
+    
+    signal received_data :std_logic_vector((PARALLEL_BUS_WIDTH*PARALLEL_FRAMES_PER_MESSAGE)-1 downto 0) := (others => '0');
+    signal number_of_received_parallel_messages :natural range 0 to PARALLEL_FRAMES_PER_MESSAGE := 0;
 begin
     process(CLK, RST)
     begin
         if RST = '1' then
             START    <= '0';
-            DATA_TO_SEND  <= (others => '0');
-            state    <= IDLE_STATE;
-            expected_data <= (others => '0');
+            DATA_OUT  <= (others => '0');
+            write_state    <= WRITE_IDLE_STATE;
         elsif rising_edge(CLK) then
-            case state is
-                when IDLE_STATE =>
-                    state <= WRITE_RAM_STATE_SENDING;
-            
-                when WRITE_RAM_STATE_SENDING =>
-                    DATA_TO_SEND <= std_logic_vector(to_unsigned(215, DATA_TO_SEND'length));
-                    START <= '1';
-                    expected_data <= std_logic_vector(to_unsigned(215, DATA_TO_SEND'length));
-                    state <= WRITE_RAM_STATE_CONFIRMING;
-            
-                when WRITE_RAM_STATE_CONFIRMING =>
+            case write_state is
+                when WRITE_IDLE_STATE =>
                     START <= '0';
-                    state <= AWAITING_MASTER;
+                    write_state <= WRITE_RAM_STATE_SENDING;
+                when WRITE_RAM_STATE_SENDING =>
+                    DATA_OUT <= std_logic_vector(to_unsigned(215, DATA_OUT'length));
+                    START <= '1';
+                    write_state <= WRITE_IDLE_STATE;
+            end case;
             
-                when AWAITING_MASTER =>
---                    state <= IDLE_STATE;
-                    null;            
-                when READ_RAM_STATE_SENDING =>
-                    null;
-            
-                when READ_RAM_STATE_CONFIRMING =>
-                    null;
-            
-                when WAIT_FOR_MASTER_RAM_READY =>
-                    null;
-            
-                when READ_RAM_STATE_READING =>
-                    null;
-            
-                when DONE_STATE =>
-                    null;
-            
+            case read_state is
+                when READ_IDLE_STATE =>
+                    if DONE = '1' then
+                        received_data(((number_of_received_parallel_messages+1)*PARALLEL_BUS_WIDTH)-1 
+                            downto (number_of_received_parallel_messages)*PARALLEL_BUS_WIDTH) <= DATA_IN;
+                        number_of_received_parallel_messages <= number_of_received_parallel_messages + 1;
+                    else
+                        if number_of_received_parallel_messages = PARALLEL_FRAMES_PER_MESSAGE then
+                            read_state <= READ_RAM_STATE_RECEIVING;
+                            number_of_received_parallel_messages <= 0;
+                        end if;
+                    end if;
+                when READ_RAM_STATE_RECEIVING =>
+                    report "OSTATECZNY TESTER = " & integer'image(to_integer(unsigned(received_data)));
+                    received_data <= (others => '0');
+                    read_state <= READ_IDLE_STATE;
             end case;
         end if;
     end process;

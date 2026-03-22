@@ -88,15 +88,16 @@ begin
     -- Instantiate Tester (generates commands on parallel interface)
     uut_tester : entity work.Tester -- uut means Unit Under Test
         generic map (
-            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH
+            PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
+            PARALLEL_FRAMES_PER_MESSAGE => (PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS
         )
         port map (
             CLK      => clk,
             RST      => rst,
             
             START    => parallel_start,
-            DATA_TO_SEND => parallel_master_data_in,
-            DATA_RECEIVED => parallel_master_data_out,
+            DATA_OUT => parallel_master_data_in,
+            DATA_IN => parallel_master_data_out,
             DONE        => parallel_done
         );
 
