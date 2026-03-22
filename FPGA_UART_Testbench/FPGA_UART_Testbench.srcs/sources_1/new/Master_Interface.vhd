@@ -81,7 +81,7 @@ architecture rtl of Master_Interface is
     
     signal buffer_zero_padding_size :natural := FIFO_SINGLE_FRAME_SIZE - PARALLEL_BUS_WIDTH;
     
-    signal current_uart_frame_pointer :natural := UART_FRAMES_PER_SINGLE_FRAME;
+    signal current_uart_frame_pointer :natural := 0;
 begin
 
     uart_rt_inst: entity work.UART_TX_Master
@@ -170,16 +170,16 @@ begin
                 if buffer_pointer = 0 then
                     null;
                 else
-                    if current_uart_frame_pointer = 0 then
+                    if current_uart_frame_pointer = UART_FRAMES_PER_SINGLE_FRAME then
                         fifo_buffer <= fifo_buffer(FIFO_BUFFER_SIZE - FIFO_SINGLE_FRAME_SIZE - 1 downto 0)
                             & (FIFO_SINGLE_FRAME_SIZE - 1 downto 0 => '0');
                         buffer_pointer <= buffer_pointer - 1;
-                        current_uart_frame_pointer <= UART_FRAMES_PER_SINGLE_FRAME;
+                        current_uart_frame_pointer <= 0;
                         tx_word_ready <= '1';
                     else
-                        tx_data <= fifo_buffer((current_uart_frame_pointer)*NUMBER_OF_WORD_BITS - 1
-                            downto (current_uart_frame_pointer-1)*NUMBER_OF_WORD_BITS);
-                        current_uart_frame_pointer <= current_uart_frame_pointer - 1;
+                        tx_data <= fifo_buffer((current_uart_frame_pointer+1)*NUMBER_OF_WORD_BITS - 1
+                            downto (current_uart_frame_pointer)*NUMBER_OF_WORD_BITS);
+                        current_uart_frame_pointer <= current_uart_frame_pointer + 1;
                         tx_word_ready <= '1';
                     end if;
                 end if;

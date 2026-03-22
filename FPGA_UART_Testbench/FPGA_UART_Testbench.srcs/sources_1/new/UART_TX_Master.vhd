@@ -95,7 +95,8 @@ begin
 
          when TRANSMITTING_WORD =>							-- obsluga stanu DANA
             BUSY <= '1';
-            TX <= output_word_buffer(output_word_buffer'left);  -- example: LSB first
+--            TX <= output_word_buffer(0);
+            TX <= output_word_buffer(output_word_buffer'right);  -- example: LSB first
             if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
                 cycles_in_current_bit <= cycles_in_current_bit + 1;
                 
@@ -103,7 +104,8 @@ begin
                 cycles_in_current_bit <= 0;
         
                 -- SHIFT OUT CURRENT BIT (LSB first or MSB first depending on design)
-                output_word_buffer <= output_word_buffer(output_word_buffer'left-1 downto 0) & '0';
+--                output_word_buffer <= output_word_buffer(output_word_buffer'left-1 downto 0) & '0';
+                output_word_buffer <= '0' & output_word_buffer(output_word_buffer'left downto 1);
         
                 -- bit counter
                 if (number_of_bits_transmitted /= NUMBER_OF_WORD_BITS-1) then

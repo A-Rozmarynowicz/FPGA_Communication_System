@@ -83,7 +83,7 @@ begin
            else								-- zakonczenie odliczania polowy okresu bodu
              cycles_in_current_bit <= 0;						-- wyzerowanie licznika czasu bodu
              state    <= RECEIVING_WORD;						-- przejscie do stanu DANA
-             if (input_rx_buffer(1) = '0') then					-- badanie nieprawidlowego stanu bitu START
+             if (input_rx_buffer(1) = '1') then					-- badanie nieprawidlowego stanu bitu START
 	           report "SERIAL_RX: nieprawidlowa wartosc bitu startu"	-- informacja o bledzie odbioru
 	           severity warning;
                internal_error <= '1';						-- ustawienie rejestru bledu odbioru
