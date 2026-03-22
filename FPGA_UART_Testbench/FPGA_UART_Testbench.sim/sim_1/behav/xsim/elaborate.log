@@ -20,6 +20,7 @@ Compiling architecture behavioral of entity xil_defaultlib.Tester [\Tester(paral
 Compiling architecture rtl of entity xil_defaultlib.UART_TX_Master [\UART_TX_Master(clock_freq=10000...]
 Compiling architecture rtl of entity xil_defaultlib.UART_RX_Master [\UART_RX_Master(clock_freq=10000...]
 Compiling architecture rt1 of entity xil_defaultlib.Parallel_Interface [parallel_interface_default]
+Compiling architecture rtl of entity xil_defaultlib.Parallel_To_UART_FIFO_Converter [\Parallel_To_UART_FIFO_Converter...]
 Compiling architecture rtl of entity xil_defaultlib.Master_Interface [\Master_Interface(parallel_bus_w...]
 Compiling architecture behavioral of entity xil_defaultlib.UART_Slave_RAM [\UART_Slave_RAM(uart_frames_per_...]
 Compiling architecture behavioral of entity xil_defaultlib.testbench

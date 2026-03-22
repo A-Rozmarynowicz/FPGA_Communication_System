@@ -168,51 +168,8 @@ begin
             PARALLEL_DATA => parallel_received_data,
             PARALLEL_READY => parallel_reading_complete,
             UART_FRAME => tx_data,
-            UART_READY => tx_data_ready,
+            UART_READY => tx_word_ready,
             UART_BUSY => tx_busy
         );
-    
-    process(CLK, RST)
-    begin
-        if RST = '1' then
-            fifo_buffer <= (others => '0');
-            buffer_pointer <= 0;
-        elsif rising_edge(CLK) then
-            if parallel_reading_complete = '1' then
-                if buffer_pointer = FIFO_SINGLE_FRAME_SIZE then
-                    null;
-                else
-                    buffer_pointer <= buffer_pointer + 1;
-                    
-                    fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH + buffer_zero_padding_size - 1 
-                        downto (buffer_pointer - 1+1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH) <= (others => '0');
-                    fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + PARALLEL_BUS_WIDTH - 1 
-                        downto (buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE ) <= parallel_received_data;
-                    null;
-                end if;
-            end if;
-            
-            if tx_busy = '0' then 
-                if buffer_pointer = 0 then
-                    null;
-                else
-                    if current_uart_frame_pointer = UART_FRAMES_PER_SINGLE_FRAME then
-                        fifo_buffer <= fifo_buffer(FIFO_BUFFER_SIZE - FIFO_SINGLE_FRAME_SIZE - 1 downto 0)
-                            & (FIFO_SINGLE_FRAME_SIZE - 1 downto 0 => '0');
-                        buffer_pointer <= buffer_pointer - 1;
-                        current_uart_frame_pointer <= 0;
-                        tx_word_ready <= '1';
-                    else
-                        tx_data <= fifo_buffer((current_uart_frame_pointer+1)*NUMBER_OF_WORD_BITS - 1
-                            downto (current_uart_frame_pointer)*NUMBER_OF_WORD_BITS);
-                        current_uart_frame_pointer <= current_uart_frame_pointer + 1;
-                        tx_word_ready <= '1';
-                    end if;
-                end if;
-            else
-                tx_word_ready <= '0';
-            end if;
-        end if;
-    end process;
     
 end rtl;
