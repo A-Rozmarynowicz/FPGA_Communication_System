@@ -43,7 +43,7 @@ architecture Behavioral of testbench is
     constant NUMBER_OF_WORD_BITS :positive := 6;			-- liczba bitow slowa danych (5-8)
     constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)
     constant NUMBER_OF_STOP_BITS    :positive := 2; 
-    constant PARITY_TYPE    :std_logic := '1'; -- 1 is odd 0 is even
+    constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
     constant PARALLEL_BUS_WIDTH     :positive := 6;
     
@@ -138,7 +138,8 @@ begin
         );
 
     -- Cross UART signals between Master and Slave
-    master_rx <= slave_tx;
-    slave_rx  <= master_tx;
+--    master_rx <= slave_tx;
+--    slave_rx  <= master_tx;
+      master_rx <= master_tx;
 
 end Behavioral;

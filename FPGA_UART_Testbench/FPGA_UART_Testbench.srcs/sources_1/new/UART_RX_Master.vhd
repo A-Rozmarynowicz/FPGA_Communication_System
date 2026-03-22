@@ -2,6 +2,7 @@ library ieee;
 use     ieee.std_logic_1164.all;
 use     ieee.std_logic_unsigned.all;
 use     ieee.std_logic_misc.all;
+use     ieee.numeric_std.all;
 
 entity UART_RX_Master is
   generic (
@@ -72,7 +73,7 @@ begin
            number_of_bits_received <= 0;						-- wyzerowanie licznika odebranych bitow
            final_word_buffer   <= (others => '0');					-- wyzerowanie bufora bitow danych
            internal_error <= '0';						-- wyzerowanie rejestru bledu odbioru
-           if (input_rx_buffer(1)='0' and input_rx_buffer(0)='1' and CYCLES_PER_BIT/=0) then	-- wykrycie poczatku bitu START
+           if (input_rx_buffer(1)='1' and input_rx_buffer(0)='0' and CYCLES_PER_BIT/=0) then	-- wykrycie poczatku bitu START
              state   <= RECEIVING_START;						-- przejscie do stanu START
            end if;							-- zakonczenie instukcji warunkowej
 
@@ -83,8 +84,8 @@ begin
              cycles_in_current_bit <= 0;						-- wyzerowanie licznika czasu bodu
              state    <= RECEIVING_WORD;						-- przejscie do stanu DANA
              if (input_rx_buffer(1) = '0') then					-- badanie nieprawidlowego stanu bitu START
-	       report "SERIAL_RX: nieprawidlowa wartosc bitu startu"	-- informacja o bledzie odbioru
-	         severity warning;
+	           report "SERIAL_RX: nieprawidlowa wartosc bitu startu"	-- informacja o bledzie odbioru
+	           severity warning;
                internal_error <= '1';						-- ustawienie rejestru bledu odbioru
              end if;							-- zakonczenie instukcji warunkowej
            end if;							-- zakonczenie instukcji warunkowej
@@ -135,20 +136,21 @@ begin
 
              if (number_of_bits_received /= NUMBER_OF_STOP_BITS-1) then				-- badanie odliczania bitow stopu
                number_of_bits_received <= number_of_bits_received + 1;					-- zwiekszenie o 1 liczby bitow stopu
-               if (input_rx_buffer(1) = '1') then				-- badanie nieprawidlowego stanu bitu STOP
-                 internal_error <= '1';					-- ustawienie rejestru bledu odbioru
-	       report "SERIAL_RX: nieprawidlowa wartosc bitu stopu"	-- informacja o bledzie odbioru
-	         severity warning;
+               if (input_rx_buffer(1) = '0') then				-- badanie nieprawidlowego stanu bitu STOP
+                   internal_error <= '1';					-- ustawienie rejestru bledu odbioru
+	               report "SERIAL_RX: nieprawidlowa wartosc bitu stopu"	-- informacja o bledzie odbioru
+	               severity warning;   
                end if; 							-- zakonczenie instukcji warunkowej
              else							-- zakonczenie odliczania bitow stopu
-               if (internal_error = '0' and input_rx_buffer(1) = '0') then		-- badanie prawidlowego odbioru szeregowego
+                if (internal_error = '0' and input_rx_buffer(1) = '1') then		-- badanie prawidlowego odbioru szeregowego
                  WORD <= final_word_buffer;					-- ustawienie na wyjsciu WORD odebranego slowa
                  READY <= '1';						-- ustawienie na wyjsciu flagi potwierdzenia
-               else							-- wykryto nieprawidlowy odbioru szeregowy
+                else							-- wykryto nieprawidlowy odbioru szeregowy
                  WORD <= (others => '0');				-- wyzerowanie wyjscia danych
                  RX_ERROR <= '1';						-- ustawienie na wyjsciu flagi bledu odbioru
-               end if;							-- zakonczenie instukcji warunkowej
-               state <= IDLE_WAIT;					-- przejscie do stanu IDLE_WAIT
+                end if;							-- zakonczenie instukcji warunkowej
+                state <= IDLE_WAIT;					-- przejscie do stanu IDLE_WAIT
+                report "Value = " & integer'image(to_integer(unsigned(final_word_buffer)));
              end if;							-- zakonczenie instukcji warunkowej
 
            end if;							-- zakonczenie instukcji warunkowej
