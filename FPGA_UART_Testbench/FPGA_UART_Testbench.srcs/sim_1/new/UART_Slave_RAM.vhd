@@ -145,7 +145,7 @@ begin
                 number_of_received_uart_frames <= number_of_received_uart_frames + 1;
             else
                 if number_of_received_uart_frames = UART_FRAMES_PER_MESSAGE then
-                    report "DUPA = " & integer'image(to_integer(unsigned(final_received_data)));
+                    report "RAM Slave: received message: " & integer'image(to_integer(unsigned(final_received_data)));
                     number_of_received_uart_frames <= 0;
                     interpret_received_data <= '1';
                 end if;

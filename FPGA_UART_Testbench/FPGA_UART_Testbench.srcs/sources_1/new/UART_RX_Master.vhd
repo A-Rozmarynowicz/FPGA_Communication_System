@@ -42,7 +42,7 @@ architecture RTL of UART_RX_Master is
 begin
     -- badanie poprawnosci ustawien zegarow
     assert (CLOCK_FREQ >= 2 * MIN_BAUD_RATE)
-    report "SERIAL_RX: nieprawidlowa wartosc parametru CLOCK_FREQ"
+    report "RX UART: clock frequency too low"
     severity error;
 
    process (RST, CLK) is							
@@ -84,7 +84,7 @@ begin
              cycles_in_current_bit <= 0;	
              state    <= RECEIVING_WORD;	
              if (input_rx_buffer(1) = '1') then					
-	           report "SERIAL_RX: nieprawidlowa wartosc bitu startu"	
+	           report "RX UART: start bit incorrect"	
 	           severity warning;
                internal_error <= '1';				
              end if;							
@@ -122,7 +122,7 @@ begin
                 null;
              else
                 internal_error <= '1';						
-                report "SERIAL_RX: nieprawidlowa wartosc bitu parzystosci" 
+                report "RX UART: parity bit incorrect" 
                 severity warning;
              end if; 							
            end if;							
@@ -137,7 +137,7 @@ begin
                number_of_bits_received <= number_of_bits_received + 1;		
                if (input_rx_buffer(1) = '0') then				
                    internal_error <= '1';					
-	               report "SERIAL_RX: nieprawidlowa wartosc bitu stopu"
+	               report "RX UART: stop bit incorrect" 
 	               severity warning;   
                end if; 							
              else							

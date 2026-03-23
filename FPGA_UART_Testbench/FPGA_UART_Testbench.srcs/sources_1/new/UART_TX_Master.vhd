@@ -42,7 +42,7 @@ architecture RTL of UART_TX_Master is
 
 begin
     assert (CLOCK_FREQ >= 2 * MIN_BAUD_RATE)
-    report "SERIAL_TX: nieprawidlowa wartosc parametru CLOCK_FREQ"
+    report "TX UART: clock frequency too low"
     severity error;
 
    process (RST, CLK) is
@@ -137,7 +137,6 @@ begin
                     number_of_bits_transmitted <= number_of_bits_transmitted + 1;
                 else
                     number_of_bits_transmitted <= 0;
-                    report "TX: FRAME COMPLETE";
                     state <= IDLE_WAIT;
                 end if;
             end if;

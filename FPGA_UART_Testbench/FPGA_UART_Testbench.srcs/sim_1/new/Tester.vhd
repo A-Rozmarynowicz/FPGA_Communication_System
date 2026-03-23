@@ -104,7 +104,7 @@ begin
                         end if;
                     end if;
                 when READ_RAM_STATE_RECEIVING =>
-                    report "OSTATECZNY TESTER = " & integer'image(to_integer(unsigned(received_data)));
+                    report "Tester: received message = " & integer'image(to_integer(unsigned(received_data)));
                     received_data <= (others => '0');
                     read_state <= READ_IDLE_STATE;
             end case;
