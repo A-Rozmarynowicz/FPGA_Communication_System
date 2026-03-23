@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
-| Date         : Mon Mar 23 11:09:10 2026
+| Date         : Mon Mar 23 12:48:42 2026
 | Host         : SolidnyLaptop running 64-bit major release  (build 9200)
 | Command      : report_utilization -file Master_Interface_utilization_synth.rpt -pb Master_Interface_utilization_synth.pb
 | Design       : Master_Interface
@@ -31,8 +31,8 @@ Table of Contents
 +-------------------------+------+-------+------------+-----------+-------+
 |        Site Type        | Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+------+-------+------------+-----------+-------+
-| Slice LUTs*             |  398 |     0 |          0 |     64000 |  0.62 |
-|   LUT as Logic          |  398 |     0 |          0 |     64000 |  0.62 |
+| Slice LUTs*             |  397 |     0 |          0 |     64000 |  0.62 |
+|   LUT as Logic          |  397 |     0 |          0 |     64000 |  0.62 |
 |   LUT as Memory         |    0 |     0 |          0 |     17600 |  0.00 |
 | Slice Registers         |  255 |     0 |          0 |    128000 |  0.20 |
 |   Register as Flip Flop |  255 |     0 |          0 |    128000 |  0.20 |
@@ -153,7 +153,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | FDCE     |  239 |        Flop & Latch |
 | LUT6     |  150 |                 LUT |
 | LUT2     |  127 |                 LUT |
-| LUT4     |   87 |                 LUT |
+| LUT4     |   84 |                 LUT |
 | LUT5     |   62 |                 LUT |
 | LUT3     |   36 |                 LUT |
 | CARRY4   |   34 |          CarryLogic |

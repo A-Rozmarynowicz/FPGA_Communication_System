@@ -32,12 +32,12 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity testbench is
---  Port ( );
 end testbench;
 
 architecture Behavioral of testbench is
     -- Process parameters
     constant CLOCK_FREQ :positive := 100_000_000;
+--    signal CLOCK_PERIOD :time :=     1_000_000_000/CLOCK_FREQ ns; --ns -- TODO
     constant BAUD_RATE :positive := 20_000_000;
     
     -- UART parameters
@@ -70,12 +70,11 @@ architecture Behavioral of testbench is
 
 begin
 
-    -- Clock generation: 100MHz clock (10 ns period)
     clk_process : process
     begin
         while true loop
             clk <= '0';
-            wait for 5 ns;
+            wait for 5 ns; --TODO
             clk <= '1';
             wait for 5 ns;
         end loop;
@@ -85,7 +84,7 @@ begin
     rst_process : process
     begin
         rst <= '1';
-        wait for 50 ns;
+        wait for 50 ns; -- TODO
         rst <= '0';
         wait;
     end process;

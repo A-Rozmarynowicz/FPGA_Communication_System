@@ -3,8 +3,8 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Mon Mar 23 11:08:27 2026
-# Process ID         : 13248
+# Start of session at: Mon Mar 23 12:48:17 2026
+# Process ID         : 13116
 # Current directory  : C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.runs/synth_1
 # Command line       : vivado.exe -log Master_Interface.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Master_Interface.tcl
 # Log file           : C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.runs/synth_1/Master_Interface.vds
@@ -19,6 +19,6 @@
 # Host memory        : 16890 MB
 # Swap memory        : 6442 MB
 # Total Virtual      : 23333 MB
-# Available Virtual  : 9643 MB
+# Available Virtual  : 10431 MB
 #-----------------------------------------------------------
 source Master_Interface.tcl -notrace
