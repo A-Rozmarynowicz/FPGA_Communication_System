@@ -52,7 +52,10 @@ entity Tester is
 end Tester;
 
 architecture Behavioral of Tester is
-    type WRITE_STATE_TYPE is (WRITE_IDLE_STATE, WRITE_RAM_STATE_SENDING);
+    constant CYCLES_BETWEEN_WRITING :positive := 100;
+    signal cycles_left_unitl_writing :natural range 0 to CYCLES_BETWEEN_WRITING := 0;
+
+    type WRITE_STATE_TYPE is (WRITE_IDLE_STATE, WRITE_RAM_STATE_SENDING, WRITE_STATE_WAITING);
     signal write_state : WRITE_STATE_TYPE := WRITE_IDLE_STATE;
     
     type READ_STATE_TYPE is (READ_IDLE_STATE, READ_RAM_STATE_RECEIVING);
@@ -61,6 +64,7 @@ architecture Behavioral of Tester is
     signal received_data :std_logic_vector((PARALLEL_BUS_WIDTH*PARALLEL_FRAMES_PER_MESSAGE)-1 downto 0) := (others => '0');
     signal number_of_received_parallel_messages :natural range 0 to PARALLEL_FRAMES_PER_MESSAGE := 0;
 begin
+
     process(CLK, RST)
     begin
         if RST = '1' then
@@ -68,14 +72,20 @@ begin
             DATA_OUT  <= (others => '0');
             write_state    <= WRITE_IDLE_STATE;
         elsif rising_edge(CLK) then
+            START <= '0';
             case write_state is
                 when WRITE_IDLE_STATE =>
-                    START <= '0';
                     write_state <= WRITE_RAM_STATE_SENDING;
                 when WRITE_RAM_STATE_SENDING =>
                     DATA_OUT <= std_logic_vector(to_unsigned(29, DATA_OUT'length));
                     START <= '1';
-                    write_state <= WRITE_IDLE_STATE;
+                    write_state <= WRITE_STATE_WAITING;
+                    cycles_left_unitl_writing <= CYCLES_BETWEEN_WRITING;
+                when WRITE_STATE_WAITING =>
+                    cycles_left_unitl_writing <= cycles_left_unitl_writing - 1;
+                    if cycles_left_unitl_writing = 1 then
+                        write_state <= WRITE_IDLE_STATE;
+                    end if;
             end case;
             
             case read_state is
