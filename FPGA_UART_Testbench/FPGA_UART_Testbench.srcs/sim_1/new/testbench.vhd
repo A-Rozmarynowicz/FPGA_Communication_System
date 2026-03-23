@@ -46,6 +46,8 @@ architecture Behavioral of testbench is
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
     constant PARALLEL_BUS_WIDTH     :positive := 8;
+    constant TESTER_ZERO_PADDING_SIZE :natural := 
+        (PARALLEL_BUS_WIDTH - NUMBER_OF_WORD_BITS) when (PARALLEL_BUS_WIDTH > NUMBER_OF_WORD_BITS) else 0;
     
     -- Clock and reset
     signal clk : std_logic := '0';
@@ -89,7 +91,8 @@ begin
     uut_tester : entity work.Tester -- uut means Unit Under Test
         generic map (
             PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
-            PARALLEL_FRAMES_PER_MESSAGE => (PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS
+            PARALLEL_FRAMES_PER_MESSAGE => (PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS,
+            ZERO_PADDING_SIZE => TESTER_ZERO_PADDING_SIZE
         )
         port map (
             CLK      => clk,

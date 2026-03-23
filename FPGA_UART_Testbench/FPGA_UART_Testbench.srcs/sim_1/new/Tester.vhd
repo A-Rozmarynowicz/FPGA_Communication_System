@@ -36,7 +36,8 @@ use ieee.numeric_std.all;
 entity Tester is
     generic (
         PARALLEL_BUS_WIDTH :positive range 4 to 10;
-        PARALLEL_FRAMES_PER_MESSAGE :positive
+        PARALLEL_FRAMES_PER_MESSAGE :positive;
+        ZERO_PADDING_SIZE :natural
     );
     port (
         CLK      : in  std_logic;
@@ -80,8 +81,11 @@ begin
             case read_state is
                 when READ_IDLE_STATE =>
                     if DONE = '1' then
-                        received_data(((number_of_received_parallel_messages+1)*PARALLEL_BUS_WIDTH)-1 
-                            downto (number_of_received_parallel_messages)*PARALLEL_BUS_WIDTH) <= DATA_IN;
+                        received_data(((number_of_received_parallel_messages+1)
+                                *(PARALLEL_BUS_WIDTH-ZERO_PADDING_SIZE))-1 
+                            downto (number_of_received_parallel_messages)
+                                *(PARALLEL_BUS_WIDTH-ZERO_PADDING_SIZE)) 
+                            <= DATA_IN(PARALLEL_BUS_WIDTH-ZERO_PADDING_SIZE-1 downto 0);
                         number_of_received_parallel_messages <= number_of_received_parallel_messages + 1;
                     else
                         if number_of_received_parallel_messages = PARALLEL_FRAMES_PER_MESSAGE then
