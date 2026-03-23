@@ -5,71 +5,70 @@ use     ieee.std_logic_misc.all;
 
 entity UART_TX_Master is
   generic (
-    CLOCK_FREQ		:positive;			-- czestotliwosc zegata w [Hz]
-    MIN_BAUD_RATE		:positive;				-- minimalna predkosc nadawania w [bodach]
-    NUMBER_OF_WORD_BITS		:positive range 5 to 8;			-- liczba bitow slowa danych (5-8)
-    NUMBER_OF_PARITY_BITS       :natural range 0 to 1;                     -- liczba bitow parzystosci (0-1)
-    NUMBER_OF_STOP_BITS            :natural range 0 to 2;                     -- liczba bitow stopu (1-2)
-    PARITY_TYPE         :std_logic -- 0 to even, 1 to odd
+    CLOCK_FREQ		:positive;
+    MIN_BAUD_RATE		:positive;
+    NUMBER_OF_WORD_BITS		:positive range 5 to 8;
+    NUMBER_OF_PARITY_BITS       :natural range 0 to 1;
+    NUMBER_OF_STOP_BITS            :natural range 0 to 2;
+    PARITY_TYPE         :std_logic -- 0 is even, 1 is odd
   );
   
   port (
-    CLK	            :in  std_logic;					-- zegar taktujacy
-    RST		        :in  std_logic;					-- sygnal resetowania
-    CYCLES_PER_BIT	:in  natural range 0 to CLOCK_FREQ/MIN_BAUD_RATE;	-- liczba taktow zegara dla jednego bodu
-    WORD	        :in std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);	-- odebrane slowo danych
+    CLK	            :in  std_logic;
+    RST		        :in  std_logic;
+    CYCLES_PER_BIT	:in  natural range 0 to CLOCK_FREQ/MIN_BAUD_RATE;
+    WORD	        :in std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);
     WORD_READY      :in std_logic;
     
-    TX		        :out  std_logic;					-- odebrany sygnal szeregowy
-    BUSY            :out std_logic;					-- flaga potwierdzenia odbioru
-    TX_ERROR	    :out std_logic					-- flaga wykrycia bledu w odbiorze
+    TX		        :out  std_logic;
+    BUSY            :out std_logic;
+    TX_ERROR	    :out std_logic
   );
 end UART_TX_Master;
 
 architecture RTL of UART_TX_Master is
 
-  signal   output_word_buffer: std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);			-- podwojny rejestr sygnalu RX
+  signal   output_word_buffer: std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);
   signal    parity_bit :std_logic;
 
-  type     STATES_TYPE		is (IDLE_WAIT, TRANSMITTING_START, TRANSMITTING_WORD, TRANSMITTING_PARITY, TRANSMITTING_STOP);	-- lista etapow pracy odbiornika
-  signal   state		:STATES_TYPE;						-- rejestr maszyny stanow odbiornika
+  type     STATES_TYPE		is (IDLE_WAIT, TRANSMITTING_START, TRANSMITTING_WORD, TRANSMITTING_PARITY, TRANSMITTING_STOP);
+  signal   state		:STATES_TYPE;
 
-  constant MAX_CYCLES_FOR_BIT	:positive := CLOCK_FREQ/MIN_BAUD_RATE;		-- czas jednego bodu - liczba taktow zegara
-  signal   cycles_in_current_bit  	:natural range 0 to MAX_CYCLES_FOR_BIT-1;		-- licznik czasu jednego bodu
-  signal   number_of_bits_transmitted  	:natural range 0 to NUMBER_OF_WORD_BITS-1;			-- licznik odebranych bitow danych lub stopu
+  constant MAX_CYCLES_FOR_BIT	:positive := CLOCK_FREQ/MIN_BAUD_RATE;
+  signal   cycles_in_current_bit  	:natural range 0 to MAX_CYCLES_FOR_BIT-1;
+  signal   number_of_bits_transmitted  	:natural range 0 to NUMBER_OF_WORD_BITS-1;
 
-  signal   internal_error	:std_logic;					-- rejestr (flaga) wykrytego bledu odbioru
+  signal   internal_error	:std_logic;
 
 begin
-    -- badanie poprawnosci ustawien zegarow
     assert (CLOCK_FREQ >= 2 * MIN_BAUD_RATE)
     report "SERIAL_TX: nieprawidlowa wartosc parametru CLOCK_FREQ"
     severity error;
 
-   process (RST, CLK) is							-- proces odbiornika
-   begin								-- cialo procesu odbiornika
+   process (RST, CLK) is
+   begin								
 
-     if (RST='1') then							-- asynchroniczna inicjalizacja rejestrow
-       output_word_buffer	<= (others => '0');					-- wyzerowanie rejestru sygnalu RX
-       state	<= IDLE_WAIT;						-- poczatkowy stan pracy odbiornika
-       cycles_in_current_bit  <= 0;							-- wyzerowanie licznika czasu bodu
-       number_of_bits_transmitted  <= 0;							-- wyzerowanie licznika odebranych bitow
+     if (RST='1') then					
+       output_word_buffer	<= (others => '0');
+       state	<= IDLE_WAIT;					
+       cycles_in_current_bit  <= 0;				
+       number_of_bits_transmitted  <= 0;		
        
-       internal_error 	<= '0';							-- wyzerowanie rejestru bledu odbioru
+       internal_error 	<= '0';							 
        
        TX <= '1';
-       BUSY	<= '0';							-- wyzerowanie flagi potwierdzenia odbioru
-       TX_ERROR	<= '0';							-- wyzerowanie flagi wykrycia bledu w odbiorze
+       BUSY	<= '0';	
+       TX_ERROR	<= '0';							
 
-     elsif (rising_edge(CLK)) then					-- synchroniczna praca odbiornika
+     elsif (rising_edge(CLK)) then		
 
-       BUSY     <= '0';						-- defaultowe skasowanie flagi potwierdzenia odbioru
-       TX_ERROR       <= '0';						-- defaultowe skasowanie flagi wykrycia bledu w odbiorze
+       BUSY     <= '0';					
+       TX_ERROR       <= '0';			
        TX <= '1';
         
-       case state is							-- badanie aktualnego stanu maszyny stanow
+       case state is					
 
-         when IDLE_WAIT =>						-- obsluga stanu IDLE_WAIT
+         when IDLE_WAIT =>				
             BUSY <= '0';
             if (WORD_READY = '1') then
                 output_word_buffer <= WORD;
@@ -82,32 +81,27 @@ begin
                 end if;
             end if;
             
-         when TRANSMITTING_START =>							-- obsluga stanu RECEIVING_START
+         when TRANSMITTING_START =>							
             BUSY <= '1';
             TX <= '0';
-            if (cycles_in_current_bit /= CYCLES_PER_BIT -1) then				-- badanie odliczania pol okresu bodu
+            if (cycles_in_current_bit /= CYCLES_PER_BIT -1) then				
                 cycles_in_current_bit <= cycles_in_current_bit + 1;
-            else								-- zakonczenie odliczania polowy okresu bodu
+            else								
                 cycles_in_current_bit <= 0;
---                TX <= '0';						-- wyzerowanie licznika czasu bodu
-                state    <= TRANSMITTING_WORD;						-- przejscie do stanu DANA
-           end if;							-- zakonczenie instukcji warunkowej
+                state    <= TRANSMITTING_WORD;	
+           end if;							
 
-         when TRANSMITTING_WORD =>							-- obsluga stanu DANA
+         when TRANSMITTING_WORD =>							
             BUSY <= '1';
---            TX <= output_word_buffer(0);
-            TX <= output_word_buffer(output_word_buffer'right);  -- example: LSB first
+            TX <= output_word_buffer(output_word_buffer'right);
             if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
                 cycles_in_current_bit <= cycles_in_current_bit + 1;
                 
             else
                 cycles_in_current_bit <= 0;
         
-                -- SHIFT OUT CURRENT BIT (LSB first or MSB first depending on design)
---                output_word_buffer <= output_word_buffer(output_word_buffer'left-1 downto 0) & '0';
-                output_word_buffer <= '0' & output_word_buffer(output_word_buffer'left downto 1);
-        
-                -- bit counter
+                output_word_buffer <= '0' & output_word_buffer(output_word_buffer'left downto 1); -- shift
+                
                 if (number_of_bits_transmitted /= NUMBER_OF_WORD_BITS-1) then
                     number_of_bits_transmitted <= number_of_bits_transmitted + 1;
                 else
@@ -121,19 +115,17 @@ begin
                 
             end if;
 
-         when TRANSMITTING_PARITY =>						-- obsluga stanu PARZYSTOSC
+         when TRANSMITTING_PARITY =>						
             BUSY <= '1';
             TX <= parity_bit;
             if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
                 cycles_in_current_bit <= cycles_in_current_bit + 1;
             else
                 cycles_in_current_bit <= 0;
-
-                -- after parity bit -> go to STOP state
                 state <= TRANSMITTING_STOP;
             end if;
 
-         when TRANSMITTING_STOP =>							-- obsluga stanu STOP
+         when TRANSMITTING_STOP =>
             BUSY <= '1';
             TX <= '1';
             if (cycles_in_current_bit /= CYCLES_PER_BIT-1) then
@@ -141,24 +133,19 @@ begin
         
             else
                 cycles_in_current_bit <= 0;
-                -- transmit STOP bit = logic '1' (UART idle level)
-        
-                -- handle multiple stop bits
                 if (number_of_bits_transmitted /= NUMBER_OF_STOP_BITS-1) then
                     number_of_bits_transmitted <= number_of_bits_transmitted + 1;
                 else
-                    -- finished frame
                     number_of_bits_transmitted <= 0;
-                    -- go back to IDLE or ready state
                     report "TX: FRAME COMPLETE";
                     state <= IDLE_WAIT;
                 end if;
             end if;
 
-       end case;							-- zakonczenie instukcji warunkowego wyboru
+       end case;
 
-     end if;								-- zakonczenie instukcji warunkowej porcesu
+     end if;
 
-   end process;								-- zakonczenie ciala procesu
+   end process;
 
 end RTL;

@@ -36,15 +36,18 @@ entity testbench is
 end testbench;
 
 architecture Behavioral of testbench is
-
+    -- Process parameters
     constant CLOCK_FREQ :positive := 100_000_000;
     constant BAUD_RATE :positive := 20_000_000;
+    
+    -- UART parameters
     constant MIN_BAUD_RATE :positive := 110;				-- minimalna predkosc nadawania w [bodach]
     constant NUMBER_OF_WORD_BITS :positive := 8;			-- liczba bitow slowa danych (5-8)
     constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)
     constant NUMBER_OF_STOP_BITS    :positive := 2; 
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
+    -- Parallel parameters
     constant PARALLEL_BUS_WIDTH     :positive := 5;
     constant TESTER_ZERO_PADDING_SIZE :natural := 
         (PARALLEL_BUS_WIDTH - NUMBER_OF_WORD_BITS) when (PARALLEL_BUS_WIDTH > NUMBER_OF_WORD_BITS) else 0;
@@ -59,7 +62,7 @@ architecture Behavioral of testbench is
     signal parallel_master_data_out : std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
     signal parallel_done     : std_logic;
 
-    -- UART signals connecting Master and Slave RAM
+    -- UART signals for Master and Slave RAM
     signal master_tx : std_logic;
     signal master_rx : std_logic;
     signal slave_tx  : std_logic;
@@ -88,7 +91,7 @@ begin
     end process;
 
     -- Instantiate Tester (generates commands on parallel interface)
-    uut_tester : entity work.Tester -- uut means Unit Under Test
+    uut_tester : entity work.Tester
         generic map (
             PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
             PARALLEL_FRAMES_PER_MESSAGE => (PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS,
@@ -118,10 +121,6 @@ begin
             PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
             
             FIFO_NUMBER_OF_WORDS => 5
-            
---            FIFO_BUFFER_SIZE => 5,
---            FIFO_SINGLE_FRAME_SIZE => 5,
---            UART_FRAMES_PER_SINGLE_FRAME => 1
           )
         port map (
             CLK      => clk,
@@ -156,9 +155,8 @@ begin
             UART_TX => slave_tx
         );
 
-    -- Cross UART signals between Master and Slave
+    -- Connect master and slave UART
     master_rx <= slave_tx;
     slave_rx  <= master_tx;
---      master_rx <= master_tx;
-
+    
 end Behavioral;

@@ -90,15 +90,15 @@ begin
             
             case read_state is
                 when READ_IDLE_STATE =>
-                    if DONE = '1' then
+                    if DONE = '1' then -- Input data ready
                         received_data(((number_of_received_parallel_messages+1)
                                 *(PARALLEL_BUS_WIDTH-ZERO_PADDING_SIZE))-1 
                             downto (number_of_received_parallel_messages)
                                 *(PARALLEL_BUS_WIDTH-ZERO_PADDING_SIZE)) 
-                            <= DATA_IN(PARALLEL_BUS_WIDTH-ZERO_PADDING_SIZE-1 downto 0);
+                            <= DATA_IN(PARALLEL_BUS_WIDTH-ZERO_PADDING_SIZE-1 downto 0); -- Store input, ignoring leading zeros
                         number_of_received_parallel_messages <= number_of_received_parallel_messages + 1;
                     else
-                        if number_of_received_parallel_messages = PARALLEL_FRAMES_PER_MESSAGE then
+                        if number_of_received_parallel_messages = PARALLEL_FRAMES_PER_MESSAGE then -- Whole message received
                             read_state <= READ_RAM_STATE_RECEIVING;
                             number_of_received_parallel_messages <= 0;
                         end if;
