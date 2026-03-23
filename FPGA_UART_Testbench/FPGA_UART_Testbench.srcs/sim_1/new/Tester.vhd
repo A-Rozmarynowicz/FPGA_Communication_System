@@ -73,7 +73,7 @@ begin
                     START <= '0';
                     write_state <= WRITE_RAM_STATE_SENDING;
                 when WRITE_RAM_STATE_SENDING =>
-                    DATA_OUT <= std_logic_vector(to_unsigned(215, DATA_OUT'length));
+                    DATA_OUT <= std_logic_vector(to_unsigned(29, DATA_OUT'length));
                     START <= '1';
                     write_state <= WRITE_IDLE_STATE;
             end case;

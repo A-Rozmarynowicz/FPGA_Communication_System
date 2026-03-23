@@ -44,7 +44,8 @@ Generic (
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1;                     -- liczba bitow parzystosci (0-1)
         NUMBER_OF_STOP_BITS            :natural range 0 to 2;                     -- liczba bitow stopu (1-2)
         PARITY_TYPE         :std_logic; -- 0 to even, 1 to odd
-        UART_FRAMES_PER_MESSAGE :positive
+        UART_FRAMES_PER_MESSAGE :positive;
+        RESPONSE_MESSAGE_WIDTH :positive := 8
 );
 Port (
         CLK   : in std_logic;
@@ -56,9 +57,8 @@ Port (
 end UART_Slave_RAM;
 
 architecture Behavioral of UART_Slave_RAM is
-    constant RESPONSE_MESSAGE_WIDTH :positive := 8;
     constant FIFO_NUMBER_OF_WORDS :positive := 1;
-
+    
     signal rx_data   : std_logic_vector(NUMBER_OF_WORD_BITS-1 downto 0);
     signal rx_receive_complete  : std_logic;
     signal rx_error : std_logic;
@@ -152,7 +152,7 @@ begin
             end if;
             
             if interpret_received_data = '1' then
-                response_message <= std_logic_vector(to_unsigned(69, response_message'length));
+                response_message <= std_logic_vector(to_unsigned(28, response_message'length));
                 response_ready <= '1';
                 interpret_received_data <= '0';
                 final_received_data <= (others => '0');

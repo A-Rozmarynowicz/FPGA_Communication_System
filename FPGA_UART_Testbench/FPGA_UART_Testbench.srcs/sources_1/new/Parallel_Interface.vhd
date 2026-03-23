@@ -64,13 +64,19 @@ begin
     process(clk, rst)
     begin
         if RST = '1' then
-            DATA_OUT <= (others => '0');
-            BUSY <= '0';
             read_state    <= IDLE_READ_STATE;
             write_state <= IDLE_WRITE_STATE;
+            BUSY <= '0';
+            DATA_OUT <= (others => '0');
             DONE <= '0';
+            READING_COMPLETE <= '0';
+            DATA_RECEIVED <= (others => '0');
         elsif rising_edge(CLK) then
             BUSY <= '0';
+            DATA_OUT <= (others => '0');
+            DONE <= '0';
+            READING_COMPLETE <= '0';
+            DATA_RECEIVED <= (others => '0');
             case read_state is
                 when IDLE_READ_STATE =>
                     if (start = '1') then
@@ -80,6 +86,7 @@ begin
                     end if;
                 when READ_PARALLEL_STATE =>
                     READING_COMPLETE <= '0'; 
+                    read_state <= IDLE_READ_STATE;
             end case;
         
             case write_state is

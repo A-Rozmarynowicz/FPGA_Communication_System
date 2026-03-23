@@ -60,9 +60,9 @@ begin
        RX_ERROR	<= '0';							-- wyzerowanie flagi wykrycia bledu w odbiorze
 
      elsif (rising_edge(CLK)) then					-- synchroniczna praca odbiornika
-
        READY     <= '0';						-- defaultowe skasowanie flagi potwierdzenia odbioru
        RX_ERROR       <= '0';						-- defaultowe skasowanie flagi wykrycia bledu w odbiorze
+       WORD	<= (others => '0');
        input_rx_buffer(0) <= RX;						-- zarejestrowanie synchroniczne stanu sygnalu RX
        input_rx_buffer(1) <= input_rx_buffer(0);					-- zarejestrowanie dwoch kolejnych stanow sygnalu RX
 

@@ -40,12 +40,12 @@ architecture Behavioral of testbench is
     constant CLOCK_FREQ :positive := 100_000_000;
     constant BAUD_RATE :positive := 20_000_000;
     constant MIN_BAUD_RATE :positive := 110;				-- minimalna predkosc nadawania w [bodach]
-    constant NUMBER_OF_WORD_BITS :positive := 6;			-- liczba bitow slowa danych (5-8)
+    constant NUMBER_OF_WORD_BITS :positive := 8;			-- liczba bitow slowa danych (5-8)
     constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)
     constant NUMBER_OF_STOP_BITS    :positive := 2; 
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
-    constant PARALLEL_BUS_WIDTH     :positive := 8;
+    constant PARALLEL_BUS_WIDTH     :positive := 5;
     constant TESTER_ZERO_PADDING_SIZE :natural := 
         (PARALLEL_BUS_WIDTH - NUMBER_OF_WORD_BITS) when (PARALLEL_BUS_WIDTH > NUMBER_OF_WORD_BITS) else 0;
     
@@ -146,7 +146,8 @@ begin
             NUMBER_OF_PARITY_BITS   => NUMBER_OF_PARITY_BITS,                     -- liczba bitow parzystosci (0-1)
             NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
             PARITY_TYPE     => PARITY_TYPE,
-            UART_FRAMES_PER_MESSAGE => ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS)
+            UART_FRAMES_PER_MESSAGE => ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS),
+            RESPONSE_MESSAGE_WIDTH => PARALLEL_BUS_WIDTH
         )
         port map (
             CLK      => clk,
