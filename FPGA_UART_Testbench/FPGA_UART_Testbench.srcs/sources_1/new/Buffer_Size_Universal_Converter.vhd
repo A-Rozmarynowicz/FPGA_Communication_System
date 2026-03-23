@@ -74,7 +74,8 @@ begin
         elsif rising_edge(CLK) then
             if INPUT_READY = '1' then
                 if buffer_pointer*FIFO_SINGLE_FRAME_SIZE = FIFO_BUFFER_SIZE then
-                    report "BUFFER FULL -----------------------------<";
+                    report "BUFFER FULL -----------------------------<"
+                    severity error;
                 elsif buffer_pointer = FIFO_SINGLE_FRAME_SIZE then
                     null;
                 else

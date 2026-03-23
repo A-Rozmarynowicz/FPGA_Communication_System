@@ -44,7 +44,7 @@ architecture Behavioral of testbench is
     constant MIN_BAUD_RATE :positive := 110;				-- minimalna predkosc nadawania w [bodach]
     constant NUMBER_OF_WORD_BITS :positive := 8;			-- liczba bitow slowa danych (5-8)
     constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)
-    constant NUMBER_OF_STOP_BITS    :positive := 2; 
+    constant NUMBER_OF_STOP_BITS    :positive := 1; 
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
     -- Parallel parameters

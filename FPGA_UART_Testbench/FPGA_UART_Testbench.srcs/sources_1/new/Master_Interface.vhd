@@ -21,7 +21,9 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
+use     ieee.std_logic_unsigned.all;
+use     ieee.std_logic_misc.all;
+use     ieee.numeric_std.all;
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -33,21 +35,17 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity Master_Interface is
     generic (
-        CLOCK_FREQ		: positive := 100_000_000;			-- czestotliwosc zegata w [Hz]
+        CLOCK_FREQ		: positive := 100_000_000;		
         BAUD_RATE       : positive := 20_000_000;
-        MIN_BAUD_RATE		:positive := 110;				-- minimalna predkosc nadawania w [bodach]
-        NUMBER_OF_WORD_BITS		:positive range 5 to 8 := 8;			-- liczba bitow slowa danych (5-8)
-        NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;                     -- liczba bitow parzystosci (0-1)
-        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;                     -- liczba bitow stopu (1-2)
-        PARITY_TYPE         :std_logic := '0'; -- 0 to even, 1 to odd
+        MIN_BAUD_RATE		:positive := 110;			
+        NUMBER_OF_WORD_BITS		:positive range 5 to 8 := 8;			
+        NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;         
+        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 1;      
+        PARITY_TYPE         :std_logic := '0'; -- 0 is even, 1 is odd
         
         PARALLEL_BUS_WIDTH :positive range 4 to 10 := 5;
         
         FIFO_NUMBER_OF_WORDS :positive range 1 to 10 := 5
-        
---        FIFO_BUFFER_SIZE :positive := 12;
---        FIFO_SINGLE_FRAME_SIZE :positive := 12;
---        UART_FRAMES_PER_SINGLE_FRAME :positive := 2
       );
     Port (
         CLK   : in std_logic;
@@ -184,4 +182,18 @@ begin
             OUTPUT_BUSY => parallel_busy
         );
     
+    process (RST, CLK) is
+    begin
+        if (RST='1') then	
+            null;
+        elsif (rising_edge(CLK)) then
+            if rx_error = '1' then
+                report "RX Master: ERROR"
+                severity error;
+            end if;
+            if tx_error = '1' then
+                report "TX Master: ERROR"
+                severity error;
+            end if;
+        end if;
 end rtl;

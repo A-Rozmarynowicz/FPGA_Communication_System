@@ -149,7 +149,6 @@ begin
                  RX_ERROR <= '1';				
                 end if;							
                 state <= IDLE_WAIT;					
-                report "Value = " & integer'image(to_integer(unsigned(final_word_buffer)));
              end if;							
 
            end if;							
