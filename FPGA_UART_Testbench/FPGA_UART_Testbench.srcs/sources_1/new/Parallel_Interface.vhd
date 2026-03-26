@@ -44,6 +44,7 @@ entity Parallel_Interface is
         DATA_IN  : in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
         DATA_OUT : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0) := (others => '0');
         DONE  : out std_logic := '0';
+        PARALLEL_TESTER_DATA_STORED :in std_logic;
         
         READING_COMPLETE : out std_logic := '0';
         DATA_RECEIVED : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
@@ -98,7 +99,10 @@ begin
                         DATA_OUT <= INPUT_DATA_WORD;
                         DONE <= '1';
                         BUSY <= '1';
-                        write_state <= WRITE_PARALLEL_STATE;
+                        if PARALLEL_TESTER_DATA_STORED = '1' then
+                            DONE <= '0';
+                            write_state <= WRITE_PARALLEL_STATE;
+                        end if;
                     end if;
                 when WRITE_PARALLEL_STATE =>
                     DONE <= '0';

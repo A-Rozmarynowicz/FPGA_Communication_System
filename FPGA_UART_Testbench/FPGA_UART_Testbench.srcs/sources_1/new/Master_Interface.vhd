@@ -57,6 +57,7 @@ entity Master_Interface is
         PARALLEL_DONE  : out std_logic := '0';
         PARALLEL_RECEIVER_FULL :out std_logic := '0';
         PARALLEL_DATA_STORED :out std_logic := '0';
+        PARALLEL_TESTER_DATA_STORED :in std_logic;
 
         -- UART
         UART_TX : out std_logic;
@@ -143,6 +144,7 @@ begin
             
             DATA_OUT => PARALLEL_DATA_OUT,
             DONE    => PARALLEL_DONE,
+            PARALLEL_TESTER_DATA_STORED => PARALLEL_TESTER_DATA_STORED,
             
             READING_COMPLETE => parallel_reading_complete,
             DATA_RECEIVED => parallel_received_data,

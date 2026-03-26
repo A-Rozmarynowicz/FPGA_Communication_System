@@ -70,6 +70,7 @@ architecture Behavioral of testbench is
 
     signal parallel_receiver_full :std_logic;
     signal parallel_receiver_stored_data :std_logic;
+    signal parallel_tester_data_stored :std_logic;
 begin
 
     clk_process : process
@@ -106,6 +107,7 @@ begin
             DATA_OUT => parallel_master_data_in,
             DATA_IN => parallel_master_data_out,
             DONE        => parallel_done,
+            TESTER_DATA_STORED => parallel_tester_data_stored,
         
             RECEIVER_FULL => parallel_receiver_full,
             RECEIVER_DATA_STORED => parallel_receiver_stored_data
@@ -139,7 +141,8 @@ begin
             UART_RX       => master_rx,
             
             PARALLEL_RECEIVER_FULL => parallel_receiver_full,
-            PARALLEL_DATA_STORED => parallel_receiver_stored_data
+            PARALLEL_DATA_STORED => parallel_receiver_stored_data,
+            PARALLEL_TESTER_DATA_STORED => parallel_tester_data_stored
         );
 
     -- Instantiate Slave RAM (UART_Slave_RAM)
