@@ -48,7 +48,9 @@ entity Buffer_Size_Universal_Converter is
         
         OUTPUT_DATA :out std_logic_vector(OUTPUT_WORD_SIZE-1 downto 0) := (others => '0');
         OUTPUT_READY :out std_logic := '0';
-        OUTPUT_BUSY :in std_logic
+        OUTPUT_BUSY :in std_logic;
+        
+        BUFFER_FULL :out std_logic := '0'
     );
 end Buffer_Size_Universal_Converter;
 
@@ -73,14 +75,16 @@ begin
             current_output_frame_pointer <= 0;
             OUTPUT_READY <= '0';
             OUTPUT_DATA <= (others => '0');
+            BUFFER_FULL <= '0';
         elsif rising_edge(CLK) then
             OUTPUT_READY <= '0';
             OUTPUT_DATA <= (others => '0');
-            if INPUT_READY = '1' then
-                if buffer_pointer*FIFO_SINGLE_FRAME_SIZE = FIFO_BUFFER_SIZE then
-                    report "BUFFER FULL -----------------------------<"
-                    severity error;
-                elsif buffer_pointer = FIFO_SINGLE_FRAME_SIZE then
+            BUFFER_FULL <= '0';
+            if buffer_pointer*FIFO_SINGLE_FRAME_SIZE = FIFO_BUFFER_SIZE then
+                BUFFER_FULL <= '1';
+            end if;
+            if INPUT_READY = '1' and (buffer_pointer*FIFO_SINGLE_FRAME_SIZE /= FIFO_BUFFER_SIZE) then
+                if buffer_pointer = FIFO_SINGLE_FRAME_SIZE then
                     null;
                 else
                     buffer_pointer <= buffer_pointer + 1;
