@@ -45,7 +45,7 @@ entity Master_Interface is
         
         PARALLEL_BUS_WIDTH :positive range 4 to 10 := 5;
         
-        FIFO_NUMBER_OF_WORDS :positive range 1 to 10 := 5
+        FIFO_NUMBER_OF_WORDS :positive range 1 to 10 := 4
       );
     Port (
         CLK   : in std_logic;
