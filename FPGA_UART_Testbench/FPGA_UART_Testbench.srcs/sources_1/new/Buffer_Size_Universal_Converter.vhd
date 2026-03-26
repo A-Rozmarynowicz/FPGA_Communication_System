@@ -71,7 +71,11 @@ begin
             fifo_buffer <= (others => '0');
             buffer_pointer <= 0;
             current_output_frame_pointer <= 0;
+            OUTPUT_READY <= '0';
+            OUTPUT_DATA <= (others => '0');
         elsif rising_edge(CLK) then
+            OUTPUT_READY <= '0';
+            OUTPUT_DATA <= (others => '0');
             if INPUT_READY = '1' then
                 if buffer_pointer*FIFO_SINGLE_FRAME_SIZE = FIFO_BUFFER_SIZE then
                     report "BUFFER FULL -----------------------------<"
