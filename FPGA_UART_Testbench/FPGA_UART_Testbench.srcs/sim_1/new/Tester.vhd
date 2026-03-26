@@ -56,7 +56,7 @@ entity Tester is
 end Tester;
 
 architecture Behavioral of Tester is
-    constant CYCLES_BETWEEN_WRITING :positive := 100;
+    constant CYCLES_BETWEEN_WRITING :positive := 70;
     signal cycles_left_unitl_writing :natural range 0 to CYCLES_BETWEEN_WRITING := 0;
 
     type WRITE_STATE_TYPE is (WRITE_IDLE_STATE, WRITE_RAM_STATE_SENDING, WRITE_STATE_WAITING);
@@ -86,7 +86,9 @@ begin
             has_just_read_data <= '0';
             case write_state is
                 when WRITE_IDLE_STATE =>
-                    write_state <= WRITE_RAM_STATE_SENDING;
+                    if RECEIVER_FULL = '0' then
+                        write_state <= WRITE_RAM_STATE_SENDING;
+                    end if;
                 when WRITE_RAM_STATE_SENDING =>
                     DATA_OUT <= std_logic_vector(to_unsigned(29, DATA_OUT'length));
                     START <= '1';
