@@ -47,7 +47,9 @@ entity Tester is
         DATA_OUT  : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0):= (others => '0');
 
         DATA_IN : in  std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
-        DONE         : in  std_logic
+        DONE         : in  std_logic;
+        
+        RECEIVER_FULL :in std_logic
     );
 end Tester;
 

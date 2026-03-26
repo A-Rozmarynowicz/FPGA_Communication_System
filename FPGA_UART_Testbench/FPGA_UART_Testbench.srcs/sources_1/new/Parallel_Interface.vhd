@@ -50,7 +50,10 @@ entity Parallel_Interface is
         
         INPUT_DATA_WORD :in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
         INPUT_DATA_READY :in std_logic;
-        BUSY :out std_logic
+        BUSY :out std_logic;
+        
+        BUFFER_CONVERTER_FULL :in std_logic;
+        BUFFER_FULL :out std_logic := '0'
     );
 end Parallel_Interface;
 
@@ -103,4 +106,6 @@ begin
             end case;
         end if;
      end process;
+     
+     BUFFER_FULL <= BUFFER_CONVERTER_FULL;
 end rt1;

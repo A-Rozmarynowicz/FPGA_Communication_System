@@ -74,6 +74,8 @@ architecture Behavioral of UART_Slave_RAM is
     
     signal response_message :std_logic_vector(RESPONSE_MESSAGE_WIDTH-1 downto 0);
     signal response_ready :std_logic := '0';
+    
+    signal buffer_converter_full :std_logic := '0';
 begin
     uart_rt_inst: entity work.UART_TX_Master
         generic map (
@@ -130,7 +132,9 @@ begin
             INPUT_READY => response_ready,
             OUTPUT_DATA => tx_data,
             OUTPUT_READY => tx_word_ready,
-            OUTPUT_BUSY => tx_busy
+            OUTPUT_BUSY => tx_busy,
+            
+            BUFFER_FULL => buffer_converter_full
         );
     
     process(CLK, RST)

@@ -55,6 +55,7 @@ entity Master_Interface is
         PARALLEL_DATA_IN  : in std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0);
         PARALLEL_DATA_OUT : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0) := (others => '0');
         PARALLEL_DONE  : out std_logic := '0';
+        PARALLEL_RECEIVER_FULL :out std_logic := '0';
 
         -- UART
         UART_TX : out std_logic;
@@ -83,6 +84,8 @@ architecture rtl of Master_Interface is
     signal parallel_output_ready : std_logic;
     signal parallel_busy :std_logic;
 
+    signal parallel_to_uart_converter_full :std_logic := '0';
+    signal uart_to_parallel_converter_full :std_logic := '0';
 begin
 
     uart_rt_inst: entity work.UART_TX_Master
@@ -145,7 +148,10 @@ begin
             
             INPUT_DATA_WORD => parallel_output_data,
             INPUT_DATA_READY => parallel_output_ready,
-            BUSY => parallel_busy
+            BUSY => parallel_busy,
+            
+            BUFFER_CONVERTER_FULL => parallel_to_uart_converter_full,
+            BUFFER_FULL => PARALLEL_RECEIVER_FULL
         );
     
     buffer_size_parallel_to_uart_converter : entity work.Buffer_Size_Universal_Converter
@@ -162,7 +168,8 @@ begin
             INPUT_READY => parallel_reading_complete,
             OUTPUT_DATA => tx_data,
             OUTPUT_READY => tx_word_ready,
-            OUTPUT_BUSY => tx_busy
+            OUTPUT_BUSY => tx_busy,
+            BUFFER_FULL => parallel_to_uart_converter_full
         );
         
         buffer_size_uart_to_parallel_converter : entity work.Buffer_Size_Universal_Converter
@@ -179,7 +186,8 @@ begin
             INPUT_READY => rx_receive_complete,
             OUTPUT_DATA => parallel_output_data,
             OUTPUT_READY => parallel_output_ready,
-            OUTPUT_BUSY => parallel_busy
+            OUTPUT_BUSY => parallel_busy,
+            BUFFER_FULL => uart_to_parallel_converter_full
         );
     
     process (RST, CLK) is
