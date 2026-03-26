@@ -82,7 +82,7 @@ begin
             DATA_RECEIVED <= (others => '0');
             case read_state is
                 when IDLE_READ_STATE =>
-                    if (start = '1') then
+                    if (start = '1') and (BUFFER_CONVERTER_FULL = '0') then
                         DATA_RECEIVED <= DATA_IN;
                         READING_COMPLETE <= '1';
                         read_state <= READ_PARALLEL_STATE;

@@ -56,6 +56,7 @@ entity Master_Interface is
         PARALLEL_DATA_OUT : out std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0) := (others => '0');
         PARALLEL_DONE  : out std_logic := '0';
         PARALLEL_RECEIVER_FULL :out std_logic := '0';
+        PARALLEL_DATA_STORED :out std_logic := '0';
 
         -- UART
         UART_TX : out std_logic;
@@ -189,6 +190,8 @@ begin
             OUTPUT_BUSY => parallel_busy,
             BUFFER_FULL => uart_to_parallel_converter_full
         );
+    
+    PARALLEL_DATA_STORED <= parallel_reading_complete;
     
     process (RST, CLK) is
     begin
