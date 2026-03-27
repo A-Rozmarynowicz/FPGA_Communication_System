@@ -80,6 +80,8 @@ begin
     process(CLK, RST)
         variable ram_max_address :positive := (2 ** RAM_ADDRESS_SIZE) - 1;
         variable ram_current_write_address :natural := 0;
+        variable ram_current_read_address :natural := 0;
+        variable ram_read_value :natural := 0;
         variable seed1, seed2 : positive := 1;
         variable rand         : real;
         variable int_rand     : integer;
@@ -94,6 +96,8 @@ begin
             has_just_read_data <= '0';
             read_or_write := '1';
             ram_current_write_address := 0;
+            ram_current_read_address := 0;
+            ram_read_value := 0;
         elsif rising_edge(CLK) then
             START <= '0';
             DATA_OUT <= (others => '0');
@@ -155,8 +159,13 @@ begin
                             number_of_received_parallel_messages <= 0;
                         end if;
                     end if;
+                    
                 when READ_RAM_STATE_RECEIVING =>
-                    report "Tester: received message = " & integer'image(to_integer(unsigned(received_data)));
+                    ram_current_read_address := to_integer(unsigned(received_data(RAM_ADDRESS_SIZE downto 1)));
+                    ram_read_value := to_integer(unsigned(received_data(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1)));
+                    report "TESTER: READ FROM RAM ADDRESS: " & integer'image(ram_current_read_address);
+                    report "TESTER: RECEIVED RAM VALUE= " & integer'image(ram_read_value);
+                    report "TESTER: ACTUAL RAM VALUE= " & integer'image(to_integer(unsigned(mem(ram_current_read_address))));
                     received_data <= (others => '0');
                     read_state <= READ_IDLE_STATE;
             end case;
