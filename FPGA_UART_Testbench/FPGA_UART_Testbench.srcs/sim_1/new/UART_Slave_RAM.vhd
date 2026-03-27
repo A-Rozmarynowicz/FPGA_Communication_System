@@ -145,9 +145,12 @@ begin
     
     process(CLK, RST)
         variable RAM_address :std_logic_vector(2 downto 0) := (others => '0');
+        variable read_ram_pipeline_ready :std_logic := '0';
     begin
         if RST = '1' then
             interpret_received_data <= '0';
+            read_ram_pipeline_ready := '0';
+            RAM_address := (others => '0');
             -- TODO
         elsif rising_edge(CLK) then
             if rx_receive_complete = '1' then
@@ -170,18 +173,23 @@ begin
                     report "WRITING TO RAM: ADDRESS: " & integer'image(to_integer(unsigned(RAM_address)));
                     report "WRITING TO RAM: VALUE: " & integer'image(to_integer(unsigned(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1))));
                 else -- READING
-                    response_ready <= '1';
+                    read_ram_pipeline_ready := '1';
                     response_message(0) <= '0';
                     response_message(RAM_ADDRESS_SIZE downto 1) <= RAM_address;
                     response_message(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= mem(to_integer(unsigned(RAM_address)));
-                    report "READING RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))));
-                    report "READING RAM: VALUE: " & integer'image(to_integer(unsigned(response_message)));
                 end if;
                 
                 interpret_received_data <= '0';
             --    final_received_data <= (others => '0');
             else
-                response_ready <= '0';
+                if read_ram_pipeline_ready = '1' then
+                    read_ram_pipeline_ready := '0';
+                    response_ready <= '1';
+                    report "READING RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))));
+                    report "READING RAM: VALUE: " & integer'image(to_integer(unsigned(response_message)));
+                else
+                    response_ready <= '0';
+                end if;
             end if;
             
            
