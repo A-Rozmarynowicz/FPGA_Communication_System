@@ -78,13 +78,13 @@ architecture Behavioral of Tester is
 begin
 
     process(CLK, RST)
-        variable ram_max_address :positive := 3;
-        variable ram_current_address :natural := 0;
+        variable ram_max_address :positive := (2 ** RAM_ADDRESS_SIZE) - 1;
+        variable ram_current_write_address :natural := 0;
         variable seed1, seed2 : positive := 1;
         variable rand         : real;
         variable int_rand     : integer;
         variable RAM_MAX_VALUE :positive := (2 ** RAM_word_size)-1; -- = 15
-        
+        variable read_or_write :std_logic := '1'; --1 is write
     begin
         if RST = '1' then
             START    <= '0';
@@ -92,6 +92,8 @@ begin
             TESTER_DATA_STORED <= '0';
             write_state    <= WRITE_IDLE_STATE;
             has_just_read_data <= '0';
+            read_or_write := '1';
+            ram_current_write_address := 0;
         elsif rising_edge(CLK) then
             START <= '0';
             DATA_OUT <= (others => '0');
@@ -103,20 +105,28 @@ begin
                         write_state <= WRITE_RAM_STATE_SENDING;
                     end if;
                 when WRITE_RAM_STATE_SENDING =>
-                    DATA_OUT(0) <= '1';
+                    DATA_OUT(0) <= '0';
+                    if read_or_write = '1' then
+                        DATA_OUT(0) <= '1';
+                        uniform(seed1, seed2, rand); -- 1 and 2 are seeds
+                        int_rand := integer(rand * real(RAM_MAX_VALUE));
+                        DATA_OUT(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= std_logic_vector(to_unsigned(int_rand, RAM_word_size));
+                        mem(ram_current_write_address)
+                            <= std_logic_vector(to_unsigned(int_rand, RAM_WORD_SIZE));
+                    end if;
                     DATA_OUT(RAM_ADDRESS_SIZE downto 1) 
-                        <= std_logic_vector(to_unsigned(ram_current_address, RAM_ADDRESS_SIZE));
-                    uniform(seed1, seed2, rand); -- 1 and 2 are seeds
-                    int_rand := integer(rand * real(RAM_MAX_VALUE));
-                    DATA_OUT(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= std_logic_vector(to_unsigned(int_rand, RAM_word_size));
-                    mem(ram_current_address)
-                        <= std_logic_vector(to_unsigned(int_rand, RAM_WORD_SIZE));
+                        <= std_logic_vector(to_unsigned(ram_current_write_address, RAM_ADDRESS_SIZE));
                     START <= '1';
                     write_state <= WRITE_STATE_WAITING;
                 when WRITE_STATE_WAITING =>
                     START <= '1';
                     if RECEIVER_DATA_STORED = '1' then
-                        ram_current_address := ram_current_address + 1;
+                        if ram_current_write_address = ram_max_address then
+                            ram_current_write_address := 0;
+                            read_or_write := not read_or_write;
+                        else
+                            ram_current_write_address := ram_current_write_address + 1;
+                        end if;
                         START <= '0';
                         write_state <= WRITE_STATE_SWITCHING;
                         cycles_left_unitl_writing <= CYCLES_BETWEEN_WRITING;

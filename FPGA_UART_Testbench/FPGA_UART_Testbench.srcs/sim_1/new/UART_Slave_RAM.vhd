@@ -80,8 +80,6 @@ architecture Behavioral of UART_Slave_RAM is
     
     constant RAM_word_size :positive := RESPONSE_MESSAGE_WIDTH - RAM_ADDRESS_SIZE - 1;
     
-    signal RAM_address :std_logic_vector(2 downto 0) := (others => '0');
-    
     type ram_type is array (0 to 255) of std_logic_vector(RAM_word_size-1 downto 0);
     signal mem : ram_type := (others => (others => '0'));
 begin
@@ -146,6 +144,7 @@ begin
         );
     
     process(CLK, RST)
+        variable RAM_address :std_logic_vector(2 downto 0) := (others => '0');
     begin
         if RST = '1' then
             interpret_received_data <= '0';
@@ -164,16 +163,17 @@ begin
             end if;
             
             if interpret_received_data = '1' then
-                RAM_address <= final_received_data(3 downto 1);
+                RAM_address := final_received_data(3 downto 1);
                 if final_received_data(0) = '1' then --WRITING
                     mem(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))))
                         <= final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1);
-                    report "WRITING TO RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(3 downto 1))));
+                    report "WRITING TO RAM: ADDRESS: " & integer'image(to_integer(unsigned(RAM_address)));
                     report "WRITING TO RAM: VALUE: " & integer'image(to_integer(unsigned(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1))));
                 else -- READING
                     response_ready <= '1';
-                    response_message(RAM_word_size-1 downto 0) <= mem(to_integer(unsigned(final_received_data(3 downto 1))));
-                    response_message(RESPONSE_MESSAGE_WIDTH-1 downto RAM_WORD_SIZE) <= (others => '0');
+                    response_message(RESPONSE_MESSAGE_WIDTH-1) = '0';
+                    response_message(RAM_ADDRESS_SIZE-1 downto 0) <= RAM_address;
+                    response_message(RESPONSE_MESSAGE_WIDTH-2 downto RAM_ADDRESS_SIZE) <= mem(to_integer(unsigned(RAM_address)));
                     report "READING RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))));
                     report "READING RAM: VALUE: " & integer'image(to_integer(unsigned(response_message)));
                 end if;
