@@ -166,7 +166,7 @@ begin
             if interpret_received_data = '1' then
                 RAM_address <= final_received_data(3 downto 1);
                 if final_received_data(0) = '1' then --WRITING
-                    mem(to_integer(unsigned(final_received_data(3 downto 1))))
+                    mem(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))))
                         <= final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1);
                     report "WRITING TO RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(3 downto 1))));
                     report "WRITING TO RAM: VALUE: " & integer'image(to_integer(unsigned(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1))));
@@ -174,7 +174,7 @@ begin
                     response_ready <= '1';
                     response_message(RAM_word_size-1 downto 0) <= mem(to_integer(unsigned(final_received_data(3 downto 1))));
                     response_message(RESPONSE_MESSAGE_WIDTH-1 downto RAM_WORD_SIZE) <= (others => '0');
-                    report "READING RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(3 downto 1))));
+                    report "READING RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))));
                     report "READING RAM: VALUE: " & integer'image(to_integer(unsigned(response_message)));
                 end if;
                 

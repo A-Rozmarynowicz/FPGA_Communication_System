@@ -23,6 +23,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+use IEEE.MATH_REAL.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -37,7 +38,8 @@ entity Tester is
     generic (
         PARALLEL_BUS_WIDTH :positive range 4 to 10;
         PARALLEL_FRAMES_PER_MESSAGE :positive;
-        ZERO_PADDING_SIZE :natural
+        ZERO_PADDING_SIZE :natural;
+        RAM_ADDRESS_SIZE :positive := 3
     );
     port (
         CLK      : in  std_logic;
@@ -59,7 +61,7 @@ architecture Behavioral of Tester is
     constant CYCLES_BETWEEN_WRITING :positive := 70;
     signal cycles_left_unitl_writing :natural range 0 to CYCLES_BETWEEN_WRITING := 0;
 
-    type WRITE_STATE_TYPE is (WRITE_IDLE_STATE, WRITE_RAM_STATE_SENDING, WRITE_STATE_WAITING);
+    type WRITE_STATE_TYPE is (WRITE_IDLE_STATE, WRITE_RAM_STATE_SENDING, WRITE_STATE_WAITING, WRITE_STATE_SWITCHING);
     signal write_state : WRITE_STATE_TYPE := WRITE_IDLE_STATE;
     
     type READ_STATE_TYPE is (READ_IDLE_STATE, READ_RAM_STATE_RECEIVING);
@@ -69,9 +71,20 @@ architecture Behavioral of Tester is
     
     signal received_data :std_logic_vector((PARALLEL_BUS_WIDTH*PARALLEL_FRAMES_PER_MESSAGE)-1 downto 0) := (others => '0');
     signal number_of_received_parallel_messages :natural range 0 to PARALLEL_FRAMES_PER_MESSAGE := 0;
+    
+    constant RAM_word_size :positive := PARALLEL_BUS_WIDTH - RAM_ADDRESS_SIZE - 1;
+    type ram_type is array (0 to 255) of std_logic_vector(RAM_word_size-1 downto 0);
+    signal mem : ram_type := (others => (others => '0'));
 begin
 
     process(CLK, RST)
+        variable ram_max_address :positive := 3;
+        variable ram_current_address :natural := 0;
+        variable seed1, seed2 : positive := 1;
+        variable rand         : real;
+        variable int_rand     : integer;
+        variable RAM_MAX_VALUE :positive := (2 ** RAM_word_size)-1; -- = 15
+        
     begin
         if RST = '1' then
             START    <= '0';
@@ -90,15 +103,25 @@ begin
                         write_state <= WRITE_RAM_STATE_SENDING;
                     end if;
                 when WRITE_RAM_STATE_SENDING =>
---                    DATA_OUT <= std_logic_vector(to_unsigned(29, DATA_OUT'length));
-                    DATA_OUT <= b"01110111";
+                    DATA_OUT(0) <= '1';
+                    DATA_OUT(RAM_ADDRESS_SIZE downto 1) 
+                        <= std_logic_vector(to_unsigned(ram_current_address, RAM_ADDRESS_SIZE));
+                    uniform(seed1, seed2, rand); -- 1 and 2 are seeds
+                    int_rand := integer(rand * real(RAM_MAX_VALUE));
+                    DATA_OUT(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= std_logic_vector(to_unsigned(int_rand, RAM_word_size));
+                    mem(ram_current_address)
+                        <= std_logic_vector(to_unsigned(int_rand, RAM_WORD_SIZE));
+                    START <= '1';
+                    write_state <= WRITE_STATE_WAITING;
+                when WRITE_STATE_WAITING =>
                     START <= '1';
                     if RECEIVER_DATA_STORED = '1' then
+                        ram_current_address := ram_current_address + 1;
                         START <= '0';
-                        write_state <= WRITE_STATE_WAITING;
+                        write_state <= WRITE_STATE_SWITCHING;
                         cycles_left_unitl_writing <= CYCLES_BETWEEN_WRITING;
                     end if;
-                when WRITE_STATE_WAITING =>
+                when WRITE_STATE_SWITCHING =>
                     cycles_left_unitl_writing <= cycles_left_unitl_writing - 1;
                     if cycles_left_unitl_writing = 1 then
                         write_state <= WRITE_IDLE_STATE;
