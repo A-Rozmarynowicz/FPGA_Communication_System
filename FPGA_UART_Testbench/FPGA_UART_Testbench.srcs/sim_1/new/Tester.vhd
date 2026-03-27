@@ -90,7 +90,8 @@ begin
                         write_state <= WRITE_RAM_STATE_SENDING;
                     end if;
                 when WRITE_RAM_STATE_SENDING =>
-                    DATA_OUT <= std_logic_vector(to_unsigned(29, DATA_OUT'length));
+--                    DATA_OUT <= std_logic_vector(to_unsigned(29, DATA_OUT'length));
+                    DATA_OUT <= b"01110111";
                     START <= '1';
                     if RECEIVER_DATA_STORED = '1' then
                         START <= '0';

@@ -45,7 +45,8 @@ Generic (
         NUMBER_OF_STOP_BITS            :natural range 0 to 2;                  
         PARITY_TYPE         :std_logic; -- 0 is even, 1 is odd
         UART_FRAMES_PER_MESSAGE :positive;
-        RESPONSE_MESSAGE_WIDTH :positive := 8
+        RESPONSE_MESSAGE_WIDTH :positive := 8;
+        RAM_ADDRESS_SIZE :positive := 3
 );
 Port (
         CLK   : in std_logic;
@@ -76,6 +77,13 @@ architecture Behavioral of UART_Slave_RAM is
     signal response_ready :std_logic := '0';
     
     signal buffer_converter_full :std_logic := '0';
+    
+    constant RAM_word_size :positive := RESPONSE_MESSAGE_WIDTH - RAM_ADDRESS_SIZE - 1;
+    
+    signal RAM_address :std_logic_vector(2 downto 0) := (others => '0');
+    
+    type ram_type is array (0 to 255) of std_logic_vector(RAM_word_size-1 downto 0);
+    signal mem : ram_type := (others => (others => '0'));
 begin
     uart_rt_inst: entity work.UART_TX_Master
         generic map (
@@ -156,10 +164,22 @@ begin
             end if;
             
             if interpret_received_data = '1' then
-                response_message <= std_logic_vector(to_unsigned(28, response_message'length));
-                response_ready <= '1';
+                RAM_address <= final_received_data(3 downto 1);
+                if final_received_data(0) = '1' then --WRITING
+                    mem(to_integer(unsigned(final_received_data(3 downto 1))))
+                        <= final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1);
+                    report "WRITING TO RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(3 downto 1))));
+                    report "WRITING TO RAM: VALUE: " & integer'image(to_integer(unsigned(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1))));
+                else -- READING
+                    response_ready <= '1';
+                    response_message(RAM_word_size-1 downto 0) <= mem(to_integer(unsigned(final_received_data(3 downto 1))));
+                    response_message(RESPONSE_MESSAGE_WIDTH-1 downto RAM_WORD_SIZE) <= (others => '0');
+                    report "READING RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(3 downto 1))));
+                    report "READING RAM: VALUE: " & integer'image(to_integer(unsigned(response_message)));
+                end if;
+                
                 interpret_received_data <= '0';
-                final_received_data <= (others => '0');
+            --    final_received_data <= (others => '0');
             else
                 response_ready <= '0';
             end if;
