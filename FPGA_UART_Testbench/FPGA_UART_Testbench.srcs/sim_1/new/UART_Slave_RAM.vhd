@@ -171,9 +171,9 @@ begin
                     report "WRITING TO RAM: VALUE: " & integer'image(to_integer(unsigned(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1))));
                 else -- READING
                     response_ready <= '1';
-                    response_message(RESPONSE_MESSAGE_WIDTH-1) = '0';
-                    response_message(RAM_ADDRESS_SIZE-1 downto 0) <= RAM_address;
-                    response_message(RESPONSE_MESSAGE_WIDTH-2 downto RAM_ADDRESS_SIZE) <= mem(to_integer(unsigned(RAM_address)));
+                    response_message(0) <= '0';
+                    response_message(RAM_ADDRESS_SIZE downto 1) <= RAM_address;
+                    response_message(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= mem(to_integer(unsigned(RAM_address)));
                     report "READING RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))));
                     report "READING RAM: VALUE: " & integer'image(to_integer(unsigned(response_message)));
                 end if;
