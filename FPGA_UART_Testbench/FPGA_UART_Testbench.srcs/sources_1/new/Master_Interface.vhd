@@ -43,7 +43,7 @@ entity Master_Interface is
         NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 1;      
         PARITY_TYPE         :std_logic := '0'; -- 0 is even, 1 is odd
         
-        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 5;
+        PARALLEL_BUS_WIDTH :positive range 4 to 10 := 8;
         
         FIFO_NUMBER_OF_WORDS :positive range 1 to 10 := 4
       );

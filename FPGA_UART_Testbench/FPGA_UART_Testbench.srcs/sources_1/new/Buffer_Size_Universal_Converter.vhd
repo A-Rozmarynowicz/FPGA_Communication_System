@@ -89,8 +89,10 @@ begin
                 else
                     buffer_pointer <= buffer_pointer + 1;
                     
-                    fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + INPUT_WORD_SIZE + buffer_zero_padding_size - 1 
-                        downto (buffer_pointer - 1+1)*FIFO_SINGLE_FRAME_SIZE + INPUT_WORD_SIZE) <= (others => '0');
+                    if buffer_zero_padding_size > 0 then
+                        fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + INPUT_WORD_SIZE + buffer_zero_padding_size - 1 
+                            downto (buffer_pointer - 1+1)*FIFO_SINGLE_FRAME_SIZE + INPUT_WORD_SIZE) <= (others => '0');
+                    end if;
                     fifo_buffer((buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE + INPUT_WORD_SIZE - 1 
                         downto (buffer_pointer-1+1)*FIFO_SINGLE_FRAME_SIZE ) <= INPUT_DATA;
                     null;

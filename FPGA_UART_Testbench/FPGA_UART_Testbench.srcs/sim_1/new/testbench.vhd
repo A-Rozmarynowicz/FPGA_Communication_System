@@ -48,7 +48,7 @@ architecture Behavioral of testbench is
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
     -- Parallel parameters
-    constant PARALLEL_BUS_WIDTH     :positive := 5;
+    constant PARALLEL_BUS_WIDTH     :positive := 8;
     constant TESTER_ZERO_PADDING_SIZE :natural := 
         (PARALLEL_BUS_WIDTH - NUMBER_OF_WORD_BITS) when (PARALLEL_BUS_WIDTH > NUMBER_OF_WORD_BITS) else 0;
     
