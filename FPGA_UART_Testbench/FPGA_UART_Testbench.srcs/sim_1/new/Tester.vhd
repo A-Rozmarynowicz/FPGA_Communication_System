@@ -82,6 +82,7 @@ begin
         variable ram_current_write_address :natural := 0;
         variable ram_current_read_address :natural := 0;
         variable ram_read_value :natural := 0;
+        variable actual_ram_value :natural := 0;
         variable seed1, seed2 : positive := 1;
         variable rand         : real;
         variable int_rand     : integer;
@@ -163,9 +164,10 @@ begin
                 when READ_RAM_STATE_RECEIVING =>
                     ram_current_read_address := to_integer(unsigned(received_data(RAM_ADDRESS_SIZE downto 1)));
                     ram_read_value := to_integer(unsigned(received_data(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1)));
+                    actual_ram_value := to_integer(unsigned(mem(ram_current_read_address)));
                     report "TESTER: READ FROM RAM ADDRESS: " & integer'image(ram_current_read_address);
                     report "TESTER: RECEIVED RAM VALUE= " & integer'image(ram_read_value);
-                    report "TESTER: ACTUAL RAM VALUE= " & integer'image(to_integer(unsigned(mem(ram_current_read_address))));
+                    report "TESTER: ACTUAL RAM VALUE= " & integer'image(actual_ram_value);
                     received_data <= (others => '0');
                     read_state <= READ_IDLE_STATE;
             end case;

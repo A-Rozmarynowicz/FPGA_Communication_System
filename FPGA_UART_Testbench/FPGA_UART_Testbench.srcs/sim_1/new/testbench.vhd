@@ -52,6 +52,9 @@ architecture Behavioral of testbench is
     constant TESTER_ZERO_PADDING_SIZE :natural := 
         (PARALLEL_BUS_WIDTH - NUMBER_OF_WORD_BITS) when (PARALLEL_BUS_WIDTH > NUMBER_OF_WORD_BITS) else 0;
     
+    -- RAM
+    constant RAM_ADDRESS_SIZE :positive := 3;
+    
     -- Clock and reset
     signal clk : std_logic := '0';
     signal rst : std_logic := '1';
@@ -97,7 +100,8 @@ begin
         generic map (
             PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
             PARALLEL_FRAMES_PER_MESSAGE => (PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS,
-            ZERO_PADDING_SIZE => TESTER_ZERO_PADDING_SIZE
+            ZERO_PADDING_SIZE => TESTER_ZERO_PADDING_SIZE,
+            RAM_ADDRESS_SIZE => RAM_ADDRESS_SIZE
         )
         port map (
             CLK      => clk,
@@ -156,7 +160,8 @@ begin
             NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
             PARITY_TYPE     => PARITY_TYPE,
             UART_FRAMES_PER_MESSAGE => ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS),
-            RESPONSE_MESSAGE_WIDTH => PARALLEL_BUS_WIDTH
+            RESPONSE_MESSAGE_WIDTH => PARALLEL_BUS_WIDTH,
+            RAM_ADDRESS_SIZE => RAM_ADDRESS_SIZE
         )
         port map (
             CLK      => clk,
