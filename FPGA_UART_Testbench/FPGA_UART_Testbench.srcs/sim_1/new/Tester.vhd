@@ -126,6 +126,20 @@ begin
                         DATA_OUT(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= std_logic_vector(to_unsigned(int_rand, RAM_word_size));
                         mem(ram_current_write_address)
                             <= std_logic_vector(to_unsigned(int_rand, RAM_WORD_SIZE));
+                        report "TESTER: Sending: " &
+                           to_hstring(to_unsigned(int_rand, RAM_word_size)) &
+                           " to adr: " &
+                           to_hstring(to_unsigned(ram_current_write_address, RAM_ADDRESS_SIZE)) &
+                           "; we: 0x" & std_logic'image(read_or_write) &
+                           " -> frame: 0x" & to_hstring(DATA_OUT) &
+                           " @ time: " & time'image(now);
+                    else
+                        report "TESTER: Reading: " &
+                           to_hstring(to_unsigned(int_rand, RAM_word_size)) &
+                           " from adr: " &
+                           to_hstring(to_unsigned(ram_current_write_address, RAM_ADDRESS_SIZE)) &
+                           " -> frame: 0x" & to_hstring(DATA_OUT) &
+                           " @ time: " & time'image(now);
                     end if;
                     DATA_OUT(RAM_ADDRESS_SIZE downto 1) 
                         <= std_logic_vector(to_unsigned(ram_current_write_address, RAM_ADDRESS_SIZE));
@@ -173,9 +187,28 @@ begin
                     ram_current_read_address := to_integer(unsigned(received_data(RAM_ADDRESS_SIZE downto 1)));
                     ram_read_value := to_integer(unsigned(received_data(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1)));
                     actual_ram_value := to_integer(unsigned(mem(ram_current_read_address)));
-                    report "TESTER: READ FROM RAM ADDRESS: " & integer'image(ram_current_read_address);
-                    report "TESTER: RECEIVED RAM VALUE= " & integer'image(ram_read_value);
-                    report "TESTER: ACTUAL RAM VALUE= " & integer'image(actual_ram_value);
+                    assert ram_read_value = actual_ram_value
+                        report "TESTER: Asserting: reference is: " &
+                               to_hstring(to_unsigned(actual_ram_value, RAM_word_size)) &
+                               " @ adr: " &
+                               to_hstring(to_unsigned(ram_current_read_address, RAM_ADDRESS_SIZE)) &
+                               " -> got: 0x" & to_hstring(to_unsigned(ram_read_value, RAM_word_size)) &
+                               " - ERROR! Stop simulation" &
+                               " @ time: " & time'image(now)
+                        severity failure;
+                        
+                    report "TESTER: Asserting: reference is: " &
+                           to_hstring(to_unsigned(actual_ram_value, RAM_word_size)) &
+                           " @ adr: " &
+                           to_hstring(to_unsigned(ram_current_read_address, RAM_ADDRESS_SIZE)) &
+                           " -> got: 0x" & to_hstring(to_unsigned(ram_read_value, RAM_word_size)) &
+                           " - OK" &
+                           " @ time: " & time'image(now);
+                    
+                    
+--                    report "TESTER: READ FROM RAM ADDRESS: " & integer'image(ram_current_read_address);
+--                    report "TESTER: RECEIVED RAM VALUE= " & integer'image(ram_read_value);
+--                    report "TESTER: ACTUAL RAM VALUE= " & integer'image(actual_ram_value);
                     received_data <= (others => '0');
                     read_state <= READ_IDLE_STATE;
             end case;
