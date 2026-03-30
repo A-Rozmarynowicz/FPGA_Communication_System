@@ -189,7 +189,7 @@ begin
                     ram_read_value := to_integer(unsigned(received_data(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1)));
                     actual_ram_value := to_integer(unsigned(mem(ram_current_read_address)));
                     assert ram_read_value = actual_ram_value
-                        report "TESTER: Asserting: reference is: " &
+                        report "TESTER: >-----ASSERTING-----<: reference is: " &
                                to_hstring(to_unsigned(actual_ram_value, RAM_word_size)) &
                                " @ adr: " &
                                to_hstring(to_unsigned(ram_current_read_address, RAM_ADDRESS_SIZE)) &
@@ -198,7 +198,7 @@ begin
                                " @ time: " & time'image(now)
                         severity failure;
                         
-                    report "TESTER: Asserting: reference is: " &
+                    report "TESTER: >-----ASSERTING-----<: reference is: " &
                            to_hstring(to_unsigned(actual_ram_value, RAM_word_size)) &
                            " @ adr: " &
                            to_hstring(to_unsigned(ram_current_read_address, RAM_ADDRESS_SIZE)) &

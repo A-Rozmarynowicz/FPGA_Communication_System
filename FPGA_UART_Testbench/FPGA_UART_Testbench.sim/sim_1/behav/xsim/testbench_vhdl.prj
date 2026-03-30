@@ -8,9 +8,9 @@ vhdl xil_defaultlib  \
 
 vhdl2008 xil_defaultlib  \
 "../../../../FPGA_UART_Testbench.srcs/sim_1/new/Tester.vhd" \
+"../../../../FPGA_UART_Testbench.srcs/sim_1/new/UART_Slave_RAM.vhd" \
 
 vhdl xil_defaultlib  \
-"../../../../FPGA_UART_Testbench.srcs/sim_1/new/UART_Slave_RAM.vhd" \
 "../../../../FPGA_UART_Testbench.srcs/sim_1/new/testbench.vhd" \
 
 # Do not sort compile order
