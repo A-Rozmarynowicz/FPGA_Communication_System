@@ -96,6 +96,7 @@ begin
         variable int_rand     : integer;
         variable RAM_MAX_VALUE :positive := (2 ** RAM_word_size)-1; -- = 15
         variable read_or_write :std_logic := '1'; -- 1 is write
+        variable buffer_data_out  : std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0):= (others => '0');
     begin
         if RST = '1' then
             START    <= '0';
@@ -107,6 +108,7 @@ begin
             ram_current_write_address := 0;
             ram_current_read_address := 0;
             ram_read_value := 0;
+            buffer_data_out := (others => '0');
         elsif rising_edge(CLK) then
             START <= '0';
             DATA_OUT <= (others => '0');
@@ -118,33 +120,39 @@ begin
                         write_state <= WRITE_RAM_STATE_SENDING;
                     end if;
                 when WRITE_RAM_STATE_SENDING =>
-                    DATA_OUT(0) <= '0';
+                    buffer_data_out(0) := '0';
                     if read_or_write = '1' then
-                        DATA_OUT(0) <= '1';
+                        buffer_data_out(0) := '1';
                         uniform(seed1, seed2, rand); -- 1 and 2 are seeds
                         int_rand := integer(rand * real(RAM_MAX_VALUE));
-                        DATA_OUT(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= std_logic_vector(to_unsigned(int_rand, RAM_word_size));
+                        buffer_data_out(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1) := std_logic_vector(to_unsigned(int_rand, RAM_word_size));
                         mem(ram_current_write_address)
                             <= std_logic_vector(to_unsigned(int_rand, RAM_WORD_SIZE));
-                        report "TESTER: Sending: " &
+                    end if;
+                    
+                    buffer_data_out(RAM_ADDRESS_SIZE downto 1) 
+                        := std_logic_vector(to_unsigned(ram_current_write_address, RAM_ADDRESS_SIZE));
+                    START <= '1';
+                    write_state <= WRITE_STATE_WAITING;
+                    DATA_OUT <= buffer_data_out;
+                    
+                    if read_or_write = '1' then
+                        report "TESTER: Sending: 0x" &
                            to_hstring(to_unsigned(int_rand, RAM_word_size)) &
-                           " to adr: " &
+                           " to adr: 0x" &
                            to_hstring(to_unsigned(ram_current_write_address, RAM_ADDRESS_SIZE)) &
                            "; we: 0x" & std_logic'image(read_or_write) &
-                           " -> frame: 0x" & to_hstring(DATA_OUT) &
+                           " -> frame: 0x" & to_hstring(buffer_data_out) &
                            " @ time: " & time'image(now);
                     else
                         report "TESTER: Reading: " &
                            to_hstring(to_unsigned(int_rand, RAM_word_size)) &
                            " from adr: " &
                            to_hstring(to_unsigned(ram_current_write_address, RAM_ADDRESS_SIZE)) &
-                           " -> frame: 0x" & to_hstring(DATA_OUT) &
+                           " -> frame: 0x" & to_hstring(buffer_data_out) &
                            " @ time: " & time'image(now);
                     end if;
-                    DATA_OUT(RAM_ADDRESS_SIZE downto 1) 
-                        <= std_logic_vector(to_unsigned(ram_current_write_address, RAM_ADDRESS_SIZE));
-                    START <= '1';
-                    write_state <= WRITE_STATE_WAITING;
+                    
                 when WRITE_STATE_WAITING =>
                     START <= '1';
                     if RECEIVER_DATA_STORED = '1' then
