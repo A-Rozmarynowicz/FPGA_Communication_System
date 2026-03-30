@@ -17,6 +17,7 @@ Compiling package ieee.std_logic_arith
 Compiling package ieee.std_logic_unsigned
 Compiling package synopsys.attributes
 Compiling package ieee.std_logic_misc
+Compiling package ieee.std_logic_textio
 Compiling architecture behavioral of entity xil_defaultlib.Tester [\Tester(parallel_bus_width=8,par...]
 Compiling architecture rtl of entity xil_defaultlib.UART_TX_Master [\UART_TX_Master(clock_freq=10000...]
 Compiling architecture rtl of entity xil_defaultlib.UART_RX_Master [\UART_RX_Master(clock_freq=10000...]

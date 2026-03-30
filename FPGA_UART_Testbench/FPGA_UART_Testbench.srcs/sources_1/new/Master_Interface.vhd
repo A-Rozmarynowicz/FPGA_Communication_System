@@ -129,8 +129,6 @@ begin
           RX_ERROR          => rx_error
        );
        
-       
-    -- Instantiate Parallel Interface
     parallel_interface_inst : entity work.Parallel_Interface
         generic map (
             PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH

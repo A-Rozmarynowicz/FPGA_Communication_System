@@ -153,11 +153,11 @@ begin
             RAM_address := (others => '0');
             -- TODO
         elsif rising_edge(CLK) then
-            if rx_receive_complete = '1' then
+            if rx_receive_complete = '1' then -- Receving frame
                 final_received_data(((number_of_received_uart_frames+1)*NUMBER_OF_WORD_BITS-1) 
                     downto ((number_of_received_uart_frames)*NUMBER_OF_WORD_BITS)) <= rx_data;
                 number_of_received_uart_frames <= number_of_received_uart_frames + 1;
-            else
+            else -- All UART frames have been received, ready for interpretation
                 if number_of_received_uart_frames = UART_FRAMES_PER_MESSAGE then
                     report "UART_Slave_RAM: received full UART message: " & 
                         to_hstring(final_received_data);
@@ -166,9 +166,9 @@ begin
                 end if;
             end if;
             
-            if interpret_received_data = '1' then
+            if interpret_received_data = '1' then -- Interpreting data
                 RAM_address := final_received_data(3 downto 1);
-                if final_received_data(0) = '1' then --WRITING
+                if final_received_data(0) = '1' then -- Writing
                     mem(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))))
                         <= final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1);
                     report "UART_Slave_RAM: got write command: data: 0x" &
@@ -176,7 +176,7 @@ begin
                            " address: 0x" &
                            to_hstring(RAM_address) &
                            " @ time: " & time'image(now);           
-                else -- READING
+                else -- Reading
                     read_ram_pipeline_ready := '1';
                     response_message(0) <= '0';
                     response_message(RAM_ADDRESS_SIZE downto 1) <= RAM_address;
@@ -184,9 +184,8 @@ begin
                 end if;
                 
                 interpret_received_data <= '0';
-            --    final_received_data <= (others => '0');
             else
-                if read_ram_pipeline_ready = '1' then
+                if read_ram_pipeline_ready = '1' then -- Waiting one clock cycle: RAM requires it
                     read_ram_pipeline_ready := '0';
                     response_ready <= '1';
                     report "UART_Slave_RAM: got read command: address: 0x" &

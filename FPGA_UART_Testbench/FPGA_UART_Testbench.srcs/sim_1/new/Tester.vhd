@@ -112,7 +112,7 @@ begin
                     if RECEIVER_FULL = '0' then
                         write_state <= WRITE_RAM_STATE_SENDING;
                     end if;
-                when WRITE_RAM_STATE_SENDING =>
+                when WRITE_RAM_STATE_SENDING => -- Creating the frame and sending
                     buffer_data_out(0) := '0';
                     if read_or_write = '1' then
                         buffer_data_out(0) := '1';
@@ -146,7 +146,7 @@ begin
                            " @ time: " & time'image(now);
                     end if;
                     
-                when WRITE_STATE_WAITING =>
+                when WRITE_STATE_WAITING => -- Waititng for the receiver to latch data
                     START <= '1';
                     if RECEIVER_DATA_STORED = '1' then
                         if ram_current_write_address = ram_max_address then
@@ -159,7 +159,7 @@ begin
                         write_state <= WRITE_STATE_SWITCHING;
                         cycles_left_unitl_writing <= CYCLES_BETWEEN_WRITING;
                     end if;
-                when WRITE_STATE_SWITCHING =>
+                when WRITE_STATE_SWITCHING => -- Loop back
                     cycles_left_unitl_writing <= cycles_left_unitl_writing - 1;
                     if cycles_left_unitl_writing = 1 then
                         write_state <= WRITE_IDLE_STATE;
@@ -184,7 +184,7 @@ begin
                         end if;
                     end if;
                     
-                when READ_RAM_STATE_RECEIVING =>
+                when READ_RAM_STATE_RECEIVING => -- Data received
                     ram_current_read_address := to_integer(unsigned(received_data(RAM_ADDRESS_SIZE downto 1)));
                     ram_read_value := to_integer(unsigned(received_data(PARALLEL_BUS_WIDTH-1 downto RAM_ADDRESS_SIZE+1)));
                     actual_ram_value := to_integer(unsigned(mem(ram_current_read_address)));
@@ -205,11 +205,6 @@ begin
                            " -> got: 0x" & to_hstring(to_unsigned(ram_read_value, RAM_word_size)) &
                            " - OK" &
                            " @ time: " & time'image(now);
-                    
-                    
---                    report "TESTER: READ FROM RAM ADDRESS: " & integer'image(ram_current_read_address);
---                    report "TESTER: RECEIVED RAM VALUE= " & integer'image(ram_read_value);
---                    report "TESTER: ACTUAL RAM VALUE= " & integer'image(actual_ram_value);
                     received_data <= (others => '0');
                     read_state <= READ_IDLE_STATE;
             end case;

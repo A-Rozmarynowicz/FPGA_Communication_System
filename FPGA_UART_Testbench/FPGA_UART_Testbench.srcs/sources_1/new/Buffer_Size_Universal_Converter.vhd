@@ -83,10 +83,10 @@ begin
             if buffer_pointer*FIFO_SINGLE_FRAME_SIZE = FIFO_BUFFER_SIZE then
                 BUFFER_FULL <= '1';
             end if;
-            if INPUT_READY = '1' and (buffer_pointer*FIFO_SINGLE_FRAME_SIZE /= FIFO_BUFFER_SIZE) then
+            if INPUT_READY = '1' and (buffer_pointer*FIFO_SINGLE_FRAME_SIZE /= FIFO_BUFFER_SIZE) then -- Ready and not full
                 if buffer_pointer = FIFO_SINGLE_FRAME_SIZE then
                     null;
-                else
+                else -- Reading data from output to the FIFO queue
                     buffer_pointer <= buffer_pointer + 1;
                     
                     if buffer_zero_padding_size > 0 then
@@ -99,10 +99,10 @@ begin
                 end if;
             end if;
             
-            if OUTPUT_BUSY = '0' then 
+            if OUTPUT_BUSY = '0' then
                 if buffer_pointer = 0 then
                     null;
-                else
+                else -- Sending data to output
                     if current_output_frame_pointer = OUTPUT_FRAMES_PER_INPUT_FRAME then
                         fifo_buffer <= fifo_buffer(FIFO_BUFFER_SIZE - FIFO_SINGLE_FRAME_SIZE - 1 downto 0)
                             & (FIFO_SINGLE_FRAME_SIZE - 1 downto 0 => '0');
