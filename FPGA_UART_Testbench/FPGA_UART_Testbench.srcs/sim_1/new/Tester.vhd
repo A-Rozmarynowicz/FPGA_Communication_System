@@ -75,6 +75,14 @@ architecture Behavioral of Tester is
     constant RAM_word_size :positive := PARALLEL_BUS_WIDTH - RAM_ADDRESS_SIZE - 1;
     type ram_type is array (0 to 255) of std_logic_vector(RAM_word_size-1 downto 0);
     signal mem : ram_type := (others => (others => '0'));
+
+    function to_hex_string(val : std_logic_vector) return string is
+        variable int_val : integer;
+    begin
+        int_val := to_integer(unsigned(val));
+        return "0x" & to_hstring(val);
+    end function;
+    
 begin
 
     process(CLK, RST)
@@ -87,7 +95,7 @@ begin
         variable rand         : real;
         variable int_rand     : integer;
         variable RAM_MAX_VALUE :positive := (2 ** RAM_word_size)-1; -- = 15
-        variable read_or_write :std_logic := '1'; --1 is write
+        variable read_or_write :std_logic := '1'; -- 1 is write
     begin
         if RST = '1' then
             START    <= '0';
