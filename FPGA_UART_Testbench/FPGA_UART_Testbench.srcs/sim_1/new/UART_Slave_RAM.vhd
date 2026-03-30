@@ -159,7 +159,8 @@ begin
                 number_of_received_uart_frames <= number_of_received_uart_frames + 1;
             else
                 if number_of_received_uart_frames = UART_FRAMES_PER_MESSAGE then
-                    report "RAM Slave: received message: " & integer'image(to_integer(unsigned(final_received_data)));
+                    report "UART_Slave_RAM: received full UART message: " & 
+                        to_hstring(final_received_data);
                     number_of_received_uart_frames <= 0;
                     interpret_received_data <= '1';
                 end if;
@@ -170,8 +171,11 @@ begin
                 if final_received_data(0) = '1' then --WRITING
                     mem(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))))
                         <= final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1);
-                    report "WRITING TO RAM: ADDRESS: " & integer'image(to_integer(unsigned(RAM_address)));
-                    report "WRITING TO RAM: VALUE: " & integer'image(to_integer(unsigned(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1))));
+                    report "UART_Slave_RAM: got write command: data: 0x" &
+                           to_hstring(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1)) &
+                           " address: 0x" &
+                           to_hstring(RAM_address) &
+                           " @ time: " & time'image(now);           
                 else -- READING
                     read_ram_pipeline_ready := '1';
                     response_message(0) <= '0';
@@ -185,8 +189,9 @@ begin
                 if read_ram_pipeline_ready = '1' then
                     read_ram_pipeline_ready := '0';
                     response_ready <= '1';
-                    report "READING RAM: ADDRESS: " & integer'image(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))));
-                    report "READING RAM: VALUE: " & integer'image(to_integer(unsigned(response_message)));
+                    report "UART_Slave_RAM: got read command: address: 0x" &
+                          to_hstring(final_received_data(RAM_ADDRESS_SIZE downto 1)) &
+                          " @ time: " & time'image(now);     
                 else
                     response_ready <= '0';
                 end if;
