@@ -81,7 +81,7 @@ architecture Behavioral of UART_Slave_RAM is
     constant RAM_word_size :positive := RESPONSE_MESSAGE_WIDTH - RAM_ADDRESS_SIZE - 1;
     
     type ram_type is array (0 to 255) of std_logic_vector(RAM_word_size-1 downto 0);
-    signal mem : ram_type := (others => (others => '0'));
+    signal mem : ram_type := (others => (others => '0')); -- RAM
     
     signal read_ram_pipeline_ready :std_logic := '0';
 begin
@@ -167,7 +167,7 @@ begin
             if interpret_received_data = '1' then -- Interpreting data
                 if final_received_data(0) = '1' then -- Writing
                     mem(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))))
-                        <= final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1);
+                        <= final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1); -- Synthesizes into a RAM module
                     report "UART_Slave_RAM: got write command: data: 0x" &
                            to_hstring(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1)) &
                            " address: 0x" &
