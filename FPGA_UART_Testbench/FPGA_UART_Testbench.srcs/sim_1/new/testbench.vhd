@@ -37,7 +37,6 @@ end testbench;
 architecture Behavioral of testbench is
     -- Process parameters
     constant CLOCK_FREQ :positive := 100_000_000;
---    signal CLOCK_PERIOD :time :=     1_000_000_000/CLOCK_FREQ ns; --ns -- TODO
     constant BAUD_RATE :positive := 5_000_000;
     
     -- UART parameters

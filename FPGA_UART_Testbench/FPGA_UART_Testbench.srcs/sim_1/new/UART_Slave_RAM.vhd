@@ -174,13 +174,13 @@ begin
                     report "UART_Slave_RAM: got write command: data: 0x" &
                            to_hstring(final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1)) &
                            " address: 0x" &
-                           to_hstring(RAM_address) &
+                           to_hstring(final_received_data(3 downto 1)) &
                            " @ time: " & time'image(now);           
                 else -- Reading
                     read_ram_pipeline_ready := '1';
                     response_message(0) <= '0';
-                    response_message(RAM_ADDRESS_SIZE downto 1) <= RAM_address;
-                    response_message(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= mem(to_integer(unsigned(RAM_address)));
+                    response_message(RAM_ADDRESS_SIZE downto 1) <= final_received_data(3 downto 1);
+                    response_message(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= mem(to_integer(unsigned(final_received_data(3 downto 1))));
                 end if;
                 
                 interpret_received_data <= '0';

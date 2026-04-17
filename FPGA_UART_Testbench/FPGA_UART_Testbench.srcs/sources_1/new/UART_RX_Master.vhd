@@ -38,6 +38,7 @@ architecture RTL of UART_RX_Master is
 
   signal   final_word_buffer	:std_logic_vector(WORD'range);			
   signal   internal_error	:std_logic;					
+  constant ZERO_WORD : std_logic_vector(WORD'range) := (others => '0');
 
 begin
     -- badanie poprawnosci ustawien zegarow
@@ -141,9 +142,11 @@ begin
 	               severity warning;   
                end if; 							
              else							
-                if (internal_error = '0' and input_rx_buffer(1) = '1') then		
-                 WORD <= final_word_buffer;					
-                 READY <= '1';						
+                if (internal_error = '0' and input_rx_buffer(1) = '1') then
+                    if final_word_buffer /= ZERO_WORD then
+                        WORD <= final_word_buffer;					
+                        READY <= '1';						
+                    end if;
                 else							
                  WORD <= (others => '0');		
                  RX_ERROR <= '1';				

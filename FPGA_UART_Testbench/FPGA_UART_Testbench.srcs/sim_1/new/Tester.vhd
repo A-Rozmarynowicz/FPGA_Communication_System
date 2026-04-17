@@ -57,7 +57,7 @@ entity Tester is
 end Tester;
 
 architecture Behavioral of Tester is
-    constant CYCLES_BETWEEN_WRITING :positive := 70;
+    constant CYCLES_BETWEEN_WRITING :positive := 300;
     signal cycles_left_unitl_writing :natural range 0 to CYCLES_BETWEEN_WRITING := 0;
 
     type WRITE_STATE_TYPE is (WRITE_IDLE_STATE, WRITE_RAM_STATE_SENDING, WRITE_STATE_WAITING, WRITE_STATE_SWITCHING);
