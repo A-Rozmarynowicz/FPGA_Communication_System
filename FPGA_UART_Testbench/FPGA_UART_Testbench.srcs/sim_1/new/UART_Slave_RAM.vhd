@@ -82,6 +82,8 @@ architecture Behavioral of UART_Slave_RAM is
     
     type ram_type is array (0 to 255) of std_logic_vector(RAM_word_size-1 downto 0);
     signal mem : ram_type := (others => (others => '0'));
+    
+    signal read_ram_pipeline_ready :std_logic := '0';
 begin
     uart_rt_inst: entity work.UART_TX_Master
         generic map (
@@ -144,14 +146,10 @@ begin
         );
     
     process(CLK, RST)
-        variable RAM_address :std_logic_vector(2 downto 0) := (others => '0');
-        variable read_ram_pipeline_ready :std_logic := '0';
     begin
         if RST = '1' then
             interpret_received_data <= '0';
-            read_ram_pipeline_ready := '0';
-            RAM_address := (others => '0');
-            -- TODO
+            read_ram_pipeline_ready <= '0';
         elsif rising_edge(CLK) then
             if rx_receive_complete = '1' then -- Receving frame
                 final_received_data(((number_of_received_uart_frames+1)*NUMBER_OF_WORD_BITS-1) 
@@ -167,7 +165,6 @@ begin
             end if;
             
             if interpret_received_data = '1' then -- Interpreting data
-                RAM_address := final_received_data(3 downto 1);
                 if final_received_data(0) = '1' then -- Writing
                     mem(to_integer(unsigned(final_received_data(RAM_ADDRESS_SIZE downto 1))))
                         <= final_received_data(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1);
@@ -177,7 +174,7 @@ begin
                            to_hstring(final_received_data(3 downto 1)) &
                            " @ time: " & time'image(now);           
                 else -- Reading
-                    read_ram_pipeline_ready := '1';
+                    read_ram_pipeline_ready <= '1';
                     response_message(0) <= '0';
                     response_message(RAM_ADDRESS_SIZE downto 1) <= final_received_data(3 downto 1);
                     response_message(RESPONSE_MESSAGE_WIDTH-1 downto RAM_ADDRESS_SIZE+1) <= mem(to_integer(unsigned(final_received_data(3 downto 1))));
@@ -186,7 +183,7 @@ begin
                 interpret_received_data <= '0';
             else
                 if read_ram_pipeline_ready = '1' then -- Waiting one clock cycle: RAM requires it
-                    read_ram_pipeline_ready := '0';
+                    read_ram_pipeline_ready <= '0';
                     response_ready <= '1';
                     report "UART_Slave_RAM: got read command: address: 0x" &
                           to_hstring(final_received_data(RAM_ADDRESS_SIZE downto 1)) &
