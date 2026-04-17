@@ -78,7 +78,8 @@ architecture Behavioral of Tester is
 begin
 
     process(CLK, RST)
-        variable ram_max_address :positive := (2 ** RAM_ADDRESS_SIZE) - 1;
+        -- Tutaj te wszystkie zmienne są w pliku niesyntezowalnym. Żadne latche się nie wygenerują. 
+        -- Przy etapie 2 ten moduł nie będzie używany.
         variable ram_current_write_address :natural := 0;
         variable ram_current_read_address :natural := 0;
         variable ram_read_value :natural := 0;
@@ -87,6 +88,7 @@ begin
         variable rand         : real;
         variable int_rand     : integer;
         variable RAM_MAX_VALUE :positive := (2 ** RAM_word_size)-1; -- = 15
+        variable ram_max_address :positive := (2 ** RAM_ADDRESS_SIZE) - 1;
         variable read_or_write :std_logic := '1'; -- 1 is write
         variable buffer_data_out  : std_logic_vector(PARALLEL_BUS_WIDTH-1 downto 0):= (others => '0');
     begin

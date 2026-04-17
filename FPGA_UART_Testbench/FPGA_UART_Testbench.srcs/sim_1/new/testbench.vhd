@@ -40,9 +40,9 @@ architecture Behavioral of testbench is
     constant BAUD_RATE :positive := 5_000_000;
     
     -- UART parameters
-    constant MIN_BAUD_RATE :positive := 110;				-- minimalna predkosc nadawania w [bodach]
-    constant NUMBER_OF_WORD_BITS :positive := 8;			-- liczba bitow slowa danych (5-8)
-    constant NUMBER_OF_PARITY_BITS  :positive := 1;                     -- liczba bitow parzystosci (0-1)
+    constant MIN_BAUD_RATE :positive := 110;				
+    constant NUMBER_OF_WORD_BITS :positive := 8;			
+    constant NUMBER_OF_PARITY_BITS  :positive := 1;
     constant NUMBER_OF_STOP_BITS    :positive := 1; 
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
@@ -79,7 +79,7 @@ begin
     begin
         while true loop
             clk <= '0';
-            wait for 5 ns; --TODO
+            wait for 5 ns;
             clk <= '1';
             wait for 5 ns;
         end loop;
@@ -94,7 +94,7 @@ begin
         wait;
     end process;
 
-    -- Instantiate Tester (generates commands on parallel interface)
+    -- Instantiate Tester
     uut_tester : entity work.Tester
         generic map (
             PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
@@ -116,15 +116,15 @@ begin
             RECEIVER_DATA_STORED => parallel_receiver_stored_data
         );
 
-    -- Instantiate Master_Interface (UART Master)
+    -- Instantiate Master_Interface
     uut_master : entity work.Master_Interface
         generic map(
             CLOCK_FREQ	=> CLOCK_FREQ,
             BAUD_RATE   => BAUD_RATE,
-            MIN_BAUD_RATE => MIN_BAUD_RATE,				-- minimalna predkosc nadawania w [bodach]
-            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,			-- liczba bitow slowa danych (5-8)
-            NUMBER_OF_PARITY_BITS   => NUMBER_OF_PARITY_BITS,                     -- liczba bitow parzystosci (0-1)
-            NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
+            MIN_BAUD_RATE => MIN_BAUD_RATE,				
+            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,			
+            NUMBER_OF_PARITY_BITS   => NUMBER_OF_PARITY_BITS,                    
+            NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     
             PARITY_TYPE     => PARITY_TYPE,
           
             PARALLEL_BUS_WIDTH => PARALLEL_BUS_WIDTH,
@@ -148,15 +148,15 @@ begin
             PARALLEL_TESTER_DATA_STORED => parallel_tester_data_stored
         );
 
-    -- Instantiate Slave RAM (UART_Slave_RAM)
+    -- Instantiate Slave RAM
     uut_slave : entity work.UART_Slave_RAM
         generic map (
             CLOCK_FREQ	=> CLOCK_FREQ,
             BAUD_RATE   => BAUD_RATE,
-            MIN_BAUD_RATE => MIN_BAUD_RATE,				-- minimalna predkosc nadawania w [bodach]
-            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,			-- liczba bitow slowa danych (5-8)
-            NUMBER_OF_PARITY_BITS   => NUMBER_OF_PARITY_BITS,                     -- liczba bitow parzystosci (0-1)
-            NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     -- liczba bitow stopu (1-2)
+            MIN_BAUD_RATE => MIN_BAUD_RATE,			
+            NUMBER_OF_WORD_BITS => NUMBER_OF_WORD_BITS,			
+            NUMBER_OF_PARITY_BITS   => NUMBER_OF_PARITY_BITS,                     
+            NUMBER_OF_STOP_BITS     => NUMBER_OF_STOP_BITS,                     
             PARITY_TYPE     => PARITY_TYPE,
             UART_FRAMES_PER_MESSAGE => ((PARALLEL_BUS_WIDTH + NUMBER_OF_WORD_BITS - 1)/NUMBER_OF_WORD_BITS),
             RESPONSE_MESSAGE_WIDTH => PARALLEL_BUS_WIDTH,
@@ -169,7 +169,6 @@ begin
             UART_TX => slave_tx
         );
 
-    -- Connect master and slave UART
     master_rx <= slave_tx;
     slave_rx  <= master_tx;
     
