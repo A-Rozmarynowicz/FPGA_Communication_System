@@ -1,9 +1,5 @@
 Time resolution is 1 ps
 Note: TESTER: Sending: 0xF to adr: 0x0; we: 0x'1' -> frame: 0xF1 @ time: 65000 ps
 Time: 65 ns  Iteration: 1  Process: /testbench/uut_tester/line__81  File: C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sim_1/new/Tester.vhd
-Note: UART_Slave_RAM: received full UART message: F1
-Time: 685 ns  Iteration: 1  Process: /testbench/uut_slave/line__148  File: C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sim_1/new/UART_Slave_RAM.vhd
-Note: UART_Slave_RAM: got write command: data: 0xF address: 0x0 @ time: 695000 ps
-Time: 695 ns  Iteration: 1  Process: /testbench/uut_slave/line__148  File: C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sim_1/new/UART_Slave_RAM.vhd
 Note: TESTER: Sending: 0xF to adr: 0x1; we: 0x'1' -> frame: 0xF3 @ time: 805000 ps
 Time: 805 ns  Iteration: 1  Process: /testbench/uut_tester/line__81  File: C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.srcs/sim_1/new/Tester.vhd
