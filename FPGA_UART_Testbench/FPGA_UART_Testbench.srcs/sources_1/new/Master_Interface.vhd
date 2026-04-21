@@ -40,7 +40,7 @@ entity Master_Interface is
         MIN_BAUD_RATE		:positive := 110;			
         NUMBER_OF_WORD_BITS		:positive range 5 to 8 := 8;			
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;         
-        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 1;      
+        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;      
         PARITY_TYPE         :std_logic := '0'; -- 0 is even, 1 is odd
         
         PARALLEL_BUS_WIDTH :positive range 4 to 10 := 8;

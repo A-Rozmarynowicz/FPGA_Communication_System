@@ -42,8 +42,8 @@ architecture Behavioral of testbench is
     -- UART parameters
     constant MIN_BAUD_RATE :positive := 110;				
     constant NUMBER_OF_WORD_BITS :positive := 8;			
-    constant NUMBER_OF_PARITY_BITS  :positive := 1;
-    constant NUMBER_OF_STOP_BITS    :positive := 1; 
+    constant NUMBER_OF_PARITY_BITS  :natural := 1;
+    constant NUMBER_OF_STOP_BITS    :positive := 2; 
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
     -- Parallel parameters
