@@ -89,7 +89,7 @@ begin
     rst_process : process
     begin
         rst <= '1';
-        wait for 50 ns; -- TODO
+        wait for 50 ns;
         rst <= '0';
         wait;
     end process;
