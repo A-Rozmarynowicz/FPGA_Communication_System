@@ -1,4 +1,0 @@
-
-*** Running vivado
-    with args -log Master_Interface.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source Master_Interface.tcl -notrace
-

@@ -35,6 +35,7 @@ use     ieee.numeric_std.all;
 
 entity Master_Interface is
     generic (
+        -- Przy zmianie parametrów trzeba pamiętać, że to samo trzeba zrobić w testbenchu
         CLOCK_FREQ		: positive := 100_000_000;		
         BAUD_RATE       : positive := 20_000_000;
         MIN_BAUD_RATE		:positive := 110;			

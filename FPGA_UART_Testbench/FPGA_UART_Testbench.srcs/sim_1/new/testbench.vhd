@@ -35,6 +35,7 @@ entity testbench is
 end testbench;
 
 architecture Behavioral of testbench is
+-- Przy zmianie parametrów trzeba pamiętać, że to samo trzeba zrobić w Master_Interface
     -- Process parameters
     constant CLOCK_FREQ :positive := 100_000_000;
     constant BAUD_RATE :positive := 5_000_000;
