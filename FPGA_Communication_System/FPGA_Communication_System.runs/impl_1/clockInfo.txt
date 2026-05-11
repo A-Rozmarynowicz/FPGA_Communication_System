@@ -1,6 +1,6 @@
 -------------------------------------
 | Tool Version : Vivado v.2025.2
-| Date         : Mon May 11 20:51:58 2026
+| Date         : Mon May 11 21:20:55 2026
 | Host         : SolidnyLaptop
 | Design       : design_1
 | Device       : xc7s25-csga225-1--
