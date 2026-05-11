@@ -1,0 +1,17 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../FPGA_Communication_System.srcs/sources_1/imports/new/Buffer_Size_Universal_Converter.vhd" \
+"../../../../FPGA_Communication_System.srcs/sources_1/imports/new/UART_TX_Master.vhd" \
+"../../../../FPGA_Communication_System.srcs/sources_1/imports/new/UART_RX_Master.vhd" \
+"../../../../FPGA_Communication_System.srcs/sources_1/imports/new/Parallel_Interface.vhd" \
+"../../../../FPGA_Communication_System.srcs/sources_1/imports/new/Master_Interface.vhd" \
+
+vhdl2008 xil_defaultlib  \
+"../../../../FPGA_Communication_System.srcs/sim_1/imports/new/Tester.vhd" \
+"../../../../FPGA_Communication_System.srcs/sim_1/imports/new/UART_Slave_RAM.vhd" \
+
+vhdl xil_defaultlib  \
+"../../../../FPGA_Communication_System.srcs/sim_1/imports/new/testbench.vhd" \
+
+# Do not sort compile order
+nosort

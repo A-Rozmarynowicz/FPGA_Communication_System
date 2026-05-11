@@ -257,3 +257,17 @@ Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Me
 INFO: [Netlist 29-17] Analyzing 32 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1739.348 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: e6702316
+INFO: [Common 17-83] Releasing license: Synthesis
+30 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:36 ; elapsed = 00:00:42 . Memory (MB): peak = 1739.348 ; gain = 1208.105
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1739.348 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_UART_Testbench/FPGA_UART_Testbench.runs/synth_1/Master_Interface.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file Master_Interface_utilization_synth.rpt -pb Master_Interface_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Thu Apr 23 16:57:06 2026...
