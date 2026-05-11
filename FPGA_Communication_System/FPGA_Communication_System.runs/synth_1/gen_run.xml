@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7s25csga225-1" LaunchTime="1778521354" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/Master_Interface.dcp">
-  <File Type="PA-TCL" Name="Master_Interface.tcl"/>
-  <File Type="REPORTS-TCL" Name="Master_Interface_reports.tcl"/>
-  <File Type="RDS-RDS" Name="Master_Interface.vds"/>
-  <File Type="RDS-PROPCONSTRS" Name="Master_Interface_drc_synth.rpt"/>
-  <File Type="RDS-UTIL" Name="Master_Interface_utilization_synth.rpt"/>
-  <File Type="RDS-UTIL-PB" Name="Master_Interface_utilization_synth.pb"/>
-  <File Type="RDS-DCP" Name="Master_Interface.dcp"/>
-  <File Type="VDS-TIMINGSUMMARY" Name="Master_Interface_timing_summary_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="Master_Interface_timing_summary_synth.pb"/>
+<GenRun Id="synth_1" LaunchPart="xc7s25csga225-1" LaunchTime="1778524268" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/Master_Interface.dcp">
+  <File Type="PA-TCL" Name="Top_hw.tcl"/>
+  <File Type="REPORTS-TCL" Name="Top_hw_reports.tcl"/>
+  <File Type="RDS-RDS" Name="Top_hw.vds"/>
+  <File Type="RDS-PROPCONSTRS" Name="Top_hw_drc_synth.rpt"/>
+  <File Type="RDS-UTIL" Name="Top_hw_utilization_synth.rpt"/>
+  <File Type="RDS-UTIL-PB" Name="Top_hw_utilization_synth.pb"/>
+  <File Type="RDS-DCP" Name="Top_hw.dcp"/>
+  <File Type="VDS-TIMINGSUMMARY" Name="Top_hw_timing_summary_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="Top_hw_timing_summary_synth.pb"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
     <File Path="$PSRCDIR/sources_1/imports/new/Buffer_Size_Universal_Converter.vhd">
@@ -51,14 +51,26 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
+    <File Path="$PSRCDIR/sources_1/new/Top_hw.vhd">
+      <FileInfo SFType="VHDL2008">
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
-      <Option Name="TopModule" Val="Master_Interface"/>
+      <Option Name="TopModule" Val="Top_hw"/>
       <Option Name="TopAutoSet" Val="TRUE"/>
     </Config>
   </FileSet>
   <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
     <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/new/constraints.xdc">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
     <Config>
       <Option Name="ConstrsType" Val="XDC"/>
     </Config>

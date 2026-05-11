@@ -7,4 +7,4 @@ REM Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 REM Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 REM
 
-vivado -log Master_Interface.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Master_Interface.tcl
+vivado -log Top_hw.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Top_hw.tcl

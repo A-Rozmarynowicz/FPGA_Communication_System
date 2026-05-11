@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.runs/synth_1/Master_Interface.tcl"
+  variable script "C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.runs/synth_1/Top_hw.tcl"
   variable category "vivado_synth"
 }
 
@@ -80,6 +80,7 @@ read_vhdl -library xil_defaultlib {
   C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/sources_1/imports/new/Parallel_Interface.vhd
   C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/sources_1/imports/new/Master_Interface.vhd
 }
+read_vhdl -vhdl2008 -library xil_defaultlib C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/sources_1/new/Top_hw.vhd
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the
@@ -89,13 +90,16 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
+read_xdc C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/constrs_1/new/constraints.xdc
+set_property used_in_implementation false [get_files C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/constrs_1/new/constraints.xdc]
+
 set_param ips.enableIPCacheLiteLoad 1
 
 read_checkpoint -auto_incremental -incremental C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/utils_1/imports/synth_1/Master_Interface.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
-synth_design -top Master_Interface -part xc7s25csga225-1
+synth_design -top Top_hw -part xc7s25csga225-1
 OPTRACE "synth_design" END { }
 if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
  send_msg_id runtcl-6 info "Synthesis results are not added to the cache due to CRITICAL_WARNING"
@@ -105,10 +109,10 @@ if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
 OPTRACE "write_checkpoint" START { CHECKPOINT }
 # disable binary constraint mode for synth run checkpoints
 set_param constraints.enableBinaryConstraints false
-write_checkpoint -force -noxdef Master_Interface.dcp
+write_checkpoint -force -noxdef Top_hw.dcp
 OPTRACE "write_checkpoint" END { }
 OPTRACE "synth reports" START { REPORT }
-generate_parallel_reports -reports { "report_utilization -file Master_Interface_utilization_synth.rpt -pb Master_Interface_utilization_synth.pb"  } 
+generate_parallel_reports -reports { "report_utilization -file Top_hw_utilization_synth.rpt -pb Top_hw_utilization_synth.pb"  } 
 OPTRACE "synth reports" END { }
 file delete __synthesis_is_running__
 close [open __synthesis_is_complete__ w]
