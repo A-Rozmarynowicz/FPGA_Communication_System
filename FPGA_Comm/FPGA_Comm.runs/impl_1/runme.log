@@ -1,0 +1,68 @@
+
+*** Running vivado
+    with args -log Top_hw.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source Top_hw.tcl -notrace
+
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue May 12 16:10:18 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source Top_hw.tcl -notrace
+create_project: Time (s): cpu = 00:00:08 ; elapsed = 00:00:06 . Memory (MB): peak = 524.395 ; gain = 222.344
+Command: link_design -top Top_hw -part xc7s25csga225-1
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Device 21-403] Loading part xc7s25csga225-1
+INFO: [Project 1-5699] Read binary netlist with skipMacroContent - 1
+INFO: [Project 1-454] Reading design checkpoint 'c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Communication_System.gen/sources_1/ip/vio_0/vio_0.dcp' for cell 'vio_0_inst'
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 744.273 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 38 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Chipscope 16-324] Core: vio_0_inst UUID: e7ff0c21-2432-5e10-a2c1-ded3bcfa7191 
+Parsing XDC File [c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Communication_System.gen/sources_1/ip/vio_0/vio_0.xdc] for cell 'vio_0_inst'
+Finished Parsing XDC File [c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Communication_System.gen/sources_1/ip/vio_0/vio_0.xdc] for cell 'vio_0_inst'
+Parsing XDC File [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.srcs/constrs_1/new/constraints.xdc]
+Finished Parsing XDC File [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.srcs/constrs_1/new/constraints.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 873.207 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+10 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7s25'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7s25'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.410 . Memory (MB): peak = 894.512 ; gain = 21.305
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 26796bed8
+
+Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1350.699 ; gain = 456.188
+
+Starting Logic Optimization Task
+
+Phase 1 Initialization
+
+Phase 1.1 Core Generation And Design Setup
+
+Phase 1.1.1 Generate And Synthesize Debug Cores
+INFO: [Chipscope 16-329] Generating Script for core instance : dbg_hub 
+INFO: [IP_Flow 19-3806] Processing IP xilinx.com:ip:xsdbm:3.0 for cell dbg_hub_CV.
+INFO: [Chipscope 16-329] Generating Script for core instance : u_ila_0 
+INFO: [IP_Flow 19-3806] Processing IP xilinx.com:ip:ila:6.2 for cell u_ila_0_CV.
