@@ -64,6 +64,9 @@ architecture rt1 of Parallel_Interface is
 
     type WRITE_STATE_TYPE is (IDLE_WRITE_STATE, WRITE_PARALLEL_STATE);
     signal write_state : WRITE_STATE_TYPE := IDLE_WRITE_STATE;
+    
+    signal latched_data : std_logic_vector(0 to PARALLEL_BUS_WIDTH - 1) := (others => '0');
+    signal data_ready : std_logic := '0';
 begin
     process(clk, rst)
     begin
@@ -75,6 +78,8 @@ begin
             DONE <= '0';
             READING_COMPLETE <= '0';
             DATA_RECEIVED <= (others => '0');
+            latched_data <= (others => '0');
+            data_ready <= '0';
         elsif rising_edge(CLK) then
             BUSY <= '0';
             DATA_OUT <= (others => '0');
@@ -96,16 +101,22 @@ begin
             case write_state is
                 when IDLE_WRITE_STATE =>
                     if INPUT_DATA_READY = '1' then
+                        data_ready <= '1';
                         DATA_OUT <= INPUT_DATA_WORD;
+                        latched_data <= INPUT_DATA_WORD;
                         DONE <= '1';
                         BUSY <= '1';
                         if PARALLEL_TESTER_DATA_STORED = '1' then
                             DONE <= '0';
                             write_state <= WRITE_PARALLEL_STATE;
                         end if;
+                    elsif data_ready = '1' then
+                        DATA_OUT <= latched_data;
                     end if;
                 when WRITE_PARALLEL_STATE =>
                     DONE <= '0';
+                    latched_data <= (others => '0');
+                    data_ready <= '0';
                     write_state <= IDLE_WRITE_STATE;
             end case;
         end if;
