@@ -46,13 +46,13 @@ end Top_hw;
 architecture Behavioral of Top_hw is
 
     constant CLOCK_FREQ :positive := 12_000_000;
-    constant BAUD_RATE :positive := 1_000_000;
+    constant BAUD_RATE :positive := 115200;
     
     -- UART parameters
     constant MIN_BAUD_RATE :positive := 110;				
     constant NUMBER_OF_WORD_BITS :positive := 8;			
     constant NUMBER_OF_PARITY_BITS  :natural := 1;
-    constant NUMBER_OF_STOP_BITS    :positive := 2; 
+    constant NUMBER_OF_STOP_BITS    :positive := 1; 
     constant PARITY_TYPE    :std_logic := '0'; -- 1 is odd 0 is even
     
     -- Parallel parameters
@@ -154,7 +154,7 @@ begin
     begin
         if rising_edge(clk) then
     
-            if cnt = 50_000_000 then
+            if cnt = 10_000 then
                 cnt <= (others => '0');
                 heartbeat <= not heartbeat;
             else

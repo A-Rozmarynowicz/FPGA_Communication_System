@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/constrs_1/new/constraints.xdc rfile:../../../FPGA_Communication_System.srcs/constrs_1/new/constraints.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.srcs/constrs_1/new/constraints.xdc rfile:../../../FPGA_Comm.srcs/constrs_1/new/constraints.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:2 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN M9 [get_ports clk]
 set_property src_info {type:XDC file:1 line:7 export:INPUT save:INPUT read:READ} [current_design]

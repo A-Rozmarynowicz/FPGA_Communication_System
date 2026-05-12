@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.runs/synth_1'
+HD_PWD='C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

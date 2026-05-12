@@ -37,11 +37,11 @@ entity Master_Interface is
     generic (
         -- Przy zmianie parametrów trzeba pamiętać, że to samo trzeba zrobić w testbenchu
         CLOCK_FREQ		: positive := 12_000_000;		
-        BAUD_RATE       : positive := 1_000_000;
+        BAUD_RATE       : positive := 115200;
         MIN_BAUD_RATE		:positive := 110;			
         NUMBER_OF_WORD_BITS		:positive range 5 to 8 := 8;			
         NUMBER_OF_PARITY_BITS       :natural range 0 to 1 := 1;         
-        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 2;      
+        NUMBER_OF_STOP_BITS            :natural range 0 to 2 := 1;      
         PARITY_TYPE         :std_logic := '0'; -- 0 is even, 1 is odd
         
         PARALLEL_BUS_WIDTH :positive range 4 to 10 := 8;
