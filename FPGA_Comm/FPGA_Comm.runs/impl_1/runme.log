@@ -1,0 +1,83 @@
+
+*** Running vivado
+    with args -log Top_hw.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source Top_hw.tcl -notrace
+
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Tue May 12 13:25:29 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source Top_hw.tcl -notrace
+create_project: Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 523.312 ; gain = 220.719
+Command: link_design -top Top_hw -part xc7s25csga225-1
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Device 21-403] Loading part xc7s25csga225-1
+INFO: [Project 1-5699] Read binary netlist with skipMacroContent - 1
+INFO: [Project 1-454] Reading design checkpoint 'c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.gen/sources_1/ip/vio_0/vio_0.dcp' for cell 'vio_0_inst'
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.010 . Memory (MB): peak = 739.988 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 38 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Chipscope 16-324] Core: vio_0_inst UUID: e7ff0c21-2432-5e10-a2c1-ded3bcfa7191 
+Parsing XDC File [c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.gen/sources_1/ip/vio_0/vio_0.xdc] for cell 'vio_0_inst'
+Finished Parsing XDC File [c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.gen/sources_1/ip/vio_0/vio_0.xdc] for cell 'vio_0_inst'
+Parsing XDC File [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/constrs_1/new/constraints.xdc]
+Finished Parsing XDC File [C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/constrs_1/new/constraints.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 868.117 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+10 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7s25'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7s25'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.387 . Memory (MB): peak = 890.441 ; gain = 22.324
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 1db32b1ca
+
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 1347.035 ; gain = 456.594
+
+Starting Logic Optimization Task
+
+Phase 1 Initialization
+
+Phase 1.1 Core Generation And Design Setup
+
+Phase 1.1.1 Generate And Synthesize Debug Cores
+INFO: [Chipscope 16-329] Generating Script for core instance : dbg_hub 
+ERROR: [Chipscope 16-302] Could not generate core for dbg_hub. Aborting IP Generation operaion. The current Vivado temporary directory path, 'C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.runs/impl_1/.Xil/Vivado-16528-SolidnyLaptop', is 159 characters. Errors on the host OS will occur when trying to insert logic for debug core 'dbg_hub' when temporary directory paths exceed 146 characters. Please move this Vivado project or the Vivado working directory to a shorter path; alternately consider using the OS subst command to map part of the path to a drive letter.
+  
+	
+Phase 1.1.1 Generate And Synthesize Debug Cores | Checksum: 1db32b1ca
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 1806.637 ; gain = 0.000
+Phase 1.1 Core Generation And Design Setup | Checksum: 1db32b1ca
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 1806.637 ; gain = 0.000
+Phase 1 Initialization | Checksum: 1db32b1ca
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 1806.637 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+17 Infos, 0 Warnings, 0 Critical Warnings and 2 Errors encountered.
+opt_design failed
+opt_design: Time (s): cpu = 00:00:19 ; elapsed = 00:00:20 . Memory (MB): peak = 1806.637 ; gain = 938.520
+ERROR: [Chipscope 16-338] Implementing debug Cores failed due to earlier errors
+INFO: [Common 17-206] Exiting Vivado at Tue May 12 13:26:08 2026...
