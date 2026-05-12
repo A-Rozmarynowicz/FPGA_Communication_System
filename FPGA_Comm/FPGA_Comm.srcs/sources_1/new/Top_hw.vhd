@@ -46,7 +46,8 @@ end Top_hw;
 architecture Behavioral of Top_hw is
 
     constant CLOCK_FREQ :positive := 12_000_000;
-    constant BAUD_RATE :positive := 115200;
+    constant BAUD_RATE :positive := 230400;
+    constant BAUD_DIV : integer := CLOCK_FREQ / BAUD_RATE;
     
     -- UART parameters
     constant MIN_BAUD_RATE :positive := 110;				
@@ -154,7 +155,7 @@ begin
     begin
         if rising_edge(clk) then
     
-            if cnt = 10_000 then
+            if cnt = BAUD_DIV then
                 cnt <= (others => '0');
                 heartbeat <= not heartbeat;
             else
