@@ -112,6 +112,10 @@ begin
                         end if;
                     elsif data_ready = '1' then
                         DATA_OUT <= latched_data;
+                        if PARALLEL_TESTER_DATA_STORED = '1' then
+                            DONE <= '0';
+                            write_state <= WRITE_PARALLEL_STATE;
+                        end if;
                     end if;
                 when WRITE_PARALLEL_STATE =>
                     DONE <= '0';

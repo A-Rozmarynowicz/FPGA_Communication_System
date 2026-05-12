@@ -108,7 +108,7 @@ begin
                             & (FIFO_SINGLE_FRAME_SIZE - 1 downto 0 => '0');
                         buffer_pointer <= buffer_pointer - 1;
                         current_output_frame_pointer <= 0;
-                        OUTPUT_READY <= '1';
+--                        OUTPUT_READY <= '1';
                     else
                         OUTPUT_DATA <= fifo_buffer((current_output_frame_pointer+1)*OUTPUT_WORD_SIZE - 1
                             downto (current_output_frame_pointer)*OUTPUT_WORD_SIZE);
