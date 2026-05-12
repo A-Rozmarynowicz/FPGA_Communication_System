@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7s25csga225-1" LaunchTime="1778590538">
+<GenRun Id="impl_1" LaunchPart="xc7s25csga225-1" LaunchTime="1778592475">
+  <File Type="PA-DCP" Name="Top_hw.dcp"/>
   <File Type="PA-TCL" Name="Top_hw.tcl"/>
   <File Type="REPORTS-TCL" Name="Top_hw_reports.tcl"/>
   <File Type="INIT-TIMING" Name="Top_hw_timing_summary_init.rpt"/>

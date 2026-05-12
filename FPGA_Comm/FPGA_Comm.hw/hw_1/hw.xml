@@ -25,14 +25,15 @@
   </ObjectList>
   <ObjectList object_type="hw_probe" gui_info="">
     <Object name="heartbeat_dbg" gui_info=""/>
-    <Object name="parallel_data_in[7:0]" gui_info="hw_vios/hw_vio_1=1_exp"/>
+    <Object name="parallel_data_in[7:0]" gui_info="hw_vios/hw_vio_1=1"/>
+    <Object name="parallel_tester_data_stored" gui_info="hw_vios/hw_vio_1=4"/>
     <Object name="rst" gui_info="hw_vios/hw_vio_1=2"/>
     <Object name="uart_tx_dbg" gui_info="Trigger Setup=0"/>
     <Object name="vio_parallel_data_out[7:0]" gui_info="hw_vios/hw_vio_1=0"/>
     <Object name="vio_parallel_start" gui_info="hw_vios/hw_vio_1=3"/>
   </ObjectList>
   <ObjectList object_type="hw_vio" gui_info="">
-    <Object name="hw_vio_1" gui_info="hw_vios/hw_vio_1/TablePreference=5	897	Name	0	2147483647	15	362	362	Value	1	2147483647	15	146	146	Activity	2	2147483647	15	122	122	Direction	3	2147483647	15	141	141	VIO	4	2147483647	15	126	126			1	6	1	Name	Value	Activity	Direction	VIO"/>
+    <Object name="hw_vio_1" gui_info="hw_vios/hw_vio_1/TablePreference=5	911	Name	0	2147483647	15	376	376	Value	1	2147483647	15	146	146	Activity	2	2147483647	15	122	122	Direction	3	2147483647	15	141	141	VIO	4	2147483647	15	126	126			1	6	1	Name	Value	Activity	Direction	VIO"/>
   </ObjectList>
   <probeset name="hw project" active="false">
     <probe type="ila" busType="net" source="netlist" spec="ILA_V2_RT">

@@ -3,8 +3,8 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Tue May 12 14:55:42 2026
-# Process ID         : 18348
+# Start of session at: Tue May 12 15:17:38 2026
+# Process ID         : 23300
 # Current directory  : C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.runs/synth_1
 # Command line       : vivado.exe -log Top_hw.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source Top_hw.tcl
 # Log file           : C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.runs/synth_1/Top_hw.vds
@@ -19,6 +19,6 @@
 # Host memory        : 16890 MB
 # Swap memory        : 9126 MB
 # Total Virtual      : 26017 MB
-# Available Virtual  : 5023 MB
+# Available Virtual  : 4442 MB
 #-----------------------------------------------------------
 source Top_hw.tcl -notrace

@@ -77,6 +77,9 @@ architecture Behavioral of Top_hw is
 
     signal heartbeat_dbg      : std_logic;
     signal uart_tx_dbg        : std_logic;
+    signal uart_rx_dbg        : std_logic;
+    signal master_out_dbg :std_logic_vector(0 to 7);
+    signal master_in_dbg : std_logic_vector(0 to 7);
     
     attribute MARK_DEBUG : string;
     attribute DONT_TOUCH : string;
@@ -86,6 +89,15 @@ architecture Behavioral of Top_hw is
     
     attribute MARK_DEBUG of uart_tx_dbg : signal is "TRUE";
     attribute DONT_TOUCH of uart_tx_dbg : signal is "TRUE";
+
+    attribute MARK_DEBUG of uart_rx_dbg : signal is "TRUE";
+    attribute DONT_TOUCH of uart_rx_dbg : signal is "TRUE";
+    
+    attribute MARK_DEBUG of master_out_dbg : signal is "TRUE";
+    attribute DONT_TOUCH of master_out_dbg : signal is "TRUE";
+    
+    attribute MARK_DEBUG of master_in_dbg : signal is "TRUE";
+    attribute DONT_TOUCH of master_in_dbg : signal is "TRUE";
 
     signal vio_rst       : std_logic;
     signal vio_parallel_start      : std_logic;
@@ -177,6 +189,9 @@ begin
     
     heartbeat_dbg <= heartbeat;
     uart_tx_dbg <= uart_tx;
+    uart_rx_dbg  <= uart_rx;
+    master_in_dbg <= parallel_data_in;
+    master_out_dbg <= parallel_data_out;
     
     rst <= vio_rst;
 --    parallel_start <= vio_parallel_start;
