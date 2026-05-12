@@ -57,14 +57,13 @@ if {$::dispatch::connected} {
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param general.usePosixSpawnForFork 1
-set_param chipscope.maxJobs 4
-set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7s25csga225-1
 
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
+set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
 set_property webtalk.parent_dir C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.cache/wt [current_project]
 set_property parent.project_path C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
@@ -83,6 +82,10 @@ read_vhdl -library xil_defaultlib {
   C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/sources_1/imports/new/Master_Interface.vhd
 }
 read_vhdl -vhdl2008 -library xil_defaultlib C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/sources_1/new/Top_hw.vhd
+read_ip -quiet c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.srcs/sources_1/ip/vio_0/vio_0.xci
+set_property used_in_implementation false [get_files -all c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.gen/sources_1/ip/vio_0/vio_0.xdc]
+set_property used_in_implementation false [get_files -all c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Communication_System/FPGA_Communication_System.gen/sources_1/ip/vio_0/vio_0_ooc.xdc]
+
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
 # stitched into the results of this synthesis run. Any black boxes in the

@@ -35,7 +35,6 @@ use IEEE.NUMERIC_STD.ALL;
 entity Top_hw is
     Port (
         clk      : in  std_logic;
-        rst_btn  : in  std_logic;
 
         uart_rx  : in  std_logic;
         uart_tx  : out std_logic;
@@ -70,12 +69,37 @@ architecture Behavioral of Top_hw is
     signal parallel_data_stored : std_logic := '0';
     signal parallel_tester_data_stored : std_logic;
     
+    signal send_prev : std_logic := '0';
+    
     signal cnt : unsigned(25 downto 0) := (others => '0');
     signal heartbeat : std_logic := '0';
 
-begin
+    signal heartbeat_dbg      : std_logic;
+    signal uart_tx_dbg        : std_logic;
+    
+    attribute MARK_DEBUG : string;
+    attribute DONT_TOUCH : string;
+        
+    attribute MARK_DEBUG of heartbeat_dbg : signal is "TRUE";
+    attribute DONT_TOUCH of heartbeat_dbg : signal is "TRUE";
+    
+    attribute MARK_DEBUG of uart_tx_dbg : signal is "TRUE";
+    attribute DONT_TOUCH of uart_tx_dbg : signal is "TRUE";
 
-    rst <= rst_btn;
+    signal vio_rst       : std_logic;
+    signal vio_parallel_start      : std_logic;
+    signal vio_parallel_data_in   : std_logic_vector(7 downto 0);
+    signal vio_parallel_data_out   : std_logic_vector(7 downto 0);
+    signal vio_parallel_done : std_logic;
+    signal vio_parallel_receiver_full : std_logic;
+    signal vio_parallel_data_stored : std_logic;
+    signal vio_parallel_tester_data_stored : std_logic;
+
+--    signal vio_uart_tx : std_logic;
+--    signal vio_uart_rx : std_logic;
+
+    signal vio_heartbeat : std_logic;
+begin
 
     Master_Interface : entity work.Master_Interface
     generic map(
@@ -107,6 +131,24 @@ begin
         UART_TX  => uart_tx
     );
 
+    vio_0_inst : entity work.vio_0
+        port map (
+            clk => clk,
+            
+            probe_out0(0) => vio_rst,
+            probe_out1(0) => vio_parallel_start,
+            probe_out2 => vio_parallel_data_in,
+            probe_out3(0) => vio_parallel_tester_data_stored,
+--            probe_out4(0) => vio_uart_tx,
+        
+            probe_in0 => vio_parallel_data_out,
+            probe_in1(0) => vio_parallel_done,
+            probe_in2(0) => vio_parallel_receiver_full,
+            probe_in3(0) => vio_parallel_data_stored,
+            probe_in4(0) => vio_heartbeat
+--            probe_in4(0) => vio_uart_rx,
+            
+        );
 
     process(clk)
     begin
@@ -119,9 +161,33 @@ begin
                 cnt <= cnt + 1;
             end if;
     
+            parallel_start <= '0';
+
+            if (vio_parallel_start = '1' and send_prev = '0') then
+                parallel_start <= '1';
+            end if;
+    
+            send_prev <= vio_parallel_start;
+    
         end if;
     end process;
     
     led <= heartbeat;
+    
+    heartbeat_dbg <= heartbeat;
+    uart_tx_dbg <= uart_tx;
+    
+    rst <= vio_rst;
+--    parallel_start <= vio_parallel_start;
+    parallel_data_in <= vio_parallel_data_in;
+    parallel_tester_data_stored <= vio_parallel_tester_data_stored;
+--    uart_rx <= vio_uart_tx;
+
+    vio_parallel_data_out <= parallel_data_out;
+    vio_parallel_done <= parallel_done;
+    vio_parallel_receiver_full <= parallel_receiver_full;
+    vio_parallel_data_stored <= parallel_data_stored;
+--    vio_uart_rx <= uart_tx;
+    vio_heartbeat <= heartbeat;
 
 end Behavioral;

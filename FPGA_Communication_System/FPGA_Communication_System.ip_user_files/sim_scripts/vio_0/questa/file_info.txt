@@ -1,0 +1,1 @@
+vio_0.vhd,vhdl,xil_defaultlib,../../../../FPGA_Communication_System.gen/sources_1/ip/vio_0/sim/vio_0.vhd,incdir="../../../../../../../../../../../AMDDesignTools/2025.2/Vivado/data/rsb/busdef"incdir="../../../../FPGA_Communication_System.gen/sources_1/ip/vio_0/hdl/verilog"incdir="../../../../FPGA_Communication_System.gen/sources_1/ip/vio_0/hdl"
