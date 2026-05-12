@@ -13,3 +13,8 @@
     <Process Command="vivado.bat" Owner="arekr" Host="SOLIDNYLAPTOP" Pid="31076" HostCore="16" HostMemory="016890978304">
     </Process>
 </ProcessHandle>
+<?xml version="1.0"?>
+<ProcessHandle Version="1" Minor="0">
+    <Process Command="vivado.bat" Owner="arekr" Host="SOLIDNYLAPTOP" Pid="16448" HostCore="16" HostMemory="016890978304">
+    </Process>
+</ProcessHandle>

@@ -1,0 +1,409 @@
+{
+    "ltx_root": {
+        "version": 4,
+        "minor": 0,
+        "ltx_data": [
+            {
+                "name": "EDA_PROBESET",
+                "active": true,
+                "debug_cores": [
+                    {
+                        "type": "XSDB_V3",
+                        "name": "dbg_hub",
+                        "spec": "labtools_xsdbm_v3",
+                        "clk_input_freq_hz": "12000047"
+                    },
+                    {
+                        "type": "VIO_V2",
+                        "name": "vio_0_inst",
+                        "spec": "labtools_vio_v3",
+                        "ipName": "vio",
+                        "core_location": {
+                            "user_chain": 1,
+                            "slave_index": 0,
+                            "bscan_switch_index": 0
+                        },
+                        "uuid": "E7FF0C2124325E10A2C1DED3BCFA7191",
+                        "pins": [
+                            {
+                                "name": "probe_in0",
+                                "id": 0,
+                                "type": "DATA",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 7,
+                                "portIndex": 0,
+                                "nets": [
+                                    {
+                                        "name": "vio_parallel_data_out",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "vio_parallel_data_out[7]"
+                                            },
+                                            {
+                                                "name": "vio_parallel_data_out[6]"
+                                            },
+                                            {
+                                                "name": "vio_parallel_data_out[5]"
+                                            },
+                                            {
+                                                "name": "vio_parallel_data_out[4]"
+                                            },
+                                            {
+                                                "name": "vio_parallel_data_out[3]"
+                                            },
+                                            {
+                                                "name": "vio_parallel_data_out[2]"
+                                            },
+                                            {
+                                                "name": "vio_parallel_data_out[1]"
+                                            },
+                                            {
+                                                "name": "vio_parallel_data_out[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe_in1",
+                                "id": 1,
+                                "type": "DATA",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 1,
+                                "nets": [
+                                    {
+                                        "name": "vio_parallel_done",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe_in2",
+                                "id": 2,
+                                "type": "DATA",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 2,
+                                "nets": [
+                                    {
+                                        "name": "vio_parallel_receiver_full",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe_in3",
+                                "id": 3,
+                                "type": "DATA",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 3,
+                                "nets": [
+                                    {
+                                        "name": "vio_parallel_data_stored",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe_in4",
+                                "id": 4,
+                                "type": "DATA",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 4,
+                                "nets": [
+                                    {
+                                        "name": "vio_heartbeat",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe_out0",
+                                "id": 5,
+                                "type": "DATA",
+                                "direction": "OUT",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 0,
+                                "nets": [
+                                    {
+                                        "name": "rst",
+                                        "isBus": false,
+                                        "parentNetId": 12
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe_out1",
+                                "id": 6,
+                                "type": "DATA",
+                                "direction": "OUT",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 1,
+                                "nets": [
+                                    {
+                                        "name": "vio_parallel_start",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe_out2",
+                                "id": 7,
+                                "type": "DATA",
+                                "direction": "OUT",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 7,
+                                "portIndex": 2,
+                                "nets": [
+                                    {
+                                        "name": "parallel_data_in",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "parallel_data_in[7]"
+                                            },
+                                            {
+                                                "name": "parallel_data_in[6]"
+                                            },
+                                            {
+                                                "name": "parallel_data_in[5]"
+                                            },
+                                            {
+                                                "name": "parallel_data_in[4]"
+                                            },
+                                            {
+                                                "name": "parallel_data_in[3]"
+                                            },
+                                            {
+                                                "name": "parallel_data_in[2]"
+                                            },
+                                            {
+                                                "name": "parallel_data_in[1]"
+                                            },
+                                            {
+                                                "name": "parallel_data_in[0]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe_out3",
+                                "id": 8,
+                                "type": "DATA",
+                                "direction": "OUT",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 3,
+                                "nets": [
+                                    {
+                                        "name": "parallel_tester_data_stored",
+                                        "isBus": false
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "ILA_V3",
+                        "name": "u_ila_0",
+                        "spec": "labtools_ila_v6",
+                        "core_location": {
+                            "user_chain": 1,
+                            "slave_index": 1,
+                            "bscan_switch_index": 0
+                        },
+                        "uuid": "23e7d65a79bc59f7bc47406c1714dfae",
+                        "pins": [
+                            {
+                                "name": "probe0",
+                                "id": 9,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 7,
+                                "portIndex": 0,
+                                "nets": [
+                                    {
+                                        "name": "master_in_dbg",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "master_in_dbg[0]"
+                                            },
+                                            {
+                                                "name": "master_in_dbg[1]"
+                                            },
+                                            {
+                                                "name": "master_in_dbg[2]"
+                                            },
+                                            {
+                                                "name": "master_in_dbg[3]"
+                                            },
+                                            {
+                                                "name": "master_in_dbg[4]"
+                                            },
+                                            {
+                                                "name": "master_in_dbg[5]"
+                                            },
+                                            {
+                                                "name": "master_in_dbg[6]"
+                                            },
+                                            {
+                                                "name": "master_in_dbg[7]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe1",
+                                "id": 10,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": true,
+                                "leftIndex": 0,
+                                "rightIndex": 7,
+                                "portIndex": 1,
+                                "nets": [
+                                    {
+                                        "name": "master_out_dbg",
+                                        "isBus": true,
+                                        "subnets": [
+                                            {
+                                                "name": "master_out_dbg[0]"
+                                            },
+                                            {
+                                                "name": "master_out_dbg[1]"
+                                            },
+                                            {
+                                                "name": "master_out_dbg[2]"
+                                            },
+                                            {
+                                                "name": "master_out_dbg[3]"
+                                            },
+                                            {
+                                                "name": "master_out_dbg[4]"
+                                            },
+                                            {
+                                                "name": "master_out_dbg[5]"
+                                            },
+                                            {
+                                                "name": "master_out_dbg[6]"
+                                            },
+                                            {
+                                                "name": "master_out_dbg[7]"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe2",
+                                "id": 11,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 2,
+                                "nets": [
+                                    {
+                                        "name": "heartbeat_dbg",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe3",
+                                "id": 12,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 3,
+                                "nets": [
+                                    {
+                                        "name": "uart_rx_dbg",
+                                        "isBus": false
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "probe4",
+                                "id": 13,
+                                "type": "DATA_TRIGGER",
+                                "direction": "IN",
+                                "isVector": false,
+                                "leftIndex": 0,
+                                "rightIndex": 0,
+                                "portIndex": 4,
+                                "nets": [
+                                    {
+                                        "name": "uart_tx_dbg",
+                                        "isBus": false
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "parent_nets": [
+                    {
+                        "id": 12,
+                        "name": "vio_0_inst/inst/PROBE_OUT_ALL_INST/G_PROBE_OUT[0].PROBE_OUT0_INST/probe_out0[0]",
+                        "state_reg": [
+                            {
+                                "name": "Master_Interface/uart_rt_inst/FSM_onehot_state_reg[1]",
+                                "states": [
+                                    {
+                                        "name": "idle_wait",
+                                        "val": "00001"
+                                    },
+                                    {
+                                        "name": "transmitting_start",
+                                        "val": "00010"
+                                    },
+                                    {
+                                        "name": "transmitting_word",
+                                        "val": "00100"
+                                    },
+                                    {
+                                        "name": "transmitting_parity",
+                                        "val": "01000"
+                                    },
+                                    {
+                                        "name": "transmitting_stop",
+                                        "val": "10000"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
