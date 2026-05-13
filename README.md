@@ -42,7 +42,7 @@ The synthesizable structure of the translator is shown below on the Figure 1. No
 <em>Figure 1: Master Interface internal diagram.</em>
 </p>
 
-Structure of the simulation testbench is shown on Figure 2. Both 
+Structure of the simulation testbench is shown on Figure 2. Both the parallel transceiver and the UART transceiver store data in RAM, to assert correctness of data transfers. Parallel transceiver on the left sends, reads, and compares data from the UART transceiver on the right. Note that widths of buses were omitted in the diagram: they are however compliant with what is shown on Figure 1, where the parallel bus width is customizable.
 
 <p align="center">
 <img src="./Images/Testbench_Diagram.png" alt="./Images/Testbench_Diagram.png" width="550"><br>
