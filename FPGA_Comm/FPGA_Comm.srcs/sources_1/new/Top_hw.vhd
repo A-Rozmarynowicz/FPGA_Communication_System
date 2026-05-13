@@ -173,7 +173,7 @@ begin
             probe_out3(0) => vio_parallel_tester_data_stored,
 --            probe_out4(0) => vio_uart_tx,
         
-            probe_in0 <= vio_parallel_data_out,
+            probe_in0 => vio_parallel_data_out,
             probe_in1(0) => vio_parallel_done,
             probe_in2(0) => vio_parallel_receiver_full,
             probe_in3(0) => vio_parallel_data_stored,

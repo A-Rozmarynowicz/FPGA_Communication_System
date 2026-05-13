@@ -10,14 +10,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0"></ZoomStartTime>
-      <ZoomEndTime time="3,371"></ZoomEndTime>
+      <ZoomEndTime time="2,113"></ZoomEndTime>
       <Cursor1Time time="0"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="298"></NameColumnWidth>
-      <ValueColumnWidth column_width="206"></ValueColumnWidth>
+      <ValueColumnWidth column_width="198"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="7" />
+   <WVObjectSize size="9" />
    <wave_markers>
    </wave_markers>
    <wvobject fp_name="heartbeat_dbg" type="logic">
@@ -63,6 +63,14 @@
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>
+   <wvobject fp_name="parallel_start_dbg" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">parallel_start_dbg</obj_property>
+      <obj_property name="ObjectShortName">parallel_start_dbg</obj_property>
+      <obj_property name="label">PC_Parallel_Start</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
    <wvobject fp_name="master_out_dbg" type="array">
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="ElementShortName">master_out_dbg[0:7]</obj_property>
@@ -77,6 +85,14 @@
       <obj_property name="ElementShortName">parallel_data_stored_dbg</obj_property>
       <obj_property name="ObjectShortName">parallel_data_stored_dbg</obj_property>
       <obj_property name="label">FPGA_Data_Stored</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+      <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
+   </wvobject>
+   <wvobject fp_name="parallel_done_dbg" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">parallel_done_dbg</obj_property>
+      <obj_property name="ObjectShortName">parallel_done_dbg</obj_property>
+      <obj_property name="label">FPGA_Parallel_Start</obj_property>
       <obj_property name="LABELRADIX">true</obj_property>
       <obj_property name="WaveformStyle">STYLE_DIGITAL</obj_property>
    </wvobject>

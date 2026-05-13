@@ -57,6 +57,8 @@ if {$::dispatch::connected} {
 
 OPTRACE "vio_0_synth_1" START { ROLLUP_AUTO }
 set_param general.usePosixSpawnForFork 1
+set_msg_config  -string {{Command: synth_design -top vio_0 -part xc7s25csga225-1 -incremental_mode off -mode out_of_context}}  -suppress 
+set_msg_config  -id {Synth 8-3848}  -string {{WARNING: [Synth 8-3848] Net sl_iport0 in module/entity vio_0 does not have driver. [c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Communication_System.gen/sources_1/ip/vio_0/synth/vio_0.v:82]}}  -suppress 
 set_param project.vivado.isBlockSynthRun true
 set_msg_config -msgmgr_mode ooc_run
 OPTRACE "Creating in-memory project" START { }

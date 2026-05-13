@@ -97,6 +97,8 @@ proc step_failed { step } {
 OPTRACE "impl_1" END { }
 }
 
+set_msg_config  -string {{Command: synth_design -top vio_0 -part xc7s25csga225-1 -incremental_mode off -mode out_of_context}}  -suppress 
+set_msg_config  -id {Synth 8-3848}  -string {{WARNING: [Synth 8-3848] Net sl_iport0 in module/entity vio_0 does not have driver. [c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Communication_System.gen/sources_1/ip/vio_0/synth/vio_0.v:82]}}  -suppress 
 
 OPTRACE "impl_1" START { ROLLUP_1 }
 OPTRACE "Phase: Init Design" START { ROLLUP_AUTO }
@@ -104,10 +106,8 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
-  set_param tcl.collectionResultDisplayLimit 0
   set_param general.usePosixSpawnForFork 1
   set_param chipscope.maxJobs 4
-  set_param xicom.use_bs_reader 1
   set_param runs.launchOptions { -jobs 8  }
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7s25csga225-1

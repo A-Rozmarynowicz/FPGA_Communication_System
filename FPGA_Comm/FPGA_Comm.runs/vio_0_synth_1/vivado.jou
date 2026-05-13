@@ -3,8 +3,8 @@
 # SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
 # IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
 # SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
-# Start of session at: Tue May 12 13:33:31 2026
-# Process ID         : 29836
+# Start of session at: Wed May 13 21:07:40 2026
+# Process ID         : 16284
 # Current directory  : C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.runs/vio_0_synth_1
 # Command line       : vivado.exe -log vio_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source vio_0.tcl
 # Log file           : C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.runs/vio_0_synth_1/vio_0.vds
@@ -19,6 +19,6 @@
 # Host memory        : 16890 MB
 # Swap memory        : 9126 MB
 # Total Virtual      : 26017 MB
-# Available Virtual  : 9585 MB
+# Available Virtual  : 4267 MB
 #-----------------------------------------------------------
 source vio_0.tcl -notrace

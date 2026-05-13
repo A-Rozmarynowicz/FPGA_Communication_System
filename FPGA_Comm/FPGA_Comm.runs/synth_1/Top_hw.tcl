@@ -56,10 +56,10 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param tcl.collectionResultDisplayLimit 0
 set_param general.usePosixSpawnForFork 1
 set_param chipscope.maxJobs 4
-set_param xicom.use_bs_reader 1
+set_msg_config  -string {{Command: synth_design -top vio_0 -part xc7s25csga225-1 -incremental_mode off -mode out_of_context}}  -suppress 
+set_msg_config  -id {Synth 8-3848}  -string {{WARNING: [Synth 8-3848] Net sl_iport0 in module/entity vio_0 does not have driver. [c:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Communication_System.gen/sources_1/ip/vio_0/synth/vio_0.v:82]}}  -suppress 
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7s25csga225-1
 
