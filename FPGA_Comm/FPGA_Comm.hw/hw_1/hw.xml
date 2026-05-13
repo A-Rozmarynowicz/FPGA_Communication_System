@@ -22,7 +22,7 @@
     <Object name="u_ila_0" gui_info="">
       <Properties Property="CONTROL.DATA_DEPTH" value="2048"/>
       <Properties Property="CONTROL.TRIGGER_CONDITION" value="OR"/>
-      <Properties Property="CONTROL.TRIGGER_POSITION" value="1024"/>
+      <Properties Property="CONTROL.TRIGGER_POSITION" value="1"/>
       <Properties Property="CONTROL.WINDOW_COUNT" value="1"/>
       <Properties Property="CORE_REFRESH_RATE_MS" value="500"/>
     </Object>
@@ -337,7 +337,7 @@
         <Option Id="HW_VIO" value="hw_vio_1"/>
         <Option Id="NAME.CUSTOM" value="PC_OUT"/>
         <Option Id="NAME.SELECT" value="Custom"/>
-        <Option Id="OUTPUT_VALUE" value="43"/>
+        <Option Id="OUTPUT_VALUE" value="50"/>
         <Option Id="OUTPUT_VALUE_RADIX" value="HEX"/>
         <Option Id="SOURCE" value="netlist"/>
       </probeOptions>
