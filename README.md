@@ -35,9 +35,16 @@ Author: Arkadiusz Rozmarynowicz.
 ## Project structure
 Source files are contained within the [FPGA_Comm](/FPGA_Comm/) folder. There you can find design and simulations files.
 
-The synthesizable structure of the translator is shown below. Note that the "Master_Interface" is the top module acting as the translator.
+The synthesizable structure of the translator is shown below on the Figure 1. Note that the "Master_Interface" is the top module acting as the translator. Also, internal error and warning signals were skipped in this schematic. Notes next to arrows inside the main node describe buses' widths.
 
 <p align="center">
 <img src="./Images/Master_Interface_Schematic.png" alt="./Images/Master_Interface_Schematic.png" width="550"><br>
-<em>Figure 1: 3D view of the PCB.</em>
+<em>Figure 1: Master Interface internal diagram.</em>
+</p>
+
+Structure of the simulation testbench is shown on Figure 2. Both 
+
+<p align="center">
+<img src="./Images/Testbench_Diagram.png" alt="./Images/Testbench_Diagram.png" width="550"><br>
+<em>Figure 2: Simulation testbench diagram.</em>
 </p>
