@@ -16,12 +16,12 @@ Author: Arkadiusz Rozmarynowicz.
 
 
 ## General information
-- Built a synthesizable structure that translates parallel bus communication to UART and vice versa
+- Built a synthesizable structure that converts parallel bus communication to UART and vice versa
 - Implemented fully parameterized modules from scratch:
     - UART interface, i.e. one that supports custom baud rates, clock frequencies, frame formats,
     - parallel interface, i.e. one that is compatible with custom bus widths and clock frequencies.
 - Constructed a universal, robust, and parameterized FIFO buffer converter, that builds frames of a certain size from data frames of a different size, and also reports errors and warnings:
-    - enables translation of UART frames of any size to parallel frames of any size, and vice versa.
+    - enables convertion of UART frames of any size to parallel frames of any size, and vice versa.
 - Built a simulation testbench consisting of two additional transceivers that exchanged data through the main module:
     - tested mutiple configurations and analyzed correctness on digital waveforms.
 - Implemented the project on the Cmod S7 Digilent board, connecting a virtual parallel interface and a PC serial terminal:
@@ -39,7 +39,7 @@ Author: Arkadiusz Rozmarynowicz.
 ## Project structure
 Source files are contained within the [FPGA_Comm](/FPGA_Comm/) folder. There you can find design and simulations files.
 
-The synthesizable structure of the translator is shown below in the figure 1. Note that the "Master_Interface" is the top module acting as the translator. Also, internal error and warning signals were skipped in this schematic. Notes next to arrows inside the main node describe buses' widths.
+The synthesizable structure of the converter is shown below in the figure 1. Note that the "Master_Interface" is the top module acting as the converter. Also, internal error and warning signals were skipped in this schematic. Notes next to arrows inside the main node describe buses' widths.
 
 <p align="center">
 <img src="./Images/Master_Interface_Schematic.png" alt="./Images/Master_Interface_Schematic.png" width="550"><br>
