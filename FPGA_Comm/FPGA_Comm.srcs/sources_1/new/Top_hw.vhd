@@ -75,6 +75,9 @@ architecture Behavioral of Top_hw is
     signal cnt : unsigned(25 downto 0) := (others => '0');
     signal heartbeat : std_logic := '0';
 
+    signal uart_tx_int : std_logic;
+    signal uart_rx_int : std_logic;
+
     signal heartbeat_dbg      : std_logic;
     signal uart_tx_dbg        : std_logic;
     signal uart_rx_dbg        : std_logic;
@@ -82,6 +85,8 @@ architecture Behavioral of Top_hw is
     signal master_in_dbg : std_logic_vector(0 to 7);
     signal parallel_data_stored_dbg :std_logic;
     signal parallel_tester_data_stored_dbg : std_logic;
+    signal parallel_start_dbg : std_logic;
+    signal parallel_done_dbg : std_logic;
     
     attribute MARK_DEBUG : string;
     attribute DONT_TOUCH : string;
@@ -107,6 +112,12 @@ architecture Behavioral of Top_hw is
     attribute MARK_DEBUG of parallel_tester_data_stored_dbg : signal is "TRUE";
     attribute DONT_TOUCH of parallel_tester_data_stored_dbg : signal is "TRUE";
 
+    attribute MARK_DEBUG of parallel_start_dbg : signal is "TRUE";
+    attribute DONT_TOUCH of parallel_start_dbg: signal is "TRUE";
+
+    attribute MARK_DEBUG of parallel_done_dbg : signal is "TRUE";
+    attribute DONT_TOUCH of parallel_done_dbg: signal is "TRUE";
+
     signal vio_rst       : std_logic;
     signal vio_parallel_start      : std_logic;
     signal vio_parallel_data_in   : std_logic_vector(7 downto 0);
@@ -116,8 +127,8 @@ architecture Behavioral of Top_hw is
     signal vio_parallel_data_stored : std_logic;
     signal vio_parallel_tester_data_stored : std_logic;
 
---    signal vio_uart_tx : std_logic;
---    signal vio_uart_rx : std_logic;
+    signal vio_uart_tx : std_logic;
+    signal vio_uart_rx : std_logic;
 
     signal vio_heartbeat : std_logic;
 begin
@@ -148,8 +159,8 @@ begin
         PARALLEL_DATA_STORED => parallel_data_stored,
         PARALLEL_TESTER_DATA_STORED => parallel_tester_data_stored,
         
-        UART_RX  => uart_rx,
-        UART_TX  => uart_tx
+        UART_RX  => uart_rx_int,
+        UART_TX  => uart_tx_int
     );
 
     vio_0_inst : entity work.vio_0
@@ -162,12 +173,12 @@ begin
             probe_out3(0) => vio_parallel_tester_data_stored,
 --            probe_out4(0) => vio_uart_tx,
         
-            probe_in0 => vio_parallel_data_out,
+            probe_in0 <= vio_parallel_data_out,
             probe_in1(0) => vio_parallel_done,
             probe_in2(0) => vio_parallel_receiver_full,
             probe_in3(0) => vio_parallel_data_stored,
             probe_in4(0) => vio_heartbeat
---            probe_in4(0) => vio_uart_rx,
+--            probe_in5(0) => vio_uart_rx
             
         );
 
@@ -196,18 +207,26 @@ begin
     led <= heartbeat;
     
     heartbeat_dbg <= heartbeat;
-    uart_tx_dbg <= uart_tx;
-    uart_rx_dbg  <= uart_rx;
+    uart_tx <= uart_tx_int;
+    uart_tx_dbg <= uart_tx_int;
+    
+    uart_rx_int <= uart_rx;
+    uart_rx_dbg <= uart_rx_int;
+    
     master_in_dbg <= parallel_data_in;
     master_out_dbg <= parallel_data_out;
     parallel_data_stored_dbg <= parallel_data_stored;
     parallel_tester_data_stored_dbg <= vio_parallel_tester_data_stored;
+    parallel_start_dbg <= parallel_start;
+    parallel_done_dbg <= parallel_done;
+    
+    
     
     rst <= vio_rst;
 --    parallel_start <= vio_parallel_start;
     parallel_data_in <= vio_parallel_data_in;
     parallel_tester_data_stored <= vio_parallel_tester_data_stored;
---    uart_rx <= vio_uart_tx;
+--    vio_uart_tx <= uart_rx;
 
     vio_parallel_data_out <= parallel_data_out;
     vio_parallel_done <= parallel_done;

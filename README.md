@@ -37,7 +37,7 @@ Author: Arkadiusz Rozmarynowicz.
 - VIO and ILA cores.
 
 ## Project structure
-Source files are contained within the [FPGA_Comm](/FPGA_Comm/) folder. There you can find design and simulations files.
+Source files are contained within the [FPGA_Comm](/FPGA_Comm/) folder. There you can find design, simulation, and hardware files.
 
 The synthesizable structure of the converter is shown below in the figure 1. Note that the "Master_Interface" is the top module acting as the converter. Also, internal error and warning signals were skipped in this schematic. Notes next to arrows inside the main node describe buses' widths.
 

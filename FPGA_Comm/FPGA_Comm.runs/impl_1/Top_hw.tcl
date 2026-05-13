@@ -109,12 +109,33 @@ set rc [catch {
   set_param chipscope.maxJobs 4
   set_param xicom.use_bs_reader 1
   set_param runs.launchOptions { -jobs 8  }
-  reset_param project.defaultXPMLibraries 
-  open_checkpoint C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.runs/impl_1/Top_hw.dcp
+OPTRACE "create in-memory project" START { }
+  create_project -in_memory -part xc7s25csga225-1
+  set_property board_part_repo_paths {C:/Users/arekr/AppData/Roaming/Xilinx/Vivado/2025.2/xhub/board_store/xilinx_board_store} [current_project]
+  set_property board_part digilentinc.com:cmod-s7-25:part0:1.0 [current_project]
+  set_property design_mode GateLvl [current_fileset]
+  set_param project.singleFileAddWarning.threshold 0
+OPTRACE "create in-memory project" END { }
+OPTRACE "set parameters" START { }
   set_property webtalk.parent_dir C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.cache/wt [current_project]
   set_property parent.project_path C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.xpr [current_project]
   set_property ip_output_repo C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
+OPTRACE "set parameters" END { }
+OPTRACE "add files" START { }
+  add_files -quiet C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.runs/synth_1/Top_hw.dcp
+  read_ip -quiet C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.srcs/sources_1/ip/vio_0/vio_0.xci
+OPTRACE "read constraints: implementation" START { }
+  read_xdc C:/Users/arekr/OneDrive/Pulpit/Github/FPGA_Communication_System/FPGA_Comm/FPGA_Comm.srcs/constrs_1/new/constraints.xdc
+OPTRACE "read constraints: implementation" END { }
+OPTRACE "read constraints: implementation_pre" START { }
+OPTRACE "read constraints: implementation_pre" END { }
+OPTRACE "add files" END { }
+OPTRACE "link_design" START { }
+  link_design -top Top_hw -part xc7s25csga225-1 
+OPTRACE "link_design" END { }
+OPTRACE "gray box cells" START { }
+OPTRACE "gray box cells" END { }
 OPTRACE "init_design_reports" START { REPORT }
 OPTRACE "init_design_reports" END { }
 OPTRACE "init_design_write_hwdef" START { }
