@@ -9,7 +9,11 @@ Designed, simulated, and validated in hardware a communication system connecting
 Author: Arkadiusz Rozmarynowicz.
 
 ## Table of contents
--
+* [General information](#general-information)
+* [Technologies used](#technologies-used)
+* [Project structure](#project-structure)
+* [Example](#example)
+
 
 ## General information
 - Built a synthesizable structure that translates parallel bus communication to UART and vice versa
