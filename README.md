@@ -36,3 +36,8 @@ Author: Arkadiusz Rozmarynowicz.
 Source files are contained within the [FPGA_Comm](/FPGA_Comm/) folder. There you can find design and simulations files.
 
 The synthesizable structure of the translator is shown below. Note that the "Master_Interface" is the top module acting as the translator.
+
+<p align="center">
+<img src="./Images/Master_Interface_Schematic.png" alt="./Images/Master_Interface_Schematic.png" width="550"><br>
+<em>Figure 1: 3D view of the PCB.</em>
+</p>
