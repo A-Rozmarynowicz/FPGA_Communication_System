@@ -59,12 +59,12 @@ In hardware implementation a VIO core plays the role of the parallel transceiver
 In figures 3 and 4 example waveforms are presented. In the first case, a letter "B" (0x42) was sent from VIO to a PuTTY terminal, through the FPGA unit and a USB-UART bridge (other visible letters were sent beforehand). In the second case, a string of letters "ABC" (0x41, 0x42, 0x43) was sent the other way around. Note that in the latter case the PC_Data_Stored handshake was omitted, as it was impractical to control it manually in VIO.
 
 <p align="center">
-<img src="./Images/FPGA_To_PC.png" alt="./Images/FPGA_To_PC.png" width="550"><br>
+<img src="./Images/FPGA_To_PC.png" alt="./Images/FPGA_To_PC.png" width="750"><br>
 <em>Figure 3: Transfer from FPGA to PC.</em>
 </p>
 
 <p align="center">
-<img src="./Images/PC_To_FPGA.png" alt="./Images/PC_To_FPGA.png" width="550"><br>
+<img src="./Images/PC_To_FPGA.png" alt="./Images/PC_To_FPGA.png" width="750"><br>
 <em>Figure 4: Transfer from PC to FPGA.</em>
 </p>
 
