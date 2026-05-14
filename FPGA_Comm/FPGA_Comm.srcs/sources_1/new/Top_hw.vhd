@@ -171,15 +171,13 @@ begin
             probe_out1(0) => vio_parallel_start,
             probe_out2 => vio_parallel_data_in,
             probe_out3(0) => vio_parallel_tester_data_stored,
---            probe_out4(0) => vio_uart_tx,
-        
+
             probe_in0 => vio_parallel_data_out,
             probe_in1(0) => vio_parallel_done,
             probe_in2(0) => vio_parallel_receiver_full,
             probe_in3(0) => vio_parallel_data_stored,
             probe_in4(0) => vio_heartbeat
---            probe_in5(0) => vio_uart_rx
-            
+
         );
 
     process(clk)
@@ -223,16 +221,16 @@ begin
     
     
     rst <= vio_rst;
---    parallel_start <= vio_parallel_start;
+
     parallel_data_in <= vio_parallel_data_in;
     parallel_tester_data_stored <= vio_parallel_tester_data_stored;
---    vio_uart_tx <= uart_rx;
+
 
     vio_parallel_data_out <= parallel_data_out;
     vio_parallel_done <= parallel_done;
     vio_parallel_receiver_full <= parallel_receiver_full;
     vio_parallel_data_stored <= parallel_data_stored;
---    vio_uart_rx <= uart_tx;
+
     vio_heartbeat <= heartbeat;
 
 end Behavioral;

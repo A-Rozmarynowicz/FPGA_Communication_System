@@ -56,15 +56,15 @@ Structure of the simulation testbench is shown in figure 2. Both the parallel tr
 In hardware implementation a VIO core plays the role of the parallel transceiver, and a PC serial terminal along with an onboard USB-UART bridge play the role of the UART transceiver.
 
 ## Example
-In figures 3 and 4 example waveforms are presented. In the first case, a letter "" (... hexadecimal) was sent from VIO to a PuTTY terminal, through the FPGA unit and a USB-UART bridge. In the second case, a letter "" (... hexadecimal) was sent the other way around.
+In figures 3 and 4 example waveforms are presented. In the first case, a letter "B" (0x42) was sent from VIO to a PuTTY terminal, through the FPGA unit and a USB-UART bridge (other visible letters were sent beforehand). In the second case, a string of letters "ABC" (0x41, 0x42, 0x43) was sent the other way around. Note that in the latter case the PC_Data_Stored handshake was omitted, as it was impractical to control it manually in VIO.
 
 <p align="center">
-<img src="" alt="..." width="550"><br>
+<img src="./Images/FPGA_To_PC.png" alt="./Images/FPGA_To_PC.png" width="550"><br>
 <em>Figure 3: Transfer from FPGA to PC.</em>
 </p>
 
 <p align="center">
-<img src="" alt="..." width="550"><br>
+<img src="./Images/PC_To_FPGA.png" alt="./Images/PC_To_FPGA.png" width="550"><br>
 <em>Figure 4: Transfer from PC to FPGA.</em>
 </p>
 
