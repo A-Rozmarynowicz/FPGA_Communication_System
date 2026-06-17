@@ -8,6 +8,8 @@ Designed, simulated, and validated in hardware a communication system connecting
 
 Author: Arkadiusz Rozmarynowicz.
 
+Development time: from 03.2026 to 05.2026.
+
 ## Table of contents
 * [General information](#general-information)
 * [Technologies used](#technologies-used)
